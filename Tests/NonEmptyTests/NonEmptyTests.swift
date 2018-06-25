@@ -184,9 +184,6 @@ final class NonEmptyTests: XCTestCase {
     let xs = NonEmptyArray(1, 2, 3)
 
     XCTAssertEqual(xs, try JSONDecoder().decode(NonEmptyArray<Int>.self, from: JSONEncoder().encode(xs)))
-
-    XCTAssertEqual("{\"head\":1,\"tail\":[2,3]}", try String(data: JSONEncoder().encode(xs), encoding: .utf8))
-
     XCTAssertEqual(xs, try JSONDecoder().decode(NonEmptyArray<Int>.self, from: Data("{\"head\":1,\"tail\":[2,3]}".utf8)))
   }
 
