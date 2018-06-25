@@ -91,6 +91,6 @@ extension NonEmpty {
 
 extension NonEmpty where C.Index == Int {
   public subscript(position: Int) -> Element {
-    return self[position == 0 ? .head : .tail(position - 1)]
+    return self[position == 0 ? .head : .tail(self.tail.startIndex + position - 1)]
   }
 }

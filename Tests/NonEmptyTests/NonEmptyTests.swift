@@ -195,6 +195,13 @@ final class NonEmptyTests: XCTestCase {
 
     XCTAssertEqual(xs, ys)
   }
+
+  func testMutableCollectionWithArraySlice() {
+    let numbers = Array(1...10)
+    var xs = NonEmpty(0, numbers[5...])
+    xs[1] = 43
+    XCTAssertEqual(43, xs[1])
+  }
 }
 
 struct TrivialHashable: Equatable, Comparable, Hashable {
