@@ -86,13 +86,13 @@ func query(_ fields: NonEmptySet<UserField>) -> String {
     .joined()
 }
 
-print(query(.init([.name, .email])))
+print(query(.init(.name, .email)))
 // {
 //   name
 //   email
 // }
 
-print(query(.init([])))
+print(query(.init()))
 // 🛑 Does not compile
 ```
 
