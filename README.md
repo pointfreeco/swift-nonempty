@@ -29,9 +29,9 @@ print("\(helloWorld)!") // "Hello World!"
 
 There are many applications of non-empty collection types but it can be hard to see since the Swift standard library does not give us this type. Here are just a few such applications:
 
-### Strengthen 1st party API's
+### Strengthen 1st party APIs
 
-Many API's take and return empty-able arrays when they can in fact guarantee that the arrays are non-empty. Consider a `groupBy` function:
+Many APIs take and return empty-able arrays when they can in fact guarantee that the arrays are non-empty. Consider a `groupBy` function:
 
 ```swift
 extension Sequence {
@@ -41,7 +41,7 @@ extension Sequence {
 }
 
 Array(1...10)
-  .groupBy { $0 % 3 == 0 }
+  .groupBy { $0 % 3 }
 // [0: [3, 6, 9], 1: [1, 4, 7, 10], 2: [2, 5, 8]]
 ```
 
@@ -55,7 +55,7 @@ extension Sequence {
 }
 ```
 
-### Better interface with 3rd party API's
+### Better interface with 3rd party APIs
 
 Sometimes a 3rd party API we interact with requires non-empty collections of values, and so in our code we should use non-empty types so that we can be sure to never send an empty values to the API. A good example of this is [GraphQL](https://graphql.org/). Here is a very simple query builder and printer:
 
@@ -86,13 +86,13 @@ func query(_ fields: NonEmptySet<UserField>) -> String {
     .joined()
 }
 
-print(query(.init([.name, .email])))
+print(query(.init(.name, .email)))
 // {
 //   name
 //   email
 // }
 
-print(query(.init([])))
+print(query(.init()))
 // 🛑 Does not compile
 ```
 
