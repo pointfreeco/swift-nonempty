@@ -49,6 +49,24 @@ final class NonEmptyTests: XCTestCase {
     XCTAssertEqual(43, xs[1])
   }
 
+  func testRangeReplaceableWithNonIntIndexCollection() {
+    var xs = NonEmptyArray(1, 2, 3, 4, 8, 9)
+    xs.insert(0, at: .head)
+    XCTAssertEqual(NonEmptyArray(0, 1, 2, 3, 4, 8, 9), xs)
+    xs.insert(contentsOf: [-2, -1], at: .head)
+    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 8, 9), xs)
+    xs.insert(contentsOf: [], at: .head)
+    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 8, 9), xs)
+    xs.insert(5, at: .tail(6))
+    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 5, 8, 9), xs)
+    xs.insert(contentsOf: [6, 7], at: .tail(7))
+    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9), xs)
+    xs.insert(10, at: .tail(11))
+    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10), xs)
+    xs.insert(contentsOf: [11, 12], at: .tail(12))
+    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12), xs)
+  }
+    
   func testRangeReplaceableCollection() {
     var xs = NonEmptyArray(1, 2, 3)
     xs.append(4)
