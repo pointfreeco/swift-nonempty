@@ -17,7 +17,7 @@ extension NonEmpty where C: RangeReplaceableCollection {
       self.tail.insert(self.head, at: self.tail.startIndex)
       self.head = newElement
     case let .tail(index):
-      self.tail.insert(newElement, at: self.tail.index(after: index))
+      self.tail.insert(newElement, at: index)
     }
   }
 
@@ -32,7 +32,7 @@ extension NonEmpty where C: RangeReplaceableCollection {
         self.tail.insert(contentsOf: tail, at: self.tail.startIndex)
         self.head = first
       case let .tail(index):
-        self.tail.insert(contentsOf: newElements, at: self.tail.index(after: index))
+        self.tail.insert(contentsOf: newElements, at: index)
       }
   }
 
