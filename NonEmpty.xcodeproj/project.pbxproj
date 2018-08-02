@@ -75,7 +75,7 @@
 		80CD742220D58E11004E5F60 /* NonEmpty+Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NonEmpty+Array.swift"; sourceTree = "<group>"; };
 		80EFFA6020D5A1BE00B265AE /* NonEmpty+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NonEmpty+Random.swift"; sourceTree = "<group>"; };
 		"NonEmpty::NonEmpty::Product" /* NonEmpty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NonEmpty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		"NonEmpty::NonEmptyTests::Product" /* NonEmptyTests.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = NonEmptyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		"NonEmpty::NonEmptyTests::Product" /* NonEmptyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = NonEmptyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_14 /* NonEmptyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonEmptyTests.swift; sourceTree = "<group>"; };
 		OBJ_16 /* NonEmpty.xcworkspace */ = {isa = PBXFileReference; lastKnownFileType = wrapper.workspace; path = NonEmpty.xcworkspace; sourceTree = SOURCE_ROOT; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
@@ -235,6 +235,14 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 9999;
+				TargetAttributes = {
+					"NonEmpty::NonEmpty" = {
+						LastSwiftMigration = 1000;
+					};
+					"NonEmpty::NonEmptyTests" = {
+						LastSwiftMigration = 1000;
+					};
+				};
 			};
 			buildConfigurationList = OBJ_2 /* Build configuration list for PBXProject "NonEmpty" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -331,7 +339,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGET_NAME = NonEmpty;
 			};
 			name = Debug;
@@ -356,7 +364,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGET_NAME = NonEmpty;
 			};
 			name = Release;
@@ -453,7 +461,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGET_NAME = NonEmptyTests;
 			};
 			name = Debug;
@@ -474,7 +482,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGET_NAME = NonEmptyTests;
 			};
 			name = Release;
