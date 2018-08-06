@@ -11,7 +11,7 @@ We often work with collections that should _never_ be empty, but the type system
 ```swift
 // 1.) A non-empty array of integers
 let xs = NonEmpty<[Int]>(1, 2, 3, 4)
-xs.first + 1 // `first` is non-optional since it's guaranteed to be present
+xs.safeFirst + 1 // `safeFirst` is non-optional since it's guaranteed to be present
 
 // 2.) A non-empty set of integers
 let ys = NonEmpty<Set<Int>>(1, 1, 2, 2, 3, 4)
