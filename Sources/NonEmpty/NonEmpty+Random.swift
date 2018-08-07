@@ -5,12 +5,8 @@ extension NonEmpty {
   }
 
   public func randomElement() -> Element {
-    #if swift(>=4.2)
     var generator = SystemRandomNumberGenerator()
     return self.randomElement(using: &generator)
-    #else
-    return self.randomElement(using: &Random.default)
-    #endif
   }
 }
 
@@ -22,12 +18,8 @@ extension NonEmpty where C: RangeReplaceableCollection {
   }
 
   public mutating func shuffle() {
-    #if swift(>=4.2)
     var generator = SystemRandomNumberGenerator()
     self.shuffle(using: &generator)
-    #else
-    self.shuffle(using: &Random.default)
-    #endif
   }
 
   public func shuffled<T: RandomNumberGenerator>(using generator: inout T) -> NonEmpty {
@@ -37,12 +29,8 @@ extension NonEmpty where C: RangeReplaceableCollection {
   }
 
   public func shuffled() -> NonEmpty {
-    #if swift(>=4.2)
     var generator = SystemRandomNumberGenerator()
     return self.shuffled(using: &generator)
-    #else
-    return self.shuffled(using: &Random.default)
-    #endif
   }
 }
 #endif
