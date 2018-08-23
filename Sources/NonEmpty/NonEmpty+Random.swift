@@ -1,4 +1,4 @@
-#if swift(>=4.1.5)
+#if swift(>=4.2)
 extension NonEmpty {
   public func randomElement<T: RandomNumberGenerator>(using generator: inout T) -> Element {
     return ContiguousArray(self).randomElement(using: &generator) ?? self.head
