@@ -1,2 +1,1 @@
-// FIXME: implement this without crashing the compiler
-//extension NonEmpty: RandomAccessCollection where C: RandomAccessCollection {}
+extension NonEmpty: RandomAccessCollection where C: RandomAccessCollection {}
