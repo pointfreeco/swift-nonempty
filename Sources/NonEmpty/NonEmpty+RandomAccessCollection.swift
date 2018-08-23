@@ -1,1 +1,1 @@
-extension NonEmpty: RandomAccessCollection where C: RandomAccessCollection {}
+//extension NonEmpty: RandomAccessCollection where C: RandomAccessCollection {}
