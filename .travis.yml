@@ -1,8 +1,8 @@
-os:
-  - osx
-osx_image: xcode10
+-os:
+  - linux
 env:
 language: generic
+dist: trusty
 install:
   - if [ $TRAVIS_OS_NAME = linux ]; then
       eval "$(curl -sL https://swiftenv.fuller.li/install.sh)";
