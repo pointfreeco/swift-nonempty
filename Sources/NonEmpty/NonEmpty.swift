@@ -10,6 +10,13 @@ public struct NonEmpty<C: Collection> {
   }
 }
 
+extension NonEmpty where C.SubSequence == C, C.Index == Int {
+  public init(_ head: Element, _ tail: C) {
+    self.head = head
+    self.tail = tail
+  }
+}
+
 extension NonEmpty: CustomStringConvertible {
   public var description: String {
     return "\(self.head)\(self.tail)"

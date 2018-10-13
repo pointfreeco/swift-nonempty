@@ -50,46 +50,53 @@ final class NonEmptyTests: XCTestCase {
   }
 
   func testRangeReplaceableWithNonIntIndexCollection() {
-    var xs = NonEmptyArray(1, 2, 3, 4, 8, 9)
-    xs.insert(0, at: .head)
-    XCTAssertEqual(NonEmptyArray(0, 1, 2, 3, 4, 8, 9), xs)
-    xs.insert(contentsOf: [-2, -1], at: .head)
-    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 8, 9), xs)
-    xs.insert(contentsOf: [], at: .head)
-    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 8, 9), xs)
-    xs.insert(5, at: .tail(6))
-    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 5, 8, 9), xs)
-    xs.insert(contentsOf: [6, 7], at: .tail(7))
-    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9), xs)
-    xs.insert(10, at: .tail(11))
-    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10), xs)
-    xs.insert(contentsOf: [11, 12], at: .tail(12))
-    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12), xs)
+//    var xs = NonEmptyArray(1, 2, 3, 4, 8, 9)
+//    xs.insert(0, at: .head)
+//    XCTAssertEqual(NonEmptyArray(0, 1, 2, 3, 4, 8, 9), xs)
+//    xs.insert(contentsOf: [-2, -1], at: .head)
+//    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 8, 9), xs)
+//    xs.insert(contentsOf: [], at: .head)
+//    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 8, 9), xs)
+//    xs.insert(5, at: .tail(6))
+//    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 5, 8, 9), xs)
+//    xs.insert(contentsOf: [6, 7], at: .tail(7))
+//    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9), xs)
+//    xs.insert(10, at: .tail(11))
+//    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10), xs)
+//    xs.insert(contentsOf: [11, 12], at: .tail(12))
+//    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12), xs)
+
+    var ys = [1, 2, 3, 4]
+    var zs = NonEmpty(0, ys[1...])
+    zs.insert(-1, at: .head)
+    XCTAssertEqual(NonEmpty(-1, 0, 2, 3, 4), zs)
+    zs.insert(5, at: .tail(4))
+    XCTAssertEqual(NonEmpty(-1, 0, 2, 3, 4, 5), zs)
   }
     
   func testRangeReplaceableCollection() {
-    var xs = NonEmptyArray(1, 2, 3)
-    xs.append(4)
-    XCTAssertEqual(NonEmptyArray(1, 2, 3, 4), xs)
-    xs.append(contentsOf: [8, 9])
-    XCTAssertEqual(NonEmptyArray(1, 2, 3, 4, 8, 9), xs)
-    xs.insert(0, at: 0)
-    XCTAssertEqual(NonEmptyArray(0, 1, 2, 3, 4, 8, 9), xs)
-    xs.insert(contentsOf: [-2, -1], at: 0)
-    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 8, 9), xs)
-    xs.insert(contentsOf: [], at: 0)
-    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 8, 9), xs)
-    xs.insert(5, at: 7)
-    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 5, 8, 9), xs)
-    xs.insert(contentsOf: [6, 7], at: 8)
-    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9), xs)
-    xs.insert(10, at: 12)
-    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10), xs)
-    xs.insert(contentsOf: [11, 12], at: 13)
-    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12), xs)
-    xs += [13]
-    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13), xs)
-    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14), xs + [14])
+//    var xs = NonEmptyArray(1, 2, 3)
+//    xs.append(4)
+//    XCTAssertEqual(NonEmptyArray(1, 2, 3, 4), xs)
+//    xs.append(contentsOf: [8, 9])
+//    XCTAssertEqual(NonEmptyArray(1, 2, 3, 4, 8, 9), xs)
+//    xs.insert(0, at: 0)
+//    XCTAssertEqual(NonEmptyArray(0, 1, 2, 3, 4, 8, 9), xs)
+//    xs.insert(contentsOf: [-2, -1], at: 0)
+//    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 8, 9), xs)
+//    xs.insert(contentsOf: [], at: 0)
+//    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 8, 9), xs)
+//    xs.insert(5, at: 7)
+//    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 5, 8, 9), xs)
+//    xs.insert(contentsOf: [6, 7], at: 8)
+//    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9), xs)
+//    xs.insert(10, at: 12)
+//    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10), xs)
+//    xs.insert(contentsOf: [11, 12], at: 13)
+//    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12), xs)
+//    xs += [13]
+//    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13), xs)
+//    XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14), xs + [14])
   }
 
   func testSetAlgebra() {
@@ -216,11 +223,27 @@ final class NonEmptyTests: XCTestCase {
     XCTAssertEqual(xs, ys)
   }
 
+  func testSubstring() {
+    let string = "Hello world!"
+    let nonempty = NonEmpty("H", string[string.index(after: string.startIndex)...])
+
+    XCTAssertEqual("e", nonempty[nonempty.index(after: nonempty.startIndex)])
+  }
+
   func testMutableCollectionWithArraySlice() {
-    let numbers = Array(1...10)
+    let numbers = Array(0...10)
+
     var xs = NonEmpty(0, numbers[5...])
-    xs[1] = 43
-    XCTAssertEqual(43, xs[1])
+    xs[.head] = 42
+    xs[.tail(5)] = 100
+
+    XCTAssertEqual(42, xs[.head])
+//    XCTAssertEqual(42, xs[0])
+
+    XCTAssertEqual(100, xs[.tail(5)])
+//    XCTAssertEqual(100, xs[6])
+
+    XCTAssertEqual(NonEmpty(42, 100, 6, 7, 8, 9, 10), xs)
   }
 }
 
