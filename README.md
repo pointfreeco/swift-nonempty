@@ -159,7 +159,7 @@ If you want to use NonEmpty in a project that uses [SwiftPM](https://swift.org/p
 
 ``` swift
 dependencies: [
-  .package(url: "https://github.com/pointfreeco/swift-nonempty.git", from: "0.1.0")
+  .package(url: "https://github.com/pointfreeco/swift-nonempty.git", from: "0.1.2")
 ]
 ```
 
