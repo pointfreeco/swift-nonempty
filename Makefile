@@ -27,7 +27,7 @@ test-ios:
 	set -o pipefail && \
 	xcodebuild test \
 		-scheme NonEmpty-Package \
-		-destination platform="iOS Simulator,name=iPhone XR,OS=12.0" \
+		-destination platform="iOS Simulator,name=iPhone XR,OS=12.1" \
 		| xcpretty
 
 test-swift:
