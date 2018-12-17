@@ -2,7 +2,7 @@ imports = \
 	@testable import NonEmptyTests;
 
 xcodeproj:
-	swift package generate-xcodeproj --xcconfig-overrides=Development.xcconfig
+	xcodegen
 
 linux-main:
 	sourcery \
@@ -19,14 +19,14 @@ test-linux: linux-main
 test-macos:
 	set -o pipefail && \
 	xcodebuild test \
-		-scheme NonEmpty-Package \
+		-scheme NonEmpty_macOS \
 		-destination platform="macOS" \
 		| xcpretty
 
 test-ios:
 	set -o pipefail && \
 	xcodebuild test \
-		-scheme NonEmpty-Package \
+		-scheme NonEmpty_iOS \
 		-destination platform="iOS Simulator,name=iPhone XR,OS=12.1" \
 		| xcpretty
 

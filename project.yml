@@ -1,0 +1,26 @@
+name: NonEmpty
+options:
+  bundleIdPrefix: co.pointfree
+  deploymentTarget:
+    iOS: 8.0
+    macOS: 10.9
+    tvOS: 9.0
+    watchOS: 2.0
+  indentWidth: 2
+  tabWidth: 2
+  usesTabs: false
+targets:
+  NonEmpty:
+    platform: [macOS, iOS, tvOS, watchOS]
+    scheme:
+      testTargets: [NonEmptyTests_$platform]
+    sources: [Sources]
+    type: framework
+  NonEmptyTests:
+    dependencies: [{target: NonEmpty_$platform}]
+    platform: [macOS, iOS, tvOS, watchOS]
+    sources:
+      - path: Tests
+        excludes:
+          - LinuxMain.swift
+    type: bundle.unit-test
