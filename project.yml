@@ -11,6 +11,8 @@ options:
   usesTabs: false
 targets:
   NonEmpty:
+    info:
+      path: Info.plist
     platform: [macOS, iOS, tvOS, watchOS]
     scheme:
       testTargets: [NonEmptyTests_$platform]
