@@ -1,6 +1,6 @@
 # 🎁 NonEmpty
 
-[![Swift 4.1](https://img.shields.io/badge/swift-4.1-ED523F.svg?style=flat)](https://swift.org/download/) [![iOS/macOS CI](https://img.shields.io/circleci/project/github/pointfreeco/swift-nonempty/master.svg?label=ios/macos)](https://circleci.com/gh/pointfreeco/swift-nonempty) [![Linux CI](https://img.shields.io/travis/pointfreeco/swift-nonempty/master.svg?label=linux)](https://travis-ci.org/pointfreeco/swift-nonempty) [![@pointfreeco](https://img.shields.io/badge/contact-@pointfreeco-5AA9E7.svg?style=flat)](https://twitter.com/pointfreeco)
+[![Swift 4.2](https://img.shields.io/badge/swift-4.2-ED523F.svg?style=flat)](https://swift.org/download/) [![iOS/macOS CI](https://img.shields.io/circleci/project/github/pointfreeco/swift-nonempty/master.svg?label=ios/macos)](https://circleci.com/gh/pointfreeco/swift-nonempty) [![Linux CI](https://img.shields.io/travis/pointfreeco/swift-nonempty/master.svg?label=linux)](https://travis-ci.org/pointfreeco/swift-nonempty) [![@pointfreeco](https://img.shields.io/badge/contact-@pointfreeco-5AA9E7.svg?style=flat)](https://twitter.com/pointfreeco)
 
 A compile-time guarantee that a collection contains a value.
 
@@ -142,7 +142,7 @@ let validatedPassword: Validated<String, String> = .invalid(.init([])) // 🛑
 If you use [Carthage](https://github.com/Carthage/Carthage), you can add the following dependency to your `Cartfile`:
 
 ``` ruby
-github "pointfreeco/swift-nonempty" ~> 0.1
+github "pointfreeco/swift-nonempty" ~> 0.1.2
 ```
 
 ### CocoaPods
@@ -150,7 +150,7 @@ github "pointfreeco/swift-nonempty" ~> 0.1
 If your project uses [CocoaPods](https://cocoapods.org), just add the following to your `Podfile`:
 
 ``` ruby
-pod 'NonEmpty', '~> 0.1'
+pod 'NonEmpty', '~> 0.1.2'
 ```
 
 ### SwiftPM
@@ -171,7 +171,7 @@ Submodule, clone, or download NonEmpty, and drag `NonEmpty.xcodeproj` into your 
 
 These concepts (and more) are explored thoroughly in [Point-Free](https://www.pointfree.co), a video series exploring functional programming and Swift hosted by [Brandon Williams](https://github.com/mbrandonw) and [Stephen Celis](https://github.com/stephencelis).
 
-`NonEmpty` was first explored in [Episode #20](https://www.pointfree.co/episodes/ep20-nonempty):
+NonEmpty was first explored in [Episode #20](https://www.pointfree.co/episodes/ep20-nonempty):
 
 <a href="https://www.pointfree.co/episodes/ep20-nonempty">
   <img alt="video poster image" src="https://d1hf1soyumxcgv.cloudfront.net/0020-nonempty/poster.jpg" width="480">
