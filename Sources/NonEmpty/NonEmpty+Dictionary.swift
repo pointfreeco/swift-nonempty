@@ -106,8 +106,8 @@ extension NonEmpty where C: _DictionaryProtocol {
 
 extension NonEmpty where C: _DictionaryProtocol, C.Value: Equatable {
   public static func == (lhs: NonEmpty, rhs: NonEmpty) -> Bool {
-    return Dictionary(uniqueKeysWithValues: Array(lhs))
-      == Dictionary(uniqueKeysWithValues: Array(rhs))
+    return Dictionary<C.Key, C.Value>(uniqueKeysWithValues: Array<Element>(lhs))
+      == Dictionary<C.Key, C.Value>(uniqueKeysWithValues: Array<Element>(rhs))
   }
 }
 
