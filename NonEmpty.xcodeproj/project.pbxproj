@@ -67,6 +67,10 @@
 		BF_F030EDF2C3D77AE34C9D9BF65C0DD3E5 /* NonEmpty+MutableCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR_EFBC4A09C560A37675DBC435A57DA052 /* NonEmpty+MutableCollection.swift */; };
 		BF_F1D5D237821115F64AECFF231248F66D /* NonEmpty+Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR_653367898CC152F2C98256D94A7D996F /* NonEmpty+Collection.swift */; };
 		BF_F98BFE895DBAE8FEC92929F4EA5C9AD7 /* NonEmpty+RandomAccessCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR_7041DFC599C1A8128B35BFFD6E06E5F8 /* NonEmpty+RandomAccessCollection.swift */; };
+		FDAAE9872219EA2500C9B619 /* NonEmpty+Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAAE9852219EA1000C9B619 /* NonEmpty+Decodable.swift */; };
+		FDAAE9882219EA2600C9B619 /* NonEmpty+Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAAE9852219EA1000C9B619 /* NonEmpty+Decodable.swift */; };
+		FDAAE9892219EA2600C9B619 /* NonEmpty+Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAAE9852219EA1000C9B619 /* NonEmpty+Decodable.swift */; };
+		FDAAE98A2219EA2700C9B619 /* NonEmpty+Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAAE9852219EA1000C9B619 /* NonEmpty+Decodable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -148,6 +152,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		FDAAE9852219EA1000C9B619 /* NonEmpty+Decodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NonEmpty+Decodable.swift"; sourceTree = "<group>"; };
 		FR_01AF5E3ABB3D3B11E1831B28A33A1285 /* NonEmpty+Comparable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NonEmpty+Comparable.swift"; sourceTree = "<group>"; };
 		FR_07CE29102CF4DFB35FC3E2853D50ED53 /* NonEmpty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NonEmpty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FR_18E29874D924C1ED3CB1CE4CD88FAA26 /* NonEmptyTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = NonEmptyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -254,6 +259,7 @@
 				FR_BFDAF48A078CE1C9EF77A1C07404727B /* NonEmpty+BidirectionalCollection.swift */,
 				FR_653367898CC152F2C98256D94A7D996F /* NonEmpty+Collection.swift */,
 				FR_01AF5E3ABB3D3B11E1831B28A33A1285 /* NonEmpty+Comparable.swift */,
+				FDAAE9852219EA1000C9B619 /* NonEmpty+Decodable.swift */,
 				FR_5344843954D3508F86CA9EF193531D08 /* NonEmpty+Dictionary.swift */,
 				FR_EFBC4A09C560A37675DBC435A57DA052 /* NonEmpty+MutableCollection.swift */,
 				FR_CDF29E60BFB64802FE5026AD030D8378 /* NonEmpty+Random.swift */,
@@ -458,6 +464,7 @@
 				BF_F98BFE895DBAE8FEC92929F4EA5C9AD7 /* NonEmpty+RandomAccessCollection.swift in Sources */,
 				BF_BBF77FCE59C5CA8C78C3AEF98FBB0473 /* NonEmpty+RangeReplaceableCollection.swift in Sources */,
 				BF_E13C2901029B10156B0ED54072256C07 /* NonEmpty+SetAlgebra.swift in Sources */,
+				FDAAE9872219EA2500C9B619 /* NonEmpty+Decodable.swift in Sources */,
 				BF_C67D2DDFAE39C5C7E85280D8245A0827 /* NonEmpty+String.swift in Sources */,
 				BF_4DD27C48C2A4837E87E3615B1AC820CF /* NonEmpty.swift in Sources */,
 			);
@@ -485,6 +492,7 @@
 				BF_4DD276AE4C5BBAFC2133A59A80D1C9CE /* NonEmpty+RandomAccessCollection.swift in Sources */,
 				BF_AFD470B56B3F1EC8EFA5435192BE7330 /* NonEmpty+RangeReplaceableCollection.swift in Sources */,
 				BF_DDB4162794ECEE9E0FBA6B5B3BC7E65E /* NonEmpty+SetAlgebra.swift in Sources */,
+				FDAAE9882219EA2600C9B619 /* NonEmpty+Decodable.swift in Sources */,
 				BF_DD312345FF614EE2CF5F85888EA10DAE /* NonEmpty+String.swift in Sources */,
 				BF_0F69F059CDE79E1A8BD1DBE73CD3AA6C /* NonEmpty.swift in Sources */,
 			);
@@ -512,6 +520,7 @@
 				BF_1555674A773FEA96D05589F810A3451E /* NonEmpty+RandomAccessCollection.swift in Sources */,
 				BF_DDD950D7850449D44D93129922884332 /* NonEmpty+RangeReplaceableCollection.swift in Sources */,
 				BF_9A022816BB67DEE71F48F703D4F60613 /* NonEmpty+SetAlgebra.swift in Sources */,
+				FDAAE9892219EA2600C9B619 /* NonEmpty+Decodable.swift in Sources */,
 				BF_66EB244E96BFEB7017E7E9DBF28D0988 /* NonEmpty+String.swift in Sources */,
 				BF_2A0EC740F9C7EBBAB9865126F25E9265 /* NonEmpty.swift in Sources */,
 			);
@@ -547,6 +556,7 @@
 				BF_99337CC18F45E720B87479BE8BE5E27C /* NonEmpty+RandomAccessCollection.swift in Sources */,
 				BF_B1191E8E9F8F4A862956878C54596384 /* NonEmpty+RangeReplaceableCollection.swift in Sources */,
 				BF_750C9A5130252B160FC8E0D3AA3119E2 /* NonEmpty+SetAlgebra.swift in Sources */,
+				FDAAE98A2219EA2700C9B619 /* NonEmpty+Decodable.swift in Sources */,
 				BF_857C6AD7C0C16B4A6947076C6314153B /* NonEmpty+String.swift in Sources */,
 				BF_EFD788658FF550BBD74E2C78AA0C18E3 /* NonEmpty.swift in Sources */,
 			);
