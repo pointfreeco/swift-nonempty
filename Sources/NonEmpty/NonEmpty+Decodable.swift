@@ -1,9 +1,10 @@
 public protocol NonEmptyDecodable: Decodable, Collection {
-  init<S>(_ slice: S) where S : Sequence, S.Element == Element
+  init()
+  mutating func append<S>(contentsOf newElements: S) where Element == S.Element, S : Sequence
 }
 
 public protocol NonEmptyEncodable: Encodable, Collection {
-  init<S>(_ slice: S) where S : Sequence, S.Element == Element
+  init()
   mutating func append<S>(contentsOf newElements: S) where Element == S.Element, S : Sequence
 }
 
@@ -20,32 +21,28 @@ extension Array: NonEmptyEncodable where Array.Element: Encodable {}
 extension String: NonEmptyDecodable {}
 extension String: NonEmptyEncodable {}
 
-private extension Dictionary {
+extension Dictionary {
   /// Private shared implementation
-  init<S>(slice: S) where S : Sequence, Dictionary<Key, Value>.Element == S.Element {
-    var temp = [Key: Value](minimumCapacity: slice.underestimatedCount)
-    for (key, value) in slice {
-      temp.updateValue(value, forKey: key)
+  private mutating func append<S>(elements newElements: S) where S : Sequence, Dictionary.Element == S.Element {
+    for (key, value) in newElements {
+      self[key] = value
     }
-    self = temp
+  }
+
+  public init() {
+    self = [:]
   }
 }
 
 extension Dictionary: NonEmptyDecodable where Dictionary.Key: Decodable, Dictionary.Value: Decodable {
-  public init<S>(_ slice: S) where S : Sequence, Dictionary<Key, Value>.Element == S.Element {
-    self.init(slice: slice)
+  public mutating func append<S>(contentsOf newElements: S) where S : Sequence, Dictionary.Element == S.Element {
+    append(elements: newElements)
   }
 }
 
 extension Dictionary: NonEmptyEncodable where Dictionary.Key: Encodable, Dictionary.Value: Encodable {
-  public init<S>(_ slice: S) where S : Sequence, Dictionary<Key, Value>.Element == S.Element {
-    self.init(slice: slice)
-  }
-
   public mutating func append<S>(contentsOf newElements: S) where S : Sequence, Dictionary.Element == S.Element {
-    for (key, value) in newElements {
-      self[key] = value
-    }
+    append(elements: newElements)
   }
 }
 
@@ -54,14 +51,16 @@ extension NonEmpty: Decodable where C: NonEmptyDecodable {
     let elements = try C(from: decoder)
     guard let head = elements.first else { throw NonEmptyCodableError.emptyCollection }
     let slice = elements.dropFirst()
-    let tail = C(slice)
+    var tail = C()
+    tail.append(contentsOf: slice)
     self.init(head, tail)
   }
 }
 
 extension NonEmpty: Encodable where C: NonEmptyEncodable {
   public func encode(to encoder: Encoder) throws {
-    var full = C([head])
+    var full = C()
+    full.append(contentsOf: [head])
     full.append(contentsOf: tail)
     try full.encode(to: encoder)
   }
