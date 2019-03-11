@@ -25,6 +25,13 @@ extension NonEmpty: MutableCollection where C: MutableCollection {
       }
     }
   }
+
+  // FIXME: Remove
+  public mutating func swapAt(_ i: NonEmpty<C>.Index, _ j: NonEmpty<C>.Index) {
+    let (x, y) = (self[i], self[j])
+    self[i] = x
+    self[j] = y
+  }
 }
 
 extension NonEmpty where C: MutableCollection, C.Index == Int {
