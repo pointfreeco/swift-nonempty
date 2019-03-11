@@ -28,7 +28,7 @@ test-ios:
 	xcodebuild test \
 		-scheme NonEmpty_iOS \
 		-destination platform="iOS Simulator,name=iPhone Xʀ,OS=12.2" \
-		| xcpretty
+		# | xcpretty
 
 test-swift:
 	swift test
