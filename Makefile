@@ -2,7 +2,7 @@ imports = \
 	@testable import NonEmptyTests;
 
 xcodeproj:
-	xcodegen
+	DEVELOP=1 swift run xcodegen
 
 linux-main:
 	sourcery \
