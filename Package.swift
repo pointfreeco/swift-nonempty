@@ -7,13 +7,9 @@ let package = Package(
   products: [
     .library(name: "NonEmpty", targets: ["NonEmpty"]),
   ],
-  targets: [
-    .target(name: "NonEmpty", dependencies: []),
-    .testTarget(name: "NonEmptyTests", dependencies: ["NonEmpty"]),
-    ]
 )
 
-if ProcessInfo.processInfo.environment.keys.contains("DEVELOP") {
+if ProcessInfo.processInfo.environment.keys.contains("PF_DEVELOP") {
   package.dependencies.append(
     contentsOf: [
       .package(url: "https://github.com/yonaskolb/XcodeGen.git", from: "2.3.0"),
