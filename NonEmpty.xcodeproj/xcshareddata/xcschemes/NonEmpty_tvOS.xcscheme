@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "NT_DAAA4B35A648B5841C16262A3B4A7FA8"
+               BlueprintIdentifier = "FBDC06202487376A032752DEF141B31E"
                BuildableName = "NonEmpty.framework"
                BlueprintName = "NonEmpty_tvOS"
                ReferencedContainer = "container:NonEmpty.xcodeproj">
@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "NT_35990E3496BEFEB6FB8249914877551A"
+               BlueprintIdentifier = "A81003E322A50A7B67250E95EB2D7F43"
                BuildableName = "NonEmptyTests.xctest"
                BlueprintName = "NonEmptyTests_tvOS"
                ReferencedContainer = "container:NonEmpty.xcodeproj">
@@ -42,7 +42,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "NT_DAAA4B35A648B5841C16262A3B4A7FA8"
+            BlueprintIdentifier = "FBDC06202487376A032752DEF141B31E"
             BuildableName = "NonEmpty.framework"
             BlueprintName = "NonEmpty_tvOS"
             ReferencedContainer = "container:NonEmpty.xcodeproj">
@@ -66,7 +66,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "NT_DAAA4B35A648B5841C16262A3B4A7FA8"
+            BlueprintIdentifier = "FBDC06202487376A032752DEF141B31E"
             BuildableName = "NonEmpty.framework"
             BlueprintName = "NonEmpty_tvOS"
             ReferencedContainer = "container:NonEmpty.xcodeproj">
@@ -87,7 +87,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "NT_DAAA4B35A648B5841C16262A3B4A7FA8"
+            BlueprintIdentifier = "FBDC06202487376A032752DEF141B31E"
             BuildableName = "NonEmpty.framework"
             BlueprintName = "NonEmpty_tvOS"
             ReferencedContainer = "container:NonEmpty.xcodeproj">
