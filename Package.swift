@@ -6,7 +6,11 @@ let package = Package(
   name: "NonEmpty",
   products: [
     .library(name: "NonEmpty", targets: ["NonEmpty"]),
-  ]
+    ],
+  targets: [
+    .target(name: "NonEmpty", dependencies: []),
+    .testTarget(name: "NonEmptyTests", dependencies: ["NonEmpty"]),
+    ]
 )
 
 if ProcessInfo.processInfo.environment.keys.contains("PF_DEVELOP") {
