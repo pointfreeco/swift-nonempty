@@ -6,6 +6,9 @@ let package = Package(
   products: [
     .library(name: "NonEmpty", targets: ["NonEmpty"]),
     ],
+  dependencies: [
+    .package(url: "https://github.com/yonaskolb/XcodeGen.git", from: "2.3.0"),
+  ],
   targets: [
     .target(name: "NonEmpty", dependencies: []),
     .testTarget(name: "NonEmptyTests", dependencies: ["NonEmpty"]),

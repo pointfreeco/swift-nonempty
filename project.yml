@@ -15,13 +15,13 @@ targets:
       path: Info.plist
     platform: [macOS, iOS, tvOS, watchOS]
     scheme:
-      testTargets: [NonEmptyTests_$platform]
+      testTargets: ['NonEmptyTests_${platform}']
     settings:
       SWIFT_VERSION: 5.0
     sources: [Sources]
     type: framework
   NonEmptyTests:
-    dependencies: [{target: NonEmpty_$platform}]
+    dependencies: [{target: 'NonEmpty_${platform}'}]
     platform: [macOS, iOS, tvOS, watchOS]
     settings:
       SWIFT_VERSION: 5.0
