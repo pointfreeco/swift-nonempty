@@ -145,7 +145,7 @@ let validatedPassword: Validated<String, String> = .invalid(.init([])) // 🛑
 If you use [Carthage](https://github.com/Carthage/Carthage), you can add the following dependency to your `Cartfile`:
 
 ``` ruby
-github "pointfreeco/swift-nonempty" ~> 0.1.2
+github "pointfreeco/swift-nonempty" ~> 0.2
 ```
 
 ### CocoaPods
@@ -153,7 +153,7 @@ github "pointfreeco/swift-nonempty" ~> 0.1.2
 If your project uses [CocoaPods](https://cocoapods.org), just add the following to your `Podfile`:
 
 ``` ruby
-pod 'NonEmpty', '~> 0.1.2'
+pod 'NonEmpty', '~> 0.2'
 ```
 
 ### SwiftPM
@@ -162,7 +162,7 @@ If you want to use NonEmpty in a project that uses [SwiftPM](https://swift.org/p
 
 ``` swift
 dependencies: [
-  .package(url: "https://github.com/pointfreeco/swift-nonempty.git", from: "0.1.2")
+  .package(url: "https://github.com/pointfreeco/swift-nonempty.git", from: "0.2.0")
 ]
 ```
 
