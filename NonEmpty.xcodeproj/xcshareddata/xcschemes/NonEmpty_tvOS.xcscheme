@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1000"
+   LastUpgradeVersion = "1020"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FBDC06202487376A032752DEF141B31E"
+               BlueprintIdentifier = "FBDC06202487376A032752DE"
                BuildableName = "NonEmpty.framework"
                BlueprintName = "NonEmpty_tvOS"
                ReferencedContainer = "container:NonEmpty.xcodeproj">
@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A81003E322A50A7B67250E95EB2D7F43"
+               BlueprintIdentifier = "A81003E322A50A7B67250E95"
                BuildableName = "NonEmptyTests.xctest"
                BlueprintName = "NonEmptyTests_tvOS"
                ReferencedContainer = "container:NonEmpty.xcodeproj">
@@ -42,7 +42,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FBDC06202487376A032752DEF141B31E"
+            BlueprintIdentifier = "FBDC06202487376A032752DE"
             BuildableName = "NonEmpty.framework"
             BlueprintName = "NonEmpty_tvOS"
             ReferencedContainer = "container:NonEmpty.xcodeproj">
@@ -52,6 +52,8 @@
       </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
+      <CodeCoverageTargets>
+      </CodeCoverageTargets>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -66,7 +68,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FBDC06202487376A032752DEF141B31E"
+            BlueprintIdentifier = "FBDC06202487376A032752DE"
             BuildableName = "NonEmpty.framework"
             BlueprintName = "NonEmpty_tvOS"
             ReferencedContainer = "container:NonEmpty.xcodeproj">
@@ -87,7 +89,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FBDC06202487376A032752DEF141B31E"
+            BlueprintIdentifier = "FBDC06202487376A032752DE"
             BuildableName = "NonEmpty.framework"
             BlueprintName = "NonEmpty_tvOS"
             ReferencedContainer = "container:NonEmpty.xcodeproj">

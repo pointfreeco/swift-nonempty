@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1000"
+   LastUpgradeVersion = "1020"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "96AAB1269668A5A72313E269BF0515DC"
+               BlueprintIdentifier = "96AAB1269668A5A72313E269"
                BuildableName = "NonEmpty.framework"
                BlueprintName = "NonEmpty_watchOS"
                ReferencedContainer = "container:NonEmpty.xcodeproj">
@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "00F98831CF68188B33D02039CAC2FC2F"
+               BlueprintIdentifier = "00F98831CF68188B33D02039"
                BuildableName = "NonEmptyTests.xctest"
                BlueprintName = "NonEmptyTests_watchOS"
                ReferencedContainer = "container:NonEmpty.xcodeproj">
@@ -42,7 +42,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "96AAB1269668A5A72313E269BF0515DC"
+            BlueprintIdentifier = "96AAB1269668A5A72313E269"
             BuildableName = "NonEmpty.framework"
             BlueprintName = "NonEmpty_watchOS"
             ReferencedContainer = "container:NonEmpty.xcodeproj">
@@ -52,6 +52,8 @@
       </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
+      <CodeCoverageTargets>
+      </CodeCoverageTargets>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -66,7 +68,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "96AAB1269668A5A72313E269BF0515DC"
+            BlueprintIdentifier = "96AAB1269668A5A72313E269"
             BuildableName = "NonEmpty.framework"
             BlueprintName = "NonEmpty_watchOS"
             ReferencedContainer = "container:NonEmpty.xcodeproj">
@@ -87,7 +89,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "96AAB1269668A5A72313E269BF0515DC"
+            BlueprintIdentifier = "96AAB1269668A5A72313E269"
             BuildableName = "NonEmpty.framework"
             BlueprintName = "NonEmpty_watchOS"
             ReferencedContainer = "container:NonEmpty.xcodeproj">
