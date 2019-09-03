@@ -26,6 +26,7 @@ targets:
     platform: [macOS, iOS, tvOS, watchOS]
     settings:
       SWIFT_VERSION: 5.0
+      APPLICATION_EXTENSION_API_ONLY: true
     sources:
       - path: Tests
         excludes:
