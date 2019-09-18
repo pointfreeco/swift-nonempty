@@ -18,6 +18,7 @@ targets:
       testTargets: ['NonEmptyTests_${platform}']
     settings:
       SWIFT_VERSION: 5.0
+      APPLICATION_EXTENSION_API_ONLY: true
     sources: [Sources]
     type: framework
   NonEmptyTests:
