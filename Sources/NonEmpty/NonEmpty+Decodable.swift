@@ -1,13 +1,10 @@
 public protocol NonEmptyDecodable: Decodable, Collection {
-  init()
-  mutating func append<S>(contentsOf newElements: S) where Element == S.Element, S : Sequence
+  static func foldFromNonEmpty(slice: Self.SubSequence) -> Self
 }
 
 public protocol NonEmptyEncodable: Encodable, Collection {
-  init()
-  mutating func append<S>(contentsOf newElements: S) where Element == S.Element, S : Sequence
+  static func foldFromNonEmpty(head: Self.Element, tail: Self) -> Self
 }
-
 
 public typealias NonEmptyCodable = NonEmptyDecodable & NonEmptyEncodable
 
@@ -15,53 +12,58 @@ public enum NonEmptyCodableError: Error, Equatable {
   case emptyCollection
 }
 
-extension Array: NonEmptyDecodable where Array.Element: Decodable {}
-extension Array: NonEmptyEncodable where Array.Element: Encodable {}
-
-extension String: NonEmptyDecodable {}
-extension String: NonEmptyEncodable {}
-
-extension Dictionary {
-  /// Private shared implementation
-  private mutating func append<S>(elements newElements: S) where S : Sequence, Dictionary.Element == S.Element {
-    for (key, value) in newElements {
-      self[key] = value
-    }
+extension Array: NonEmptyDecodable where Array.Element: Decodable {
+  public static func foldFromNonEmpty(slice: SubSequence) -> Array {
+    return .init(slice)
   }
+}
+extension Array: NonEmptyEncodable where Array.Element: Encodable {
+  public static func foldFromNonEmpty(head: Element, tail: Array) -> Array {
+    var full = [head]
+    full.append(contentsOf: tail)
+    return full
+  }
+}
 
-  public init() {
-    self = [:]
+extension String: NonEmptyDecodable {
+  public static func foldFromNonEmpty(slice: Substring) -> String {
+    return .init(slice)
+  }
+}
+extension String: NonEmptyEncodable {
+  public static func foldFromNonEmpty(head: Character, tail: String) -> String {
+    return "\(head)\(tail)"
   }
 }
 
 extension Dictionary: NonEmptyDecodable where Dictionary.Key: Decodable, Dictionary.Value: Decodable {
-  public mutating func append<S>(contentsOf newElements: S) where S : Sequence, Dictionary.Element == S.Element {
-    append(elements: newElements)
+	public static func foldFromNonEmpty(slice: SubSequence) -> Dictionary {
+    return slice.reduce(into: Dictionary()) { dict, entry in
+      dict[entry.key] = entry.value
+    }
   }
 }
 
 extension Dictionary: NonEmptyEncodable where Dictionary.Key: Encodable, Dictionary.Value: Encodable {
-  public mutating func append<S>(contentsOf newElements: S) where S : Sequence, Dictionary.Element == S.Element {
-    append(elements: newElements)
-  }
+  public static func foldFromNonEmpty(head: Element, tail: Dictionary) -> Dictionary {
+    var copy = tail
+    copy[head.key] = head.value
+    return copy
+	}
 }
 
 extension NonEmpty: Decodable where C: NonEmptyDecodable {
   public init(from decoder: Decoder) throws {
     let elements = try C(from: decoder)
     guard let head = elements.first else { throw NonEmptyCodableError.emptyCollection }
-    let slice = elements.dropFirst()
-    var tail = C()
-    tail.append(contentsOf: slice)
+    let tail = C.foldFromNonEmpty(slice: elements.dropFirst())
     self.init(head, tail)
   }
 }
 
 extension NonEmpty: Encodable where C: NonEmptyEncodable {
   public func encode(to encoder: Encoder) throws {
-    var full = C()
-    full.append(contentsOf: [head])
-    full.append(contentsOf: tail)
+    let full = C.foldFromNonEmpty(head: head, tail: tail)
     try full.encode(to: encoder)
   }
 }

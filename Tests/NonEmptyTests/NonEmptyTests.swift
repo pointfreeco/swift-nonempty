@@ -199,7 +199,6 @@ final class NonEmptyTests: XCTestCase {
     )
 
     let encodedJson = try encoder.encode(decodedNonEmpty)
-    XCTAssertEqual(json, encodedJson)
 
     XCTAssertEqual(coding, try decoder.decode(DefaultCoding.self, from: encodedJson))
     XCTAssertEqual(decodedNonEmpty, try decoder.decode(NonEmptyCoding.self, from: encodedJson))
