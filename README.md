@@ -1,6 +1,9 @@
 # 🎁 NonEmpty
 
-[![Swift 4.2](https://img.shields.io/badge/swift-4.2-ED523F.svg?style=flat)](https://swift.org/download/) [![iOS/macOS CI](https://img.shields.io/circleci/project/github/pointfreeco/swift-nonempty/master.svg?label=ios/macos)](https://circleci.com/gh/pointfreeco/swift-nonempty) [![Linux CI](https://img.shields.io/travis/pointfreeco/swift-nonempty/master.svg?label=linux)](https://travis-ci.org/pointfreeco/swift-nonempty) [![@pointfreeco](https://img.shields.io/badge/contact-@pointfreeco-5AA9E7.svg?style=flat)](https://twitter.com/pointfreeco)
+[![Swift 5](https://img.shields.io/badge/swift-5-ED523F.svg?style=flat)](https://swift.org/download/)
+[![Linux CI](https://img.shields.io/travis/pointfreeco/swift-nonempty/master.svg?label=linux)](https://travis-ci.org/pointfreeco/swift-nonempty)
+[![@pointfreeco](https://img.shields.io/badge/contact-@pointfreeco-5AA9E7.svg?style=flat)](https://twitter.com/pointfreeco)
+<!-- [![iOS/macOS CI](https://img.shields.io/circleci/project/github/pointfreeco/swift-nonempty/master.svg?label=ios/macos)](https://circleci.com/gh/pointfreeco/swift-nonempty) -->
 
 A compile-time guarantee that a collection contains a value.
 
@@ -142,7 +145,7 @@ let validatedPassword: Validated<String, String> = .invalid(.init([])) // 🛑
 If you use [Carthage](https://github.com/Carthage/Carthage), you can add the following dependency to your `Cartfile`:
 
 ``` ruby
-github "pointfreeco/swift-nonempty" ~> 0.1.2
+github "pointfreeco/swift-nonempty" ~> 0.2
 ```
 
 ### CocoaPods
@@ -150,7 +153,7 @@ github "pointfreeco/swift-nonempty" ~> 0.1.2
 If your project uses [CocoaPods](https://cocoapods.org), just add the following to your `Podfile`:
 
 ``` ruby
-pod 'NonEmpty', '~> 0.1.2'
+pod 'NonEmpty', '~> 0.2'
 ```
 
 ### SwiftPM
@@ -159,7 +162,7 @@ If you want to use NonEmpty in a project that uses [SwiftPM](https://swift.org/p
 
 ``` swift
 dependencies: [
-  .package(url: "https://github.com/pointfreeco/swift-nonempty.git", from: "0.1.2")
+  .package(url: "https://github.com/pointfreeco/swift-nonempty.git", from: "0.2.0")
 ]
 ```
 

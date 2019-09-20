@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1000"
+   LastUpgradeVersion = "1020"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "NT_8C7F0748D1DA4C1667AF7075F07E7DC5"
+               BlueprintIdentifier = "9AAC2CFE0AA9849A50D0DFBE"
                BuildableName = "NonEmpty.framework"
                BlueprintName = "NonEmpty_macOS"
                ReferencedContainer = "container:NonEmpty.xcodeproj">
@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "NT_07BE745E5E538EA28B6DE25784BFF60E"
+               BlueprintIdentifier = "B48C9D7469ED32C8C604FB91"
                BuildableName = "NonEmptyTests.xctest"
                BlueprintName = "NonEmptyTests_macOS"
                ReferencedContainer = "container:NonEmpty.xcodeproj">
@@ -42,7 +42,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "NT_8C7F0748D1DA4C1667AF7075F07E7DC5"
+            BlueprintIdentifier = "9AAC2CFE0AA9849A50D0DFBE"
             BuildableName = "NonEmpty.framework"
             BlueprintName = "NonEmpty_macOS"
             ReferencedContainer = "container:NonEmpty.xcodeproj">
@@ -52,6 +52,8 @@
       </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
+      <CodeCoverageTargets>
+      </CodeCoverageTargets>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -66,7 +68,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "NT_8C7F0748D1DA4C1667AF7075F07E7DC5"
+            BlueprintIdentifier = "9AAC2CFE0AA9849A50D0DFBE"
             BuildableName = "NonEmpty.framework"
             BlueprintName = "NonEmpty_macOS"
             ReferencedContainer = "container:NonEmpty.xcodeproj">
@@ -87,7 +89,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "NT_8C7F0748D1DA4C1667AF7075F07E7DC5"
+            BlueprintIdentifier = "9AAC2CFE0AA9849A50D0DFBE"
             BuildableName = "NonEmpty.framework"
             BlueprintName = "NonEmpty_macOS"
             ReferencedContainer = "container:NonEmpty.xcodeproj">

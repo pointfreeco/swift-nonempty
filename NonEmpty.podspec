@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = "NonEmpty"
-  s.version = "0.1.2"
+  s.version = "0.2.0"
   s.summary = "A compile-time guarantee that a collection contains a value."
 
   s.description = <<-DESC
@@ -21,6 +21,8 @@ Pod::Spec.new do |s|
     :git => "https://github.com/pointfreeco/swift-nonempty.git",
     :tag => s.version
   }
+
+  s.swift_version = "5.0"
 
   s.ios.deployment_target = "8.0"
   s.osx.deployment_target = "10.9"

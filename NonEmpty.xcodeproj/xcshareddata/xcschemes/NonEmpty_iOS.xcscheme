@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1000"
+   LastUpgradeVersion = "1020"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "NT_E300B6A447EC09902E305B5FA8725E23"
+               BlueprintIdentifier = "DD8CA668256A668DB6BA7683"
                BuildableName = "NonEmpty.framework"
                BlueprintName = "NonEmpty_iOS"
                ReferencedContainer = "container:NonEmpty.xcodeproj">
@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "NT_7AFA1E5FE3F3679365F5B8A07836F8BA"
+               BlueprintIdentifier = "26EA67900DA2348FB03A3B45"
                BuildableName = "NonEmptyTests.xctest"
                BlueprintName = "NonEmptyTests_iOS"
                ReferencedContainer = "container:NonEmpty.xcodeproj">
@@ -42,7 +42,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "NT_E300B6A447EC09902E305B5FA8725E23"
+            BlueprintIdentifier = "DD8CA668256A668DB6BA7683"
             BuildableName = "NonEmpty.framework"
             BlueprintName = "NonEmpty_iOS"
             ReferencedContainer = "container:NonEmpty.xcodeproj">
@@ -52,6 +52,8 @@
       </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
+      <CodeCoverageTargets>
+      </CodeCoverageTargets>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -66,7 +68,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "NT_E300B6A447EC09902E305B5FA8725E23"
+            BlueprintIdentifier = "DD8CA668256A668DB6BA7683"
             BuildableName = "NonEmpty.framework"
             BlueprintName = "NonEmpty_iOS"
             ReferencedContainer = "container:NonEmpty.xcodeproj">
@@ -87,7 +89,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "NT_E300B6A447EC09902E305B5FA8725E23"
+            BlueprintIdentifier = "DD8CA668256A668DB6BA7683"
             BuildableName = "NonEmpty.framework"
             BlueprintName = "NonEmpty_iOS"
             ReferencedContainer = "container:NonEmpty.xcodeproj">
