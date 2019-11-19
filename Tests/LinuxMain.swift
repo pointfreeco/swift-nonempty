@@ -16,7 +16,6 @@ extension NonEmptyTests {
     ("testString", testString),
     ("testEquatable", testEquatable),
     ("testComparable", testComparable),
-    ("testCodable", testCodable),
     ("testNonEmptySetWithTrivialValue", testNonEmptySetWithTrivialValue),
     ("testMutableCollectionWithArraySlice", testMutableCollectionWithArraySlice)
   ]
