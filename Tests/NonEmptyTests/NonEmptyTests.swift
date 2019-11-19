@@ -180,13 +180,6 @@ final class NonEmptyTests: XCTestCase {
     XCTAssertEqual(NonEmptyArray(1), NonEmptyArray(1).sorted())
   }
 
-  func testCodable() throws {
-    let xs = NonEmptyArray(1, 2, 3)
-
-    XCTAssertEqual(xs, try JSONDecoder().decode(NonEmptyArray<Int>.self, from: JSONEncoder().encode(xs)))
-    XCTAssertEqual(xs, try JSONDecoder().decode(NonEmptyArray<Int>.self, from: Data("{\"head\":1,\"tail\":[2,3]}".utf8)))
-  }
-
   func testNonEmptySetWithTrivialValue() {
     let xs = NonEmptySet<TrivialHashable>(.init(value: 1), .init(value: 2))
     let ys = NonEmptySet<TrivialHashable>(.init(value: 2), .init(value: 1))

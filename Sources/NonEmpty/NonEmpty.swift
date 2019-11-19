@@ -19,7 +19,3 @@ extension NonEmpty: CustomStringConvertible {
 extension NonEmpty: Equatable where C: Equatable, C.Element: Equatable {}
 
 extension NonEmpty: Hashable where C: Hashable, C.Element: Hashable {}
-
-extension NonEmpty: Decodable where C: Decodable, C.Element: Decodable {}
-
-extension NonEmpty: Encodable where C: Encodable, C.Element: Encodable {}
