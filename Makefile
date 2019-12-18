@@ -1,18 +1,10 @@
-imports = \
-	@testable import NonEmptyTests;
-
 xcodeproj:
 	PF_DEVELOP=1 swift run xcodegen
 
 linux-main:
-	sourcery \
-		--sources ./Tests/ \
-		--templates ./.sourcery-templates/ \
-		--output ./Tests/ \
-		--args testimports='$(imports)' \
-		&& mv ./Tests/LinuxMain.generated.swift ./Tests/LinuxMain.swift
+	swift test --generate-linuxmain
 
-test-linux: linux-main
+test-linux:
 	docker build --tag nonempty-testing . \
 		&& docker run --rm nonempty-testing
 
@@ -31,6 +23,6 @@ test-ios:
 		| xcpretty
 
 test-swift:
-	swift test
+	swift test -v
 
 test-all: test-linux test-mac test-ios
