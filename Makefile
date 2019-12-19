@@ -23,6 +23,6 @@ test-ios:
 		| xcpretty
 
 test-swift:
-	swift test -v
+	swift test --parallel -v
 
 test-all: test-linux test-mac test-ios
