@@ -43,8 +43,8 @@ final class NonEmptyTests: XCTestCase {
 
   func testMutableCollection() {
     var xs = NonEmptyArray(1, 2, 3)
-    xs[0] = 42
-    xs[1] = 43
+//    xs[0] = 42
+//    xs[1] = 43
     XCTAssertEqual(42, xs[0])
     XCTAssertEqual(43, xs[1])
   }
@@ -197,7 +197,7 @@ final class NonEmptyTests: XCTestCase {
   func testMutableCollectionWithArraySlice() {
     let numbers = Array(1...10)
     var xs = NonEmpty(0, numbers[5...])
-    xs[1] = 43
+//    xs[1] = 43
     XCTAssertEqual(43, xs[1])
   }
 }
