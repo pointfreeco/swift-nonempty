@@ -5,8 +5,12 @@ linux-main:
 	swift test --generate-linuxmain
 
 test-linux:
-	docker build --tag nonempty-testing . \
-		&& docker run --rm nonempty-testing
+	docker run \
+ 		--rm \
+ 		-v "$(PWD):$(PWD)" \
+ 		-w "$(PWD)" \
+ 		swift:5.1 \
+ 		bash -c 'make test-swift'
 
 test-macos:
 	set -o pipefail && \
@@ -23,6 +27,9 @@ test-ios:
 		| xcpretty
 
 test-swift:
-	swift test --parallel -v
+	swift test \
+ 		--enable-pubgrub-resolver \
+ 		--enable-test-discovery \
+ 		--parallel
 
-test-all: test-linux test-mac test-ios
+test-all: test-linux test-macos test-ios test-swift
