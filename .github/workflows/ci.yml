@@ -8,6 +8,8 @@ jobs:
     runs-on: macOS-latest
     steps:
     - uses: actions/checkout@v1
+    - name: Swift version
+      run: swift --version
     - name: Xcode version
       run: sudo xcode-select -s /Applications/Xcode_11.3.app
     - name: Run tests
