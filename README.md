@@ -1,9 +1,8 @@
 # 🎁 NonEmpty
 
 [![Swift 5](https://img.shields.io/badge/swift-5-ED523F.svg?style=flat)](https://swift.org/download/)
-[![Linux CI](https://img.shields.io/travis/pointfreeco/swift-nonempty/master.svg?label=linux)](https://travis-ci.org/pointfreeco/swift-nonempty)
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fpointfreeco%2Fswift-nonempty%2Fbadge&style=flat)](https://actions-badge.atrox.dev/pointfreeco/swift-nonempty/goto)
 [![@pointfreeco](https://img.shields.io/badge/contact-@pointfreeco-5AA9E7.svg?style=flat)](https://twitter.com/pointfreeco)
-<!-- [![iOS/macOS CI](https://img.shields.io/circleci/project/github/pointfreeco/swift-nonempty/master.svg?label=ios/macos)](https://circleci.com/gh/pointfreeco/swift-nonempty) -->
 
 A compile-time guarantee that a collection contains a value.
 
