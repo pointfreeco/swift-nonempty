@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = "NonEmpty"
-  s.version = "0.2.0"
+  s.version = "0.2.1"
   s.summary = "A compile-time guarantee that a collection contains a value."
 
   s.description = <<-DESC
@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
     :tag => s.version
   }
 
-  s.swift_version = "5.0"
+  s.swift_versions = "5.0", "5.1"
 
   s.ios.deployment_target = "8.0"
   s.osx.deployment_target = "10.9"
