@@ -181,10 +181,50 @@ final class NonEmptyTests: XCTestCase {
   }
 
   func testCodable() throws {
-    let xs = NonEmptyArray(1, 2, 3)
+    let encoder = JSONEncoder()
+    let decoder = JSONDecoder()
 
-    XCTAssertEqual(xs, try JSONDecoder().decode(NonEmptyArray<Int>.self, from: JSONEncoder().encode(xs)))
-    XCTAssertEqual(xs, try JSONDecoder().decode(NonEmptyArray<Int>.self, from: Data("{\"head\":1,\"tail\":[2,3]}".utf8)))
+    let list = ["Blob", "Blob Sr."]
+    let numbered = [1: "Blob", 2: "Blob Sr."]
+    let coding = DefaultCoding(list: list, numbered: numbered)
+    let json = try encoder.encode(coding)
+
+    let decodedNonEmpty = try decoder.decode(NonEmptyCoding.self, from: json)
+    XCTAssertEqual(
+      decodedNonEmpty,
+      NonEmptyCoding(
+        list: .init(NonEmptyString("B", "lob"), [NonEmptyString("B", "lob Sr.")]),
+        numbered: .init((1, NonEmptyString("B", "lob")), [2: NonEmptyString("B", "lob Sr.")])
+      )
+    )
+
+    let encodedJson = try encoder.encode(decodedNonEmpty)
+
+    XCTAssertEqual(coding, try decoder.decode(DefaultCoding.self, from: encodedJson))
+    XCTAssertEqual(decodedNonEmpty, try decoder.decode(NonEmptyCoding.self, from: encodedJson))
+
+    let testCodingError = codingTest(decoder: decoder, encoder: encoder)
+
+    testCodingError(.init(list: [], numbered: numbered), #file, #line)
+    testCodingError(.init(list: [""], numbered: numbered), #file, #line)
+    testCodingError(.init(list: list, numbered: [:]), #file, #line)
+  }
+
+  private func codingTest(decoder: JSONDecoder, encoder: JSONEncoder) -> (DefaultCoding, _ file: String, _ line: Int) -> Void {
+    return { [unowned self] (coding: DefaultCoding, file: String, line: Int) in
+      do {
+        let json = try encoder.encode(coding)
+        _ = try decoder.decode(NonEmptyCoding.self, from: json)
+        self.recordFailure(withDescription: "Decoding Data should not work: \(String(data: json, encoding: .utf8) ?? "no Json")", inFile: file, atLine: line, expected: true)
+      } catch let error as NonEmptyCodableError {
+        switch error {
+        case .emptyCollection:
+          break // success
+        }
+      } catch {
+        self.recordFailure(withDescription: error.localizedDescription, inFile: file, atLine: line, expected: false)
+      }
+    }
   }
 
   func testNonEmptySetWithTrivialValue() {
@@ -210,4 +250,19 @@ struct TrivialHashable: Equatable, Comparable, Hashable {
   var hashValue: Int {
     return 1
   }
+}
+
+struct DefaultCoding: Codable, Equatable {
+  let list: [String]
+  let numbered: [Int: String]
+}
+
+struct NonEmptyCoding: Codable, Equatable {
+  let list: NonEmptyArray<NonEmptyString>
+  let numbered: NonEmptyDictionary<Int, NonEmptyString>
+}
+
+func == (lhs: NonEmptyCoding, rhs: NonEmptyCoding) -> Bool {
+  return lhs.list == rhs.list
+    && lhs.numbered == rhs.numbered
 }
