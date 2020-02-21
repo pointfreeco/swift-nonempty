@@ -1,4 +1,4 @@
-extension NonEmpty: Collection {
+extension NonEmpty {
   public enum Index: Comparable {
     case head
     case tail(C.Index)

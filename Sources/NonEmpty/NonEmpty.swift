@@ -1,4 +1,4 @@
-public struct NonEmpty<C: Collection> {
+public struct NonEmpty<C: Collection>: Collection {
   public typealias Element = C.Element
 
   public internal(set) var head: Element

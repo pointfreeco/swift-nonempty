@@ -1,20 +1,16 @@
-imports = \
-	@testable import NonEmptyTests;
-
 xcodeproj:
 	PF_DEVELOP=1 swift run xcodegen
 
 linux-main:
-	sourcery \
-		--sources ./Tests/ \
-		--templates ./.sourcery-templates/ \
-		--output ./Tests/ \
-		--args testimports='$(imports)' \
-		&& mv ./Tests/LinuxMain.generated.swift ./Tests/LinuxMain.swift
+	swift test --generate-linuxmain
 
-test-linux: linux-main
-	docker build --tag nonempty-testing . \
-		&& docker run --rm nonempty-testing
+test-linux:
+	docker run \
+ 		--rm \
+ 		-v "$(PWD):$(PWD)" \
+ 		-w "$(PWD)" \
+ 		swift:5.1 \
+ 		bash -c 'make test-swift'
 
 test-macos:
 	set -o pipefail && \
@@ -31,6 +27,9 @@ test-ios:
 		| xcpretty
 
 test-swift:
-	swift test
+	swift test \
+ 		--enable-pubgrub-resolver \
+ 		--enable-test-discovery \
+ 		--parallel
 
-test-all: test-linux test-mac test-ios
+test-all: test-linux test-macos test-ios test-swift

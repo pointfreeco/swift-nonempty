@@ -28,7 +28,7 @@ extension NonEmpty: MutableCollection where C: MutableCollection {
 }
 
 extension NonEmpty where C: MutableCollection, C.Index == Int {
-  public subscript(position: Int) -> Element {
+  public subscript(position: C.Index) -> Element {
     get {
       return self[position == 0 ? .head : .tail(self.tail.startIndex + position - 1)]
     }
