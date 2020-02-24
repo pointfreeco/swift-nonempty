@@ -85,6 +85,14 @@ extension NonEmpty: StringProtocol where C: StringProtocol {
   ) rethrows -> Result where Encoding: _UnicodeEncoding {
     try self.withCString(encodedAs: targetEncoding, body)
   }
+
+  public func lowercased() -> NonEmptyString {
+    NonEmptyString(self.rawValue.lowercased())!
+  }
+
+  public func uppercased() -> NonEmptyString {
+    NonEmptyString(self.rawValue.uppercased())!
+  }
 }
 #else
 extension NonEmpty where C: StringProtocol {
@@ -125,6 +133,14 @@ extension NonEmpty where C: StringProtocol {
     _ body: (UnsafePointer<Encoding.CodeUnit>) throws -> Result
   ) rethrows -> Result where Encoding: _UnicodeEncoding {
     try self.withCString(encodedAs: targetEncoding, body)
+  }
+
+  public func lowercased() -> NonEmptyString {
+    NonEmptyString(self.rawValue.lowercased())!
+  }
+
+  public func uppercased() -> NonEmptyString {
+    NonEmptyString(self.rawValue.uppercased())!
   }
 }
 #endif
