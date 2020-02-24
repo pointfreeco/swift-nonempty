@@ -106,37 +106,36 @@ final class NonEmptyTests: XCTestCase {
     XCTAssertFalse(NonEmptySet(1, 2, 3).isDisjoint(with: [3, 4, 5]))
   }
 
-//  func testDictionary() {
-//    let nonEmptyDict1 = NonEmpty(("1", "Blob"), ["1": "Blobbo"], uniquingKeysWith: { $1 })
-//    XCTAssertEqual(1, nonEmptyDict1.count)
-//    XCTAssertEqual("Blobbo", nonEmptyDict1["1"])
-//    XCTAssertEqual("Blob", NonEmpty(("1", "Blob"), ["1": "Blobbo"], uniquingKeysWith: { v, _ in v })["1"])
-//
-//    let nonEmptySingleton1 = NonEmptyDictionary(("1", "Blob"))
-//    XCTAssertEqual(1, nonEmptySingleton1.count)
-//
-//    XCTAssert(
-//      NonEmpty<[String: String]>(("1", "Blob"), ["2": "Blob Senior"])
-//        .merging(["2": "Blob Junior"], uniquingKeysWith: { $1 })
-//        == NonEmpty(("1", "Blob"), ["2": "Blob Junior"])
-//    )
-//    XCTAssert(
-//      NonEmpty<[String: String]>(("1", "Blob"), ["2": "Blob Senior"])
-//        .merging(["2": "Blob Junior"], uniquingKeysWith: { a, _ in a })
-//        == NonEmpty(("1", "Blob"), ["2": "Blob Senior"])
-//    )
-//  }
-//
+  func testDictionary() {
+    let nonEmptyDict1 = NonEmpty(("1", "Blob"), ["1": "Blobbo"], uniquingKeysWith: { $1 })
+    XCTAssertEqual(1, nonEmptyDict1.count)
+    XCTAssertEqual("Blobbo", nonEmptyDict1["1"])
+    XCTAssertEqual("Blob", NonEmpty(("1", "Blob"), ["1": "Blobbo"], uniquingKeysWith: { v, _ in v })["1"])
+
+    let nonEmptySingleton1 = NonEmptyDictionary((key: "1", value: "Blob"))
+    XCTAssertEqual(1, nonEmptySingleton1.count)
+
+    XCTAssert(
+      NonEmpty<[String: String]>(("1", "Blob"), ["2": "Blob Senior"])
+        .merging(["2": "Blob Junior"], uniquingKeysWith: { $1 })
+        == NonEmpty(("1", "Blob"), ["2": "Blob Junior"])
+    )
+    XCTAssert(
+      NonEmpty<[String: String]>(("1", "Blob"), ["2": "Blob Senior"])
+        .merging(["2": "Blob Junior"], uniquingKeysWith: { a, _ in a })
+        == NonEmpty(("1", "Blob"), ["2": "Blob Senior"])
+    )
+  }
 
   func testEquatable() {
     XCTAssertEqual(NonEmptyArray(1, 2, 3), NonEmptyArray(1, 2, 3))
     XCTAssertNotEqual(NonEmptyArray(1, 2, 3), NonEmptyArray(2, 2, 3))
     XCTAssertNotEqual(NonEmptyArray(1, 2, 3), NonEmptyArray(1, 2, 4))
     XCTAssertEqual(NonEmptySet(1, 2, 3), NonEmptySet(3, 2, 1))
-//    XCTAssert(
-//      NonEmpty(("hello", "world"), ["goodnight": "moon"])
-//        == NonEmpty(("goodnight", "moon"), ["hello": "world"])
-//    )
+    XCTAssert(
+      NonEmpty(("hello", "world"), ["goodnight": "moon"])
+        == NonEmpty(("goodnight", "moon"), ["hello": "world"])
+    )
   }
 
   func testComparable() {
