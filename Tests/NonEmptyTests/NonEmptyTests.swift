@@ -156,8 +156,8 @@ final class NonEmptyTests: XCTestCase {
     XCTAssertThrowsError(try JSONDecoder().decode(NonEmptyArray<Int>.self, from: Data("[]".utf8)))
 
     let str = NonEmptyString(rawValue: "Hello")!
-    XCTAssertEqual(str, try JSONDecoder().decode([NonEmptyString].self, from: JSONEncoder().encode([str])))
-    XCTAssertEqual(str, try JSONDecoder().decode([NonEmptyString].self, from: Data(#"["Hello"]"#.utf8)))
+    XCTAssertEqual([str], try JSONDecoder().decode([NonEmptyString].self, from: JSONEncoder().encode([str])))
+    XCTAssertEqual([str], try JSONDecoder().decode([NonEmptyString].self, from: Data(#"["Hello"]"#.utf8)))
     XCTAssertThrowsError(try JSONDecoder().decode([NonEmptyString].self, from: Data(#"[""]"#.utf8)))
 
     let dict = NonEmpty(rawValue: ["Hello": 1])!
