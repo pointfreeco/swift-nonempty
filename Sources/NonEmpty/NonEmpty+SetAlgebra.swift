@@ -5,7 +5,7 @@ extension NonEmpty where C: SetAlgebra, C.Element: Hashable {
   public init(_ head: C.Element, _ tail: C.Element...) {
     var tail = C(tail)
     tail.insert(head)
-    self.init(tail)!
+    self.init(rawValue: tail)!
   }
 
   public func contains(_ member: C.Element) -> Bool {

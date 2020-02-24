@@ -5,7 +5,7 @@ public struct NonEmpty<C: Collection>: Collection {
 
   public internal(set) var rawValue: C
 
-  public init?(_ rawValue: C) {
+  public init?(rawValue: C) {
     guard !rawValue.isEmpty else { return nil }
     self.rawValue = rawValue
   }
@@ -37,7 +37,7 @@ public struct NonEmpty<C: Collection>: Collection {
   public func sorted(
     by areInIncreasingOrder: (Element, Element) throws -> Bool
   ) rethrows -> NonEmpty<[Element]> {
-    NonEmpty<[Element]>(try self.rawValue.sorted(by: areInIncreasingOrder))!
+    NonEmpty<[Element]>(rawValue: try self.rawValue.sorted(by: areInIncreasingOrder))!
   }
 
   public func randomElement<T>(using generator: inout T) -> Element where T: RandomNumberGenerator {
@@ -49,21 +49,21 @@ public struct NonEmpty<C: Collection>: Collection {
   }
 
   public func shuffled<T>(using generator: inout T) -> NonEmpty<[Element]> where T: RandomNumberGenerator {
-    NonEmpty<[Element]>(self.rawValue.shuffled(using: &generator))!
+    NonEmpty<[Element]>(rawValue: self.rawValue.shuffled(using: &generator))!
   }
 
   public func shuffled() -> NonEmpty<[Element]> {
-    NonEmpty<[Element]>(self.rawValue.shuffled())!
+    NonEmpty<[Element]>(rawValue: self.rawValue.shuffled())!
   }
 
   public func map<T>(_ transform: (Element) throws -> T) rethrows -> NonEmpty<[T]> {
-    NonEmpty<[T]>(try self.rawValue.map(transform))!
+    NonEmpty<[T]>(rawValue: try self.rawValue.map(transform))!
   }
 
   public func flatMap<SegmentOfResult>(
     _ transform: (Element) throws -> NonEmpty<SegmentOfResult>
   ) rethrows -> NonEmpty<[SegmentOfResult.Element]> where SegmentOfResult: Sequence {
-    NonEmpty<[SegmentOfResult.Element]>(try self.rawValue.flatMap(transform))!
+    NonEmpty<[SegmentOfResult.Element]>(rawValue: try self.rawValue.flatMap(transform))!
   }
 }
 
@@ -97,15 +97,11 @@ extension NonEmpty: Decodable where C: Collection & Decodable {
         .init(codingPath: decoder.codingPath, debugDescription: "Non-empty collection expected")
       )
     }
-    self.init(collection)!
+    self.init(rawValue: collection)!
   }
 }
 
-extension NonEmpty: RawRepresentable {
-  public init?(rawValue: C) {
-    self.init(rawValue)
-  }
-}
+extension NonEmpty: RawRepresentable {}
 
 extension NonEmpty where C: Collection, C.Element: Comparable {
   public func max() -> Element {
@@ -117,7 +113,7 @@ extension NonEmpty where C: Collection, C.Element: Comparable {
   }
 
   public func sorted() -> NonEmpty<[Element]> {
-    return NonEmpty<[Element]>(self.rawValue.sorted())!
+    return NonEmpty<[Element]>(rawValue: self.rawValue.sorted())!
   }
 }
 

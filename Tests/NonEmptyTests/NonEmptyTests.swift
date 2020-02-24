@@ -155,12 +155,12 @@ final class NonEmptyTests: XCTestCase {
     XCTAssertEqual(xs, try JSONDecoder().decode(NonEmptyArray<Int>.self, from: Data("[1,2,3]".utf8)))
     XCTAssertThrowsError(try JSONDecoder().decode(NonEmptyArray<Int>.self, from: Data("[]".utf8)))
 
-    let str = NonEmptyString("Hello")!
+    let str = NonEmptyString(rawValue: "Hello")!
     XCTAssertEqual(str, try JSONDecoder().decode(NonEmptyString.self, from: JSONEncoder().encode(str)))
     XCTAssertEqual(str, try JSONDecoder().decode(NonEmptyString.self, from: Data(#""Hello""#.utf8)))
     XCTAssertThrowsError(try JSONDecoder().decode(NonEmptyString.self, from: Data("\"\"".utf8)))
 
-    let dict = NonEmpty(["Hello": 1])!
+    let dict = NonEmpty(rawValue: ["Hello": 1])!
     XCTAssertEqual(dict, try JSONDecoder().decode(NonEmpty<[String: Int]>.self, from: JSONEncoder().encode(dict)))
     XCTAssertEqual(dict, try JSONDecoder().decode(NonEmpty<[String: Int]>.self, from: Data(#"{"Hello":1}"#.utf8)))
     XCTAssertThrowsError(try JSONDecoder().decode(NonEmpty<[String: Int]>.self, from: Data("{}".utf8)))
@@ -175,7 +175,7 @@ final class NonEmptyTests: XCTestCase {
 
   func testMutableCollectionWithArraySlice() {
     let numbers = Array(1...10)
-    var xs = NonEmpty(numbers[5...])!
+    var xs = NonEmpty(rawValue: numbers[5...])!
     xs[6] = 43
     XCTAssertEqual(43, xs[6])
   }

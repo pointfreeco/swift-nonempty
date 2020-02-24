@@ -3,7 +3,7 @@ extension NonEmpty where C: RangeReplaceableCollection {
   public init(_ head: Element, _ tail: Element...) {
     var tail = tail
     tail.insert(head, at: tail.startIndex)
-    self.init(C(tail))!
+    self.init(rawValue: C(tail))!
   }
 
   public mutating func append(_ newElement: Element) {
