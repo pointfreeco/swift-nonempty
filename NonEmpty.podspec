@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = "NonEmpty"
-  s.version = "0.2.1"
+  s.version = "0.2.2"
   s.summary = "A compile-time guarantee that a collection contains a value."
 
   s.description = <<-DESC
