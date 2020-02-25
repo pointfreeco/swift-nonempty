@@ -1,9 +1,9 @@
 // NB: `NonEmpty` does not conditionally conform to `RangeReplaceableCollection` because it contains destructive methods.
-extension NonEmpty where C: RangeReplaceableCollection {
+extension NonEmpty where Collection: RangeReplaceableCollection {
   public init(_ head: Element, _ tail: Element...) {
     var tail = tail
     tail.insert(head, at: tail.startIndex)
-    self.init(rawValue: C(tail))!
+    self.init(rawValue: Collection(tail))!
   }
 
   public mutating func append(_ newElement: Element) {
@@ -20,7 +20,7 @@ extension NonEmpty where C: RangeReplaceableCollection {
 
   public mutating func insert<S>(
     contentsOf newElements: S, at i: Index
-  ) where S: Collection, Element == S.Element {
+  ) where S: Swift.Collection, Element == S.Element {
     self.rawValue.insert(contentsOf: newElements, at: i)
   }
 

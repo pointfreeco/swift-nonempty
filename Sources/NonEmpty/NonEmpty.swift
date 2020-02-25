@@ -1,16 +1,16 @@
 @dynamicMemberLookup
-public struct NonEmpty<C: Collection>: Collection {
-  public typealias Element = C.Element
-  public typealias Index = C.Index
+public struct NonEmpty<Collection: Swift.Collection>: Swift.Collection {
+  public typealias Element = Collection.Element
+  public typealias Index = Collection.Index
 
-  public internal(set) var rawValue: C
+  public internal(set) var rawValue: Collection
 
-  public init?(rawValue: C) {
+  public init?(rawValue: Collection) {
     guard !rawValue.isEmpty else { return nil }
     self.rawValue = rawValue
   }
 
-  public subscript<Subject>(dynamicMember keyPath: KeyPath<C, Subject>) -> Subject {
+  public subscript<Subject>(dynamicMember keyPath: KeyPath<Collection, Subject>) -> Subject {
     self.rawValue[keyPath: keyPath]
   }
 
@@ -73,25 +73,25 @@ extension NonEmpty: CustomStringConvertible {
   }
 }
 
-extension NonEmpty: Equatable where C: Equatable {}
+extension NonEmpty: Equatable where Collection: Equatable {}
 
-extension NonEmpty: Hashable where C: Hashable {}
+extension NonEmpty: Hashable where Collection: Hashable {}
 
-extension NonEmpty: Comparable where C: Comparable {
+extension NonEmpty: Comparable where Collection: Comparable {
   public static func < (lhs: Self, rhs: Self) -> Bool {
     lhs.rawValue < rhs.rawValue
   }
 }
 
-extension NonEmpty: Encodable where C: Collection & Encodable {
+extension NonEmpty: Encodable where Collection: Encodable {
   public func encode(to encoder: Encoder) throws {
     try self.rawValue.encode(to: encoder)
   }
 }
 
-extension NonEmpty: Decodable where C: Collection & Decodable {
+extension NonEmpty: Decodable where Collection: Decodable {
   public init(from decoder: Decoder) throws {
-    let collection = try C(from: decoder)
+    let collection = try Collection(from: decoder)
     guard !collection.isEmpty else {
       throw DecodingError.dataCorrupted(
         .init(codingPath: decoder.codingPath, debugDescription: "Non-empty collection expected")
@@ -103,7 +103,7 @@ extension NonEmpty: Decodable where C: Collection & Decodable {
 
 extension NonEmpty: RawRepresentable {}
 
-extension NonEmpty where C: Collection, C.Element: Comparable {
+extension NonEmpty where Collection.Element: Comparable {
   public func max() -> Element {
     self.rawValue.max()!
   }
@@ -117,7 +117,7 @@ extension NonEmpty where C: Collection, C.Element: Comparable {
   }
 }
 
-extension NonEmpty: BidirectionalCollection where C: BidirectionalCollection {
+extension NonEmpty: BidirectionalCollection where Collection: BidirectionalCollection {
   public func index(before i: Index) -> Index {
     self.rawValue.index(before: i)
   }
@@ -125,7 +125,7 @@ extension NonEmpty: BidirectionalCollection where C: BidirectionalCollection {
   public var last: Element { self.rawValue.last! }
 }
 
-extension NonEmpty: MutableCollection where C: MutableCollection {
+extension NonEmpty: MutableCollection where Collection: MutableCollection {
   public subscript(position: Index) -> Element {
     get { self.rawValue[position] }
     set { self.rawValue[position] = newValue }
@@ -133,20 +133,12 @@ extension NonEmpty: MutableCollection where C: MutableCollection {
   }
 }
 
-extension NonEmpty: RandomAccessCollection where C: RandomAccessCollection {}
+extension NonEmpty: RandomAccessCollection where Collection: RandomAccessCollection {}
 
-extension NonEmpty where C: MutableCollection & RandomAccessCollection {
+extension NonEmpty where Collection: MutableCollection & RandomAccessCollection {
   public mutating func shuffle<T: RandomNumberGenerator>(using generator: inout T) {
     self.rawValue.shuffle(using: &generator)
   }
 }
 
 public typealias NonEmptyArray<Element> = NonEmpty<[Element]>
-
-extension NonEmpty where C == String {
-  public init(_ head: Character, _ tail: String) {
-    var tail = tail
-    tail.insert(head, at: tail.startIndex)
-    self.init(tail)!
-  }
-}

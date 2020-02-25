@@ -1,14 +1,14 @@
 public typealias NonEmptySet<Element> = NonEmpty<Set<Element>> where Element: Hashable
 
 // NB: `NonEmpty` does not conditionally conform to `SetAlgebra` because it contains destructive methods.
-extension NonEmpty where C: SetAlgebra, C.Element: Hashable {
-  public init(_ head: C.Element, _ tail: C.Element...) {
-    var tail = C(tail)
+extension NonEmpty where Collection: SetAlgebra, Collection.Element: Hashable {
+  public init(_ head: Collection.Element, _ tail: Collection.Element...) {
+    var tail = Collection(tail)
     tail.insert(head)
     self.init(rawValue: tail)!
   }
 
-  public func contains(_ member: C.Element) -> Bool {
+  public func contains(_ member: Collection.Element) -> Bool {
     self.rawValue.contains(member)
   }
 
@@ -18,35 +18,35 @@ extension NonEmpty where C: SetAlgebra, C.Element: Hashable {
     return copy
   }
 
-  public func union(_ other: C) -> NonEmpty {
+  public func union(_ other: Collection) -> NonEmpty {
     var copy = self
     copy.formUnion(other)
     return copy
   }
 
-  public func intersection(_ other: NonEmpty) -> C {
+  public func intersection(_ other: NonEmpty) -> Collection {
     self.rawValue.intersection(other.rawValue)
   }
 
-  public func intersection(_ other: C) -> C {
+  public func intersection(_ other: Collection) -> Collection {
     self.rawValue.intersection(other)
   }
 
-  public func symmetricDifference(_ other: NonEmpty) -> C {
+  public func symmetricDifference(_ other: NonEmpty) -> Collection {
     self.rawValue.symmetricDifference(other.rawValue)
   }
 
-  public func symmetricDifference(_ other: C) -> C {
+  public func symmetricDifference(_ other: Collection) -> Collection {
     self.rawValue.symmetricDifference(other)
   }
 
   @discardableResult
-  public mutating func insert(_ newMember: C.Element) -> (inserted: Bool, memberAfterInsert: C.Element) {
+  public mutating func insert(_ newMember: Collection.Element) -> (inserted: Bool, memberAfterInsert: Collection.Element) {
     self.rawValue.insert(newMember)
   }
 
   @discardableResult
-  public mutating func update(with newMember: C.Element) -> C.Element? {
+  public mutating func update(with newMember: Collection.Element) -> Collection.Element? {
     self.rawValue.update(with: newMember)
   }
 
@@ -54,15 +54,15 @@ extension NonEmpty where C: SetAlgebra, C.Element: Hashable {
     self.rawValue.formUnion(other.rawValue)
   }
 
-  public mutating func formUnion(_ other: C) {
+  public mutating func formUnion(_ other: Collection) {
     self.rawValue.formUnion(other)
   }
 
-  public func subtracting(_ other: NonEmpty) -> C {
+  public func subtracting(_ other: NonEmpty) -> Collection {
     self.rawValue.subtracting(other.rawValue)
   }
 
-  public func subtracting(_ other: C) -> C {
+  public func subtracting(_ other: Collection) -> Collection {
     self.rawValue.subtracting(other)
   }
 
@@ -70,7 +70,7 @@ extension NonEmpty where C: SetAlgebra, C.Element: Hashable {
     self.rawValue.isDisjoint(with: other.rawValue)
   }
 
-  public func isDisjoint(with other: C) -> Bool {
+  public func isDisjoint(with other: Collection) -> Bool {
     self.rawValue.isDisjoint(with: other)
   }
 
@@ -78,7 +78,7 @@ extension NonEmpty where C: SetAlgebra, C.Element: Hashable {
     self.rawValue.isSubset(of: other.rawValue)
   }
 
-  public func isSubset(of other: C) -> Bool {
+  public func isSubset(of other: Collection) -> Bool {
     self.rawValue.isSubset(of: other)
   }
 
@@ -86,7 +86,7 @@ extension NonEmpty where C: SetAlgebra, C.Element: Hashable {
     self.rawValue.isSuperset(of: other.rawValue)
   }
 
-  public func isSuperset(of other: C) -> Bool {
+  public func isSuperset(of other: Collection) -> Bool {
     self.rawValue.isSuperset(of: other)
   }
 
@@ -94,7 +94,7 @@ extension NonEmpty where C: SetAlgebra, C.Element: Hashable {
     self.rawValue.isStrictSubset(of: other.rawValue)
   }
 
-  public func isStrictSubset(of other: C) -> Bool {
+  public func isStrictSubset(of other: Collection) -> Bool {
     self.rawValue.isStrictSubset(of: other)
   }
 
@@ -102,7 +102,7 @@ extension NonEmpty where C: SetAlgebra, C.Element: Hashable {
     self.rawValue.isStrictSuperset(of: other.rawValue)
   }
 
-  public func isStrictSuperset(of other: C) -> Bool {
+  public func isStrictSuperset(of other: Collection) -> Bool {
     self.rawValue.isStrictSuperset(of: other)
   }
 }
