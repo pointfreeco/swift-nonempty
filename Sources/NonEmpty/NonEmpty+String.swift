@@ -109,7 +109,7 @@ extension NonEmpty where Collection: StringProtocol {
 
   public init<C, Encoding>(
     decoding codeUnits: C, as sourceEncoding: Encoding.Type
-  ) where C: Collection, Encoding: _UnicodeEncoding, C.Element == Encoding.CodeUnit {
+  ) where C: Swift.Collection, Encoding: _UnicodeEncoding, C.Element == Encoding.CodeUnit {
     self.init(rawValue: Collection(decoding: codeUnits, as: sourceEncoding))!
   }
 
