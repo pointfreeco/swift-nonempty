@@ -95,10 +95,10 @@ extension NonEmpty: StringProtocol where Collection: StringProtocol {
   }
 }
 #else
-extension NonEmpty where C: StringProtocol {
-  public typealias UTF8View = C.UTF8View
-  public typealias UTF16View = C.UTF16View
-  public typealias UnicodeScalarView = C.UnicodeScalarView
+extension NonEmpty where Collection: StringProtocol {
+  public typealias UTF8View = Collection.UTF8View
+  public typealias UTF16View = Collection.UTF16View
+  public typealias UnicodeScalarView = Collection.UnicodeScalarView
 
   public var utf8: UTF8View { self.rawValue.utf8 }
   public var utf16: UTF16View { self.rawValue.utf16 }
@@ -110,18 +110,18 @@ extension NonEmpty where C: StringProtocol {
   public init<C, Encoding>(
     decoding codeUnits: C, as sourceEncoding: Encoding.Type
   ) where C: Collection, Encoding: _UnicodeEncoding, C.Element == Encoding.CodeUnit {
-    self.init(rawValue: C(decoding: codeUnits, as: sourceEncoding))!
+    self.init(rawValue: Collection(decoding: codeUnits, as: sourceEncoding))!
   }
 
   public init(cString nullTerminatedUTF8: UnsafePointer<CChar>) {
-    self.init(rawValue: C(cString: nullTerminatedUTF8))!
+    self.init(rawValue: Collection(cString: nullTerminatedUTF8))!
   }
 
   public init<Encoding>(
     decodingCString nullTerminatedCodeUnits: UnsafePointer<Encoding.CodeUnit>,
     as sourceEncoding: Encoding.Type
   ) where Encoding: _UnicodeEncoding {
-    self.init(rawValue: C(decodingCString: nullTerminatedCodeUnits, as: sourceEncoding))!
+    self.init(rawValue: Collection(decodingCString: nullTerminatedCodeUnits, as: sourceEncoding))!
   }
 
   public func withCString<Result>(_ body: (UnsafePointer<CChar>) throws -> Result) rethrows -> Result {
