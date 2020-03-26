@@ -6,11 +6,7 @@ final class NonEmptyTests: XCTestCase {
     let xs = NonEmptyArray(1, 2, 3)
 
     XCTAssertEqual(3, xs.count)
-    #if swift(>=4.1.5)
     XCTAssertEqual(2, xs.first + 1)
-    #else
-    XCTAssertEqual(2, xs.safeFirst + 1)
-    #endif
     XCTAssertEqual(
       xs,
       NonEmptyArray(NonEmptyArray(1), NonEmptyArray(2), NonEmptyArray(3)).flatMap { $0 }
@@ -25,20 +21,9 @@ final class NonEmptyTests: XCTestCase {
     XCTAssertEqual([1, 2, 3], Array(xs))
   }
 
-  func testCollectionWithIntIndex() {
-    let xs = NonEmptyArray(1, 2, 3)
-    XCTAssertEqual(1, xs[0])
-    XCTAssertEqual(2, xs[1])
-  }
-
   func testBidirectionalCollection() {
-    #if swift(>=4.1.5)
     XCTAssertEqual(4, NonEmptyArray(1, 2, 3).last + 1)
     XCTAssertEqual(4, NonEmptyArray(3).last + 1)
-    #else
-    XCTAssertEqual(4, NonEmptyArray(1, 2, 3).safeLast + 1)
-    XCTAssertEqual(4, NonEmptyArray(3).safeLast + 1)
-    #endif
   }
 
   func testMutableCollection() {
@@ -61,9 +46,9 @@ final class NonEmptyTests: XCTestCase {
     XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 5, 6), xs)
     xs.insert(contentsOf: [], at: 0)
     XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 5, 6), xs)
-    xs.insert(7, at: 8)
+    xs.insert(7, at: 9)
     XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 5, 6, 7), xs)
-    xs.insert(contentsOf: [8, 9], at: 9)
+    xs.insert(contentsOf: [8, 9], at: 10)
     XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9), xs)
     xs += [10]
     XCTAssertEqual(NonEmptyArray(-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10), xs)
@@ -72,7 +57,6 @@ final class NonEmptyTests: XCTestCase {
 
   func testSetAlgebra() {
     XCTAssertEqual(3, NonEmptySet(1, 1, 2, 3).count)
-    XCTAssertEqual(3, NonEmptySet(1, [1, 2, 3]).count)
 
     XCTAssertTrue(NonEmptySet(1, 2, 3).contains(1))
     XCTAssertTrue(NonEmptySet(1, 2, 3).contains(3))
@@ -128,7 +112,7 @@ final class NonEmptyTests: XCTestCase {
     XCTAssertEqual("Blobbo", nonEmptyDict1["1"])
     XCTAssertEqual("Blob", NonEmpty(("1", "Blob"), ["1": "Blobbo"], uniquingKeysWith: { v, _ in v })["1"])
 
-    let nonEmptySingleton1 = NonEmptyDictionary(("1", "Blob"))
+    let nonEmptySingleton1 = NonEmptyDictionary((key: "1", value: "Blob"))
     XCTAssertEqual(1, nonEmptySingleton1.count)
 
     XCTAssert(
@@ -143,25 +127,10 @@ final class NonEmptyTests: XCTestCase {
     )
   }
 
-  func testString() {
-    let blob = NonEmptyString("B", "lob")
-
-    XCTAssertEqual(NonEmpty("B", ""), NonEmpty("B"))
-    XCTAssertEqual(NonEmpty("B", "LOB"), NonEmpty("B", "lOb").uppercased())
-    XCTAssertEqual(NonEmpty("b", "lob"), NonEmpty("B", "lOb").lowercased())
-    XCTAssertEqual(
-      NonEmpty("B", "lob Blob Blob"),
-      NonEmptyArray(blob, blob, blob)
-        .joined(separator: " ")
-    )
-    XCTAssertEqual("Blob", blob.string)
-  }
-
   func testEquatable() {
     XCTAssertEqual(NonEmptyArray(1, 2, 3), NonEmptyArray(1, 2, 3))
     XCTAssertNotEqual(NonEmptyArray(1, 2, 3), NonEmptyArray(2, 2, 3))
     XCTAssertNotEqual(NonEmptyArray(1, 2, 3), NonEmptyArray(1, 2, 4))
-    XCTAssertEqual(NonEmptySet(1, [2, 3]), NonEmptySet(3, [2, 1]))
     XCTAssertEqual(NonEmptySet(1, 2, 3), NonEmptySet(3, 2, 1))
     XCTAssert(
       NonEmpty(("hello", "world"), ["goodnight": "moon"])
@@ -181,50 +150,20 @@ final class NonEmptyTests: XCTestCase {
   }
 
   func testCodable() throws {
-    let encoder = JSONEncoder()
-    let decoder = JSONDecoder()
+    let xs = NonEmptyArray(1, 2, 3)
+    XCTAssertEqual(xs, try JSONDecoder().decode(NonEmptyArray<Int>.self, from: JSONEncoder().encode(xs)))
+    XCTAssertEqual(xs, try JSONDecoder().decode(NonEmptyArray<Int>.self, from: Data("[1,2,3]".utf8)))
+    XCTAssertThrowsError(try JSONDecoder().decode(NonEmptyArray<Int>.self, from: Data("[]".utf8)))
 
-    let list = ["Blob", "Blob Sr."]
-    let numbered = [1: "Blob", 2: "Blob Sr."]
-    let coding = DefaultCoding(list: list, numbered: numbered)
-    let json = try encoder.encode(coding)
+    let str = NonEmptyString(rawValue: "Hello")!
+    XCTAssertEqual([str], try JSONDecoder().decode([NonEmptyString].self, from: JSONEncoder().encode([str])))
+    XCTAssertEqual([str], try JSONDecoder().decode([NonEmptyString].self, from: Data(#"["Hello"]"#.utf8)))
+    XCTAssertThrowsError(try JSONDecoder().decode([NonEmptyString].self, from: Data(#"[""]"#.utf8)))
 
-    let decodedNonEmpty = try decoder.decode(NonEmptyCoding.self, from: json)
-    XCTAssertEqual(
-      decodedNonEmpty,
-      NonEmptyCoding(
-        list: .init(NonEmptyString("B", "lob"), [NonEmptyString("B", "lob Sr.")]),
-        numbered: .init((1, NonEmptyString("B", "lob")), [2: NonEmptyString("B", "lob Sr.")])
-      )
-    )
-
-    let encodedJson = try encoder.encode(decodedNonEmpty)
-
-    XCTAssertEqual(coding, try decoder.decode(DefaultCoding.self, from: encodedJson))
-    XCTAssertEqual(decodedNonEmpty, try decoder.decode(NonEmptyCoding.self, from: encodedJson))
-
-    let testCodingError = codingTest(decoder: decoder, encoder: encoder)
-
-    testCodingError(.init(list: [], numbered: numbered), #file, #line)
-    testCodingError(.init(list: [""], numbered: numbered), #file, #line)
-    testCodingError(.init(list: list, numbered: [:]), #file, #line)
-  }
-
-  private func codingTest(decoder: JSONDecoder, encoder: JSONEncoder) -> (DefaultCoding, _ file: String, _ line: Int) -> Void {
-    return { [unowned self] (coding: DefaultCoding, file: String, line: Int) in
-      do {
-        let json = try encoder.encode(coding)
-        _ = try decoder.decode(NonEmptyCoding.self, from: json)
-        self.recordFailure(withDescription: "Decoding Data should not work: \(String(data: json, encoding: .utf8) ?? "no Json")", inFile: file, atLine: line, expected: true)
-      } catch let error as NonEmptyCodableError {
-        switch error {
-        case .emptyCollection:
-          break // success
-        }
-      } catch {
-        self.recordFailure(withDescription: error.localizedDescription, inFile: file, atLine: line, expected: false)
-      }
-    }
+    let dict = NonEmpty(rawValue: ["Hello": 1])!
+    XCTAssertEqual(dict, try JSONDecoder().decode(NonEmpty<[String: Int]>.self, from: JSONEncoder().encode(dict)))
+    XCTAssertEqual(dict, try JSONDecoder().decode(NonEmpty<[String: Int]>.self, from: Data(#"{"Hello":1}"#.utf8)))
+    XCTAssertThrowsError(try JSONDecoder().decode(NonEmpty<[String: Int]>.self, from: Data("{}".utf8)))
   }
 
   func testNonEmptySetWithTrivialValue() {
@@ -236,9 +175,9 @@ final class NonEmptyTests: XCTestCase {
 
   func testMutableCollectionWithArraySlice() {
     let numbers = Array(1...10)
-    var xs = NonEmpty(0, numbers[5...])
-    xs[1] = 43
-    XCTAssertEqual(43, xs[1])
+    var xs = NonEmpty(rawValue: numbers[5...])!
+    xs[6] = 43
+    XCTAssertEqual(43, xs[6])
   }
 }
 
@@ -247,22 +186,7 @@ struct TrivialHashable: Equatable, Comparable, Hashable {
   static func < (lhs: TrivialHashable, rhs: TrivialHashable) -> Bool {
     return lhs.value < rhs.value
   }
-  var hashValue: Int {
-    return 1
+  func hash(into hasher: inout Hasher) {
+    hasher.combine(self.value)
   }
-}
-
-struct DefaultCoding: Codable, Equatable {
-  let list: [String]
-  let numbered: [Int: String]
-}
-
-struct NonEmptyCoding: Codable, Equatable {
-  let list: NonEmptyArray<NonEmptyString>
-  let numbered: NonEmptyDictionary<Int, NonEmptyString>
-}
-
-func == (lhs: NonEmptyCoding, rhs: NonEmptyCoding) -> Bool {
-  return lhs.list == rhs.list
-    && lhs.numbered == rhs.numbered
 }

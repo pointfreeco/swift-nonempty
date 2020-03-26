@@ -1,22 +1,15 @@
-public typealias NonEmptySet<Element> = NonEmpty<Set<Element>> where Element: Hashable & Comparable
+public typealias NonEmptySet<Element> = NonEmpty<Set<Element>> where Element: Hashable
 
-extension NonEmpty where C: SetAlgebra, C.Element: Hashable & Comparable {
-  public init(_ head: Element, _ tail: C) {
-    var tail = tail
+// NB: `NonEmpty` does not conditionally conform to `SetAlgebra` because it contains destructive methods.
+extension NonEmpty where Collection: SetAlgebra, Collection.Element: Hashable {
+  public init(_ head: Collection.Element, _ tail: Collection.Element...) {
+    var tail = Collection(tail)
     tail.insert(head)
-    self.head = tail.min() ?? head 
-    tail.remove(self.head)
-    self.tail = tail
+    self.init(rawValue: tail)!
   }
 
-  public init(_ head: Element, _ tail: Element...) {
-    self.init(head, C(tail))
-  }
-
-  public func contains(_ member: Element) -> Bool {
-    var tail = self.tail
-    tail.insert(self.head)
-    return tail.contains(member)
+  public func contains(_ member: Collection.Element) -> Bool {
+    self.rawValue.contains(member)
   }
 
   public func union(_ other: NonEmpty) -> NonEmpty {
@@ -25,151 +18,135 @@ extension NonEmpty where C: SetAlgebra, C.Element: Hashable & Comparable {
     return copy
   }
 
-  public func union(_ other: C) -> NonEmpty {
+  public func union(_ other: Collection) -> NonEmpty {
     var copy = self
     copy.formUnion(other)
     return copy
   }
 
-  public func intersection(_ other: NonEmpty) -> C {
-    var tail = self.tail
-    tail.insert(self.head)
-    var otherTail = other.tail
-    otherTail.insert(other.head)
-    return tail.intersection(otherTail)
+  public func intersection(_ other: NonEmpty) -> Collection {
+    self.rawValue.intersection(other.rawValue)
   }
 
-  public func intersection(_ other: C) -> C {
-    var tail = self.tail
-    tail.insert(self.head)
-    return tail.intersection(other)
+  public func intersection(_ other: Collection) -> Collection {
+    self.rawValue.intersection(other)
   }
 
-  public func symmetricDifference(_ other: NonEmpty) -> C {
-    var tail = self.tail
-    tail.insert(self.head)
-    var otherTail = other.tail
-    otherTail.insert(other.head)
-    return tail.symmetricDifference(otherTail)
+  public func symmetricDifference(_ other: NonEmpty) -> Collection {
+    self.rawValue.symmetricDifference(other.rawValue)
   }
 
-  public func symmetricDifference(_ other: C) -> C {
-    var tail = self.tail
-    tail.insert(self.head)
-    return tail.symmetricDifference(other)
+  public func symmetricDifference(_ other: Collection) -> Collection {
+    self.rawValue.symmetricDifference(other)
   }
 
   @discardableResult
-  public mutating func insert(_ newMember: Element)
-    -> (inserted: Bool, memberAfterInsert: Element) {
-
-      var newMember = newMember
-      if newMember < self.head {
-        (self.head, newMember) = (newMember, self.head)
-      }
-      var (inserted, memberAfterInsert) = self.tail.insert(newMember)
-      if let _ = self.tail.remove(self.head) {
-        (inserted, self.head) = (false, memberAfterInsert)
-      }
-      return (inserted, memberAfterInsert)
+  public mutating func insert(_ newMember: Collection.Element) -> (inserted: Bool, memberAfterInsert: Collection.Element) {
+    self.rawValue.insert(newMember)
   }
 
-// TODO: Implement
-//  @discardableResult
-//  public mutating func update(with newMember: Collection.Element) -> Collection.Element? {
-//    fatalError()
-//  }
+  @discardableResult
+  public mutating func update(with newMember: Collection.Element) -> Collection.Element? {
+    self.rawValue.update(with: newMember)
+  }
 
   public mutating func formUnion(_ other: NonEmpty) {
-    self.tail.insert(self.head)
-    self.tail.insert(other.head)
-    self.tail.formUnion(other.tail)
-    self.head = tail.min() ?? self.head
-    self.tail.remove(self.head)
+    self.rawValue.formUnion(other.rawValue)
   }
 
-  public mutating func formUnion(_ other: C) {
-    self.tail.insert(self.head)
-    self.tail.formUnion(other)
-    self.head = tail.min() ?? self.head
-    self.tail.remove(self.head)
+  public mutating func formUnion(_ other: Collection) {
+    self.rawValue.formUnion(other)
   }
 
-  public func subtracting(_ other: NonEmpty) -> C {
-    var tail = self.tail
-    tail.insert(self.head)
-    tail.remove(other.head)
-    return tail.subtracting(other.tail)
+  public func subtracting(_ other: NonEmpty) -> Collection {
+    self.rawValue.subtracting(other.rawValue)
   }
 
-  public func subtracting(_ other: C) -> C {
-    var tail = self.tail
-    tail.insert(self.head)
-    return tail.subtracting(other)
+  public func subtracting(_ other: Collection) -> Collection {
+    self.rawValue.subtracting(other)
   }
 
   public func isDisjoint(with other: NonEmpty) -> Bool {
-    var (tail, otherTail) = (self.tail, other.tail)
-    tail.insert(self.head)
-    otherTail.insert(other.head)
-    return tail.isDisjoint(with: otherTail)
+    self.rawValue.isDisjoint(with: other.rawValue)
   }
 
-  public func isDisjoint(with other: C) -> Bool {
-    var tail = self.tail
-    tail.insert(self.head)
-    return tail.isDisjoint(with: other)
+  public func isDisjoint(with other: Collection) -> Bool {
+    self.rawValue.isDisjoint(with: other)
   }
 
   public func isSubset(of other: NonEmpty) -> Bool {
-    var (tail, otherTail) = (self.tail, other.tail)
-    tail.insert(self.head)
-    otherTail.insert(other.head)
-    return tail.isSubset(of: otherTail)
+    self.rawValue.isSubset(of: other.rawValue)
   }
 
-  public func isSubset(of other: C) -> Bool {
-    var tail = self.tail
-    tail.insert(self.head)
-    return tail.isSubset(of: other)
+  public func isSubset(of other: Collection) -> Bool {
+    self.rawValue.isSubset(of: other)
   }
 
   public func isSuperset(of other: NonEmpty) -> Bool {
-    var (tail, otherTail) = (self.tail, other.tail)
-    tail.insert(self.head)
-    otherTail.insert(other.head)
-    return tail.isSuperset(of: otherTail)
+    self.rawValue.isSuperset(of: other.rawValue)
   }
 
-  public func isSuperset(of other: C) -> Bool {
-    var tail = self.tail
-    tail.insert(self.head)
-    return tail.isSuperset(of: other)
+  public func isSuperset(of other: Collection) -> Bool {
+    self.rawValue.isSuperset(of: other)
   }
 
   public func isStrictSubset(of other: NonEmpty) -> Bool {
-    var (tail, otherTail) = (self.tail, other.tail)
-    tail.insert(self.head)
-    otherTail.insert(other.head)
-    return tail.isStrictSubset(of: otherTail)
+    self.rawValue.isStrictSubset(of: other.rawValue)
   }
 
-  public func isStrictSubset(of other: C) -> Bool {
-    var tail = self.tail
-    tail.insert(self.head)
-    return tail.isStrictSubset(of: other)
+  public func isStrictSubset(of other: Collection) -> Bool {
+    self.rawValue.isStrictSubset(of: other)
   }
 
   public func isStrictSuperset(of other: NonEmpty) -> Bool {
-    var (tail, otherTail) = (self.tail, other.tail)
-    tail.insert(self.head)
-    otherTail.insert(other.head)
-    return tail.isStrictSuperset(of: otherTail)
+    self.rawValue.isStrictSuperset(of: other.rawValue)
   }
 
-  public func isStrictSuperset(of other: C) -> Bool {
-    var tail = self.tail
-    tail.insert(self.head)
-    return tail.isStrictSuperset(of: other)
+  public func isStrictSuperset(of other: Collection) -> Bool {
+    self.rawValue.isStrictSuperset(of: other)
+  }
+}
+
+extension SetAlgebra where Self: Collection, Element: Hashable {
+  public func union(_ other: NonEmpty<Self>) -> NonEmpty<Self> {
+    var copy = other
+    copy.formUnion(self)
+    return copy
+  }
+
+  public func intersection(_ other: NonEmpty<Self>) -> Self {
+    self.intersection(other.rawValue)
+  }
+
+  public func symmetricDifference(_ other: NonEmpty<Self>) -> Self {
+    self.symmetricDifference(other.rawValue)
+  }
+
+  public mutating func formUnion(_ other: NonEmpty<Self>) {
+    self.formUnion(other.rawValue)
+  }
+
+  public func subtracting(_ other: NonEmpty<Self>) -> Self {
+    self.subtracting(other.rawValue)
+  }
+
+  public func isDisjoint(with other: NonEmpty<Self>) -> Bool {
+    self.isDisjoint(with: other.rawValue)
+  }
+
+  public func isSubset(of other: NonEmpty<Self>) -> Bool {
+    self.isSubset(of: other.rawValue)
+  }
+
+  public func isSuperset(of other: NonEmpty<Self>) -> Bool {
+    self.isSuperset(of: other.rawValue)
+  }
+
+  public func isStrictSubset(of other: NonEmpty<Self>) -> Bool {
+    self.isStrictSubset(of: other.rawValue)
+  }
+
+  public func isStrictSuperset(of other: NonEmpty<Self>) -> Bool {
+    self.isStrictSuperset(of: other.rawValue)
   }
 }

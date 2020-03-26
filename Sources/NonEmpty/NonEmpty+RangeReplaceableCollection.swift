@@ -1,77 +1,59 @@
-extension NonEmpty where C: RangeReplaceableCollection {
+// NB: `NonEmpty` does not conditionally conform to `RangeReplaceableCollection` because it contains destructive methods.
+extension NonEmpty where Collection: RangeReplaceableCollection {
   public init(_ head: Element, _ tail: Element...) {
-    self.init(head, C(tail))
+    var tail = tail
+    tail.insert(head, at: tail.startIndex)
+    self.init(rawValue: Collection(tail))!
   }
 
   public mutating func append(_ newElement: Element) {
-    self.tail.append(newElement)
+    self.rawValue.append(newElement)
   }
 
   public mutating func append<S: Sequence>(contentsOf newElements: S) where Element == S.Element {
-    self.tail.append(contentsOf: newElements)
+    self.rawValue.append(contentsOf: newElements)
   }
 
   public mutating func insert(_ newElement: Element, at i: Index) {
-    switch i {
-    case .head:
-      self.tail.insert(self.head, at: self.tail.startIndex)
-      self.head = newElement
-    case let .tail(index):
-      self.tail.insert(newElement, at: self.tail.index(after: index))
-    }
+    self.rawValue.insert(newElement, at: i)
   }
 
-  public mutating func insert<S>(contentsOf newElements: S, at i: Index)
-    where S: Collection, Element == S.Element {
-
-      switch i {
-      case .head:
-        guard let first = newElements.first else { return }
-        var tail = C(newElements.dropFirst())
-        tail.append(self.head)
-        self.tail.insert(contentsOf: tail, at: self.tail.startIndex)
-        self.head = first
-      case let .tail(index):
-        self.tail.insert(contentsOf: newElements, at: self.tail.index(after: index))
-      }
-  }
-
-  public static func + <S: Sequence>(lhs: NonEmpty, rhs: S) -> NonEmpty where Element == S.Element {
-    var tail = lhs.tail
-    tail.append(contentsOf: rhs)
-    return NonEmpty(lhs.head, tail)
+  public mutating func insert<S>(
+    contentsOf newElements: S, at i: Index
+  ) where S: Swift.Collection, Element == S.Element {
+    self.rawValue.insert(contentsOf: newElements, at: i)
   }
 
   public static func += <S: Sequence>(lhs: inout NonEmpty, rhs: S) where Element == S.Element {
     lhs.append(contentsOf: rhs)
   }
-}
 
-extension NonEmpty where C: RangeReplaceableCollection, C.Index == Int {
-  public mutating func insert(_ newElement: Element, at i: Int) {
-    self.insert(newElement, at: i == self.tail.startIndex ? .head : .tail(i - 1))
+  public static func + <S: Sequence>(lhs: NonEmpty, rhs: S) -> NonEmpty where Element == S.Element {
+    var lhs = lhs
+    lhs += rhs
+    return lhs
   }
 
-  public mutating func insert<S>(contentsOf newElements: S, at i: Int)
-    where S: Collection, Element == S.Element {
-
-      self.insert(contentsOf: newElements, at: i == self.tail.startIndex ? .head : .tail(i - 1))
-  }
-}
-
-extension NonEmpty {
-  public func joined<S: Sequence, RRC: RangeReplaceableCollection>(
-    separator: S
-    )
-    -> NonEmpty<RRC>
-    where Element == NonEmpty<RRC>, S.Element == RRC.Element {
-
-      return NonEmpty<RRC>(
-        self.head.head, self.head.tail + RRC(separator) + RRC(self.tail.joined(separator: separator))
-      )
-  }
-
-  public func joined<RRC: RangeReplaceableCollection>() -> NonEmpty<RRC> where Element == NonEmpty<RRC> {
-      return joined(separator: RRC())
+  public static func + <S: Sequence>(lhs: S, rhs: NonEmpty) -> NonEmpty where Element == S.Element {
+    var rhs = rhs
+    rhs.insert(contentsOf: ContiguousArray(lhs), at: rhs.startIndex)
+    return rhs
   }
 }
+
+//extension NonEmpty {
+//  public func joined<S: Sequence, RRC: RangeReplaceableCollection>(
+//    separator: S
+//  )
+//    -> NonEmpty<RRC>
+//    where Element == NonEmpty<RRC>, S.Element == RRC.Element {
+//
+//      return NonEmpty<RRC>(
+//        self.head.head, self.head.tail + RRC(separator) + RRC(self.tail.joined(separator: separator))
+//      )
+//  }
+//
+//  public func joined<RRC: RangeReplaceableCollection>() -> NonEmpty<RRC> where Element == NonEmpty<RRC> {
+//    return joined(separator: RRC())
+//  }
+//}
