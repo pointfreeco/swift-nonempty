@@ -171,7 +171,7 @@ Submodule, clone, or download NonEmpty, and drag `NonEmpty.xcodeproj` into your 
 
 ## Interested in learning more?
 
-These concepts (and more) are explored thoroughly in [Point-Free](https://www.pointfree.co), a video series exploring functional programming and Swift hosted by [Brandon Williams](https://github.com/mbrandonw) and [Stephen Celis](https://github.com/stephencelis).
+These concepts (and more) are explored thoroughly in [Point-Free](https://www.pointfree.co), a video series exploring functional programming and Swift hosted by [Brandon Williams](https://twitter.com/mbrandonw) and [Stephen Celis](https://twitter.com/stephencelis).
 
 NonEmpty was first explored in [Episode #20](https://www.pointfree.co/episodes/ep20-nonempty):
 
