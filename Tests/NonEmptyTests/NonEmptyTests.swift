@@ -106,6 +106,13 @@ final class NonEmptyTests: XCTestCase {
     XCTAssertFalse(NonEmptySet(1, 2, 3).isDisjoint(with: [3, 4, 5]))
   }
 
+  func testSetAlgebraAnyCollectionInitialization() {
+    let array: [Int] = [1, 2, 3]
+    XCTAssertEqual(NonEmptySet(AnyCollection(array)), NonEmptySet(1, 2, 3))
+    XCTAssertEqual(NonEmptySet(array), NonEmptySet(1, 2, 3))
+    XCTAssertEqual(NonEmptySet(array[0..<2]), NonEmptySet(1, 2))
+  }
+
   func testDictionary() {
     let nonEmptyDict1 = NonEmpty(("1", "Blob"), ["1": "Blobbo"], uniquingKeysWith: { $1 })
     XCTAssertEqual(1, nonEmptyDict1.count)
