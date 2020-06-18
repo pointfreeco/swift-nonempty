@@ -6,6 +6,10 @@ extension NonEmpty where Collection: RangeReplaceableCollection {
     self.init(rawValue: Collection(tail))!
   }
 
+  public init<C>(_ collection: NonEmpty<C>) where Collection.Element == C.Element {
+    self.init(rawValue: Collection(collection))!
+  }
+
   public mutating func append(_ newElement: Element) {
     self.rawValue.append(newElement)
   }

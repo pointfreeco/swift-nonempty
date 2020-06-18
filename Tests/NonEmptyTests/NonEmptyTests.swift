@@ -179,6 +179,18 @@ final class NonEmptyTests: XCTestCase {
     xs[6] = 43
     XCTAssertEqual(43, xs[6])
   }
+
+  func testNonEmptyArrayConversion() {
+    let ints = NonEmptyArray(1, 2, 3)
+    let strings: NonEmptyArray<String> = NonEmptyArray(ints.map(String.init))
+    XCTAssertEqual(strings, NonEmptyArray("1", "2", "3"))
+  }
+
+  func testNonEmptySetConversion() {
+    let ints = NonEmptySet(1, 2, 3)
+    let strings: NonEmptySet<String> = NonEmptySet(ints.map(String.init))
+    XCTAssertEqual(strings, NonEmptySet("1", "2", "3"))
+  }
 }
 
 struct TrivialHashable: Equatable, Comparable, Hashable {
