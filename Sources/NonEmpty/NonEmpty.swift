@@ -2,6 +2,8 @@
 public struct NonEmpty<Collection: Swift.Collection>: Swift.Collection {
   public typealias Element = Collection.Element
   public typealias Index = Collection.Index
+  public typealias Iterator = Collection.Iterator
+  public typealias SubSequence = Collection.SubSequence
 
   public internal(set) var rawValue: Collection
 
@@ -12,6 +14,10 @@ public struct NonEmpty<Collection: Swift.Collection>: Swift.Collection {
 
   public subscript<Subject>(dynamicMember keyPath: KeyPath<Collection, Subject>) -> Subject {
     self.rawValue[keyPath: keyPath]
+  }
+
+  public func makeIterator() -> Iterator {
+    self.rawValue.makeIterator()
   }
 
   public var startIndex: Index { self.rawValue.startIndex }
