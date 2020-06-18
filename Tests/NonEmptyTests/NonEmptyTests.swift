@@ -182,7 +182,7 @@ final class NonEmptyTests: XCTestCase {
 
   func testNonEmptyArrayConversion() {
     let ints = NonEmptyArray(1, 2, 3)
-    let strings: NonEmptyArray<String> = NonEmptyArray(ints.map(String.init))
+    let strings: NonEmptyArray<String> = NonEmptyArray(NonEmptySet(ints.map(String.init)))
     XCTAssertEqual(strings, NonEmptyArray("1", "2", "3"))
   }
 
