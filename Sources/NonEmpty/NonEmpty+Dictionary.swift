@@ -7,10 +7,10 @@ public protocol _DictionaryProtocol: Collection where Element == (key: Key, valu
   subscript(key: Key) -> Value? { get set }
   mutating func merge<S: Sequence>(
     _ other: S, uniquingKeysWith combine: (Value, Value) throws -> Value
-    ) rethrows where S.Element == (Key, Value)
+  ) rethrows where S.Element == (Key, Value)
   mutating func merge(
     _ other: [Key: Value], uniquingKeysWith combine: (Value, Value) throws -> Value
-    ) rethrows
+  ) rethrows
   @discardableResult mutating func removeValue(forKey key: Key) -> Value?
   mutating func updateValue(_ value: Value, forKey key: Key) -> Value?
 }
@@ -80,7 +80,9 @@ extension NonEmpty where Collection: _DictionaryProtocol {
     return copy
   }
 
-  public mutating func updateValue(_ value: Collection.Value, forKey key: Collection.Key) -> Collection.Value? {
+  public mutating func updateValue(_ value: Collection.Value, forKey key: Collection.Key)
+    -> Collection.Value?
+  {
     self.rawValue.updateValue(value, forKey: key)
   }
 }

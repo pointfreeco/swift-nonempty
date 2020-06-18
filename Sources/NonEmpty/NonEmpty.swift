@@ -54,7 +54,8 @@ public struct NonEmpty<Collection: Swift.Collection>: Swift.Collection {
     self.rawValue.randomElement()!
   }
 
-  public func shuffled<T>(using generator: inout T) -> NonEmpty<[Element]> where T: RandomNumberGenerator {
+  public func shuffled<T>(using generator: inout T) -> NonEmpty<[Element]>
+  where T: RandomNumberGenerator {
     NonEmpty<[Element]>(rawValue: self.rawValue.shuffled(using: &generator))!
   }
 

@@ -1,4 +1,5 @@
 import XCTest
+
 @testable import NonEmpty
 
 final class NonEmptyTests: XCTestCase {
@@ -110,7 +111,8 @@ final class NonEmptyTests: XCTestCase {
     let nonEmptyDict1 = NonEmpty(("1", "Blob"), ["1": "Blobbo"], uniquingKeysWith: { $1 })
     XCTAssertEqual(1, nonEmptyDict1.count)
     XCTAssertEqual("Blobbo", nonEmptyDict1["1"])
-    XCTAssertEqual("Blob", NonEmpty(("1", "Blob"), ["1": "Blobbo"], uniquingKeysWith: { v, _ in v })["1"])
+    XCTAssertEqual(
+      "Blob", NonEmpty(("1", "Blob"), ["1": "Blobbo"], uniquingKeysWith: { v, _ in v })["1"])
 
     let nonEmptySingleton1 = NonEmptyDictionary((key: "1", value: "Blob"))
     XCTAssertEqual(1, nonEmptySingleton1.count)
@@ -151,19 +153,28 @@ final class NonEmptyTests: XCTestCase {
 
   func testCodable() throws {
     let xs = NonEmptyArray(1, 2, 3)
-    XCTAssertEqual(xs, try JSONDecoder().decode(NonEmptyArray<Int>.self, from: JSONEncoder().encode(xs)))
-    XCTAssertEqual(xs, try JSONDecoder().decode(NonEmptyArray<Int>.self, from: Data("[1,2,3]".utf8)))
+    XCTAssertEqual(
+      xs, try JSONDecoder().decode(NonEmptyArray<Int>.self, from: JSONEncoder().encode(xs)))
+    XCTAssertEqual(
+      xs, try JSONDecoder().decode(NonEmptyArray<Int>.self, from: Data("[1,2,3]".utf8)))
     XCTAssertThrowsError(try JSONDecoder().decode(NonEmptyArray<Int>.self, from: Data("[]".utf8)))
 
     let str = NonEmptyString(rawValue: "Hello")!
-    XCTAssertEqual([str], try JSONDecoder().decode([NonEmptyString].self, from: JSONEncoder().encode([str])))
-    XCTAssertEqual([str], try JSONDecoder().decode([NonEmptyString].self, from: Data(#"["Hello"]"#.utf8)))
+    XCTAssertEqual(
+      [str], try JSONDecoder().decode([NonEmptyString].self, from: JSONEncoder().encode([str])))
+    XCTAssertEqual(
+      [str], try JSONDecoder().decode([NonEmptyString].self, from: Data(#"["Hello"]"#.utf8)))
     XCTAssertThrowsError(try JSONDecoder().decode([NonEmptyString].self, from: Data(#"[""]"#.utf8)))
 
     let dict = NonEmpty(rawValue: ["Hello": 1])!
-    XCTAssertEqual(dict, try JSONDecoder().decode(NonEmpty<[String: Int]>.self, from: JSONEncoder().encode(dict)))
-    XCTAssertEqual(dict, try JSONDecoder().decode(NonEmpty<[String: Int]>.self, from: Data(#"{"Hello":1}"#.utf8)))
-    XCTAssertThrowsError(try JSONDecoder().decode(NonEmpty<[String: Int]>.self, from: Data("{}".utf8)))
+    XCTAssertEqual(
+      dict, try JSONDecoder().decode(NonEmpty<[String: Int]>.self, from: JSONEncoder().encode(dict))
+    )
+    XCTAssertEqual(
+      dict, try JSONDecoder().decode(NonEmpty<[String: Int]>.self, from: Data(#"{"Hello":1}"#.utf8))
+    )
+    XCTAssertThrowsError(
+      try JSONDecoder().decode(NonEmpty<[String: Int]>.self, from: Data("{}".utf8)))
   }
 
   func testNonEmptySetWithTrivialValue() {

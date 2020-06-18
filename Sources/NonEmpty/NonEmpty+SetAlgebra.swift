@@ -41,7 +41,9 @@ extension NonEmpty where Collection: SetAlgebra, Collection.Element: Hashable {
   }
 
   @discardableResult
-  public mutating func insert(_ newMember: Collection.Element) -> (inserted: Bool, memberAfterInsert: Collection.Element) {
+  public mutating func insert(_ newMember: Collection.Element) -> (
+    inserted: Bool, memberAfterInsert: Collection.Element
+  ) {
     self.rawValue.insert(newMember)
   }
 
