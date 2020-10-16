@@ -3,7 +3,7 @@ import Foundation
 import PackageDescription
 
 let package = Package(
-  name: "NonEmpty",
+  name: "swift-nonempty",
   products: [
     .library(name: "NonEmpty", targets: ["NonEmpty"]),
   ],
