@@ -69,7 +69,10 @@ where
     public var utf16: UTF16View { self.rawValue.utf16 }
     public var unicodeScalars: UnicodeScalarView { self.rawValue.unicodeScalars }
 
+    @_disfavoredOverload
     public func lowercased() -> String { self.rawValue.lowercased() }
+
+    @_disfavoredOverload
     public func uppercased() -> String { self.rawValue.uppercased() }
 
     public init<C, Encoding>(
@@ -120,7 +123,10 @@ where
     public var utf16: UTF16View { self.rawValue.utf16 }
     public var unicodeScalars: UnicodeScalarView { self.rawValue.unicodeScalars }
 
+    @_disfavoredOverload
     public func lowercased() -> String { self.rawValue.lowercased() }
+
+    @_disfavoredOverload
     public func uppercased() -> String { self.rawValue.uppercased() }
 
     public init<C, Encoding>(
