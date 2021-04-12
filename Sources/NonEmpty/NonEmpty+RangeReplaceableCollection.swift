@@ -6,7 +6,7 @@ extension NonEmpty where Collection: RangeReplaceableCollection {
     self.init(rawValue: Collection(tail))!
   }
 
-  public init?<S>(_ elements: S) where S: Sequence, Self.Element == S.Element {
+  public init?<S>(_ elements: S) where S: Sequence, Collection.Element == S.Element {
     self.init(rawValue: Collection(elements))
   }
 
