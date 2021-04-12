@@ -26,6 +26,8 @@ public struct NonEmpty<Collection: Swift.Collection>: Swift.Collection {
 
   public subscript(position: Index) -> Element { self.rawValue[position] }
 
+  public subscript(bounds: Range<Index>) -> SubSequence { self.rawValue[bounds] }
+
   public func index(after i: Index) -> Index {
     self.rawValue.index(after: i)
   }

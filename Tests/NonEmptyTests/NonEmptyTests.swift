@@ -35,6 +35,11 @@ final class NonEmptyTests: XCTestCase {
     XCTAssertEqual(43, xs[1])
   }
 
+  func testRangeSubscript() {
+    let xs = NonEmptyArray(1, 2, 3, 4)
+    XCTAssertEqual([2, 3], xs[1...2])
+  }
+
   func testRangeReplaceableCollection() {
     var xs = NonEmptyArray(1, 2, 3)
 
