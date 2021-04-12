@@ -8,6 +8,10 @@ extension NonEmpty where Collection: SetAlgebra, Collection.Element: Hashable {
     self.init(rawValue: tail)!
   }
 
+  public init?<S>(_ elements: S) where S: Sequence, Self.Element == S.Element {
+    self.init(rawValue: Collection(elements))
+  }
+
   public func contains(_ member: Collection.Element) -> Bool {
     self.rawValue.contains(member)
   }
