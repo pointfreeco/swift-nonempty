@@ -1,5 +1,11 @@
 public typealias NonEmptyString = NonEmpty<String>
 
+extension NonEmptyString {
+  public init?<T>(_ value: T) where T: LosslessStringConvertible {
+    self.init(String(value))
+  }
+}
+
 extension NonEmpty: ExpressibleByUnicodeScalarLiteral
 where Collection: ExpressibleByUnicodeScalarLiteral {
   public typealias UnicodeScalarLiteralType = Collection.UnicodeScalarLiteralType
