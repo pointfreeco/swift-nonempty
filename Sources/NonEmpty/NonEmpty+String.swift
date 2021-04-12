@@ -1,6 +1,7 @@
 public typealias NonEmptyString = NonEmpty<String>
 
 extension NonEmptyString {
+  @_disfavoredOverload
   public init?<T>(_ value: T) where T: LosslessStringConvertible {
     self.init(String(value))
   }
