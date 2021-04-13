@@ -49,7 +49,7 @@ extension NonEmpty {
   public func joined<S: Sequence, C: RangeReplaceableCollection>(
     separator: S
   )
-  -> NonEmpty<C>
+    -> NonEmpty<C>
   where Element == NonEmpty<C>, S.Element == C.Element {
     NonEmpty<C>(rawValue: C(self.rawValue.joined(separator: separator)))!
   }

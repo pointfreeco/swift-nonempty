@@ -4,7 +4,7 @@ import PackageDescription
 let package = Package(
   name: "swift-nonempty",
   products: [
-    .library(name: "NonEmpty", targets: ["NonEmpty"]),
+    .library(name: "NonEmpty", targets: ["NonEmpty"])
   ],
   targets: [
     .target(name: "NonEmpty", dependencies: []),
