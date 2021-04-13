@@ -6,6 +6,10 @@ extension NonEmpty where Collection: RangeReplaceableCollection {
     self.init(rawValue: Collection(tail))!
   }
 
+  public init?<S>(_ elements: S) where S: Sequence, Collection.Element == S.Element {
+    self.init(rawValue: Collection(elements))
+  }
+
   public mutating func append(_ newElement: Element) {
     self.rawValue.append(newElement)
   }
@@ -41,19 +45,17 @@ extension NonEmpty where Collection: RangeReplaceableCollection {
   }
 }
 
-//extension NonEmpty {
-//  public func joined<S: Sequence, RRC: RangeReplaceableCollection>(
-//    separator: S
-//  )
-//    -> NonEmpty<RRC>
-//    where Element == NonEmpty<RRC>, S.Element == RRC.Element {
-//
-//      return NonEmpty<RRC>(
-//        self.head.head, self.head.tail + RRC(separator) + RRC(self.tail.joined(separator: separator))
-//      )
-//  }
-//
-//  public func joined<RRC: RangeReplaceableCollection>() -> NonEmpty<RRC> where Element == NonEmpty<RRC> {
-//    return joined(separator: RRC())
-//  }
-//}
+extension NonEmpty {
+  public func joined<S: Sequence, C: RangeReplaceableCollection>(
+    separator: S
+  )
+  -> NonEmpty<C>
+  where Element == NonEmpty<C>, S.Element == C.Element {
+    NonEmpty<C>(rawValue: C(self.rawValue.joined(separator: separator)))!
+  }
+
+  public func joined<C: RangeReplaceableCollection>() -> NonEmpty<C>
+  where Element == NonEmpty<C> {
+    return joined(separator: C())
+  }
+}

@@ -1,5 +1,12 @@
 public typealias NonEmptyString = NonEmpty<String>
 
+extension NonEmptyString {
+  @_disfavoredOverload
+  public init?<T>(_ value: T) where T: LosslessStringConvertible {
+    self.init(String(value))
+  }
+}
+
 extension NonEmpty: ExpressibleByUnicodeScalarLiteral
 where Collection: ExpressibleByUnicodeScalarLiteral {
   public typealias UnicodeScalarLiteralType = Collection.UnicodeScalarLiteralType
@@ -62,7 +69,10 @@ where
     public var utf16: UTF16View { self.rawValue.utf16 }
     public var unicodeScalars: UnicodeScalarView { self.rawValue.unicodeScalars }
 
+    @_disfavoredOverload
     public func lowercased() -> String { self.rawValue.lowercased() }
+
+    @_disfavoredOverload
     public func uppercased() -> String { self.rawValue.uppercased() }
 
     public init<C, Encoding>(
@@ -113,7 +123,10 @@ where
     public var utf16: UTF16View { self.rawValue.utf16 }
     public var unicodeScalars: UnicodeScalarView { self.rawValue.unicodeScalars }
 
+    @_disfavoredOverload
     public func lowercased() -> String { self.rawValue.lowercased() }
+
+    @_disfavoredOverload
     public func uppercased() -> String { self.rawValue.uppercased() }
 
     public init<C, Encoding>(

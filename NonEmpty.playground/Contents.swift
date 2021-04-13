@@ -2,7 +2,7 @@ import NonEmpty
 
 let xs = NonEmptyArray(42, 1, 3, 2)
 
-xs
+let str: NonEmptyString = xs
   .sorted()
-  .map(NonEmptyString.init)
+  .map { NonEmptyString($0)! }
   .joined(separator: ",")

@@ -42,6 +42,9 @@ final class NonEmptyTests: XCTestCase {
 
   func testRangeReplaceableCollection() {
     var xs = NonEmptyArray(1, 2, 3)
+
+    XCTAssertEqual(xs, NonEmptyArray([1, 2, 3]))
+
     xs.append(4)
     XCTAssertEqual(NonEmptyArray(1, 2, 3, 4), xs)
     xs.append(contentsOf: [5, 6])
@@ -76,6 +79,9 @@ final class NonEmptyTests: XCTestCase {
     XCTAssertEqual([1, 2, 4, 5], NonEmptySet(1, 2, 3).symmetricDifference([3, 4, 5]))
 
     var xs = NonEmptySet(1, 2, 3)
+
+    XCTAssertEqual(xs, NonEmptySet([1, 2, 3]))
+
     var (inserted, memberAfterInsert) = xs.insert(1)
     XCTAssertFalse(inserted)
     XCTAssertEqual(1, memberAfterInsert)
