@@ -143,13 +143,9 @@ If you want to use NonEmpty in a project that uses [SwiftPM](https://swift.org/p
 
 ``` swift
 dependencies: [
-  .package(url: "https://github.com/pointfreeco/swift-nonempty.git", from: "0.2.2")
+  .package(url: "https://github.com/pointfreeco/swift-nonempty.git", from: "0.3.0")
 ]
 ```
-
-### Xcode Sub-project
-
-Submodule, clone, or download NonEmpty, and drag `NonEmpty.xcodeproj` into your project.
 
 ## Interested in learning more?
 
