@@ -28,23 +28,23 @@ extension NonEmpty where Collection: RangeReplaceableCollection {
     self.rawValue.insert(contentsOf: newElements, at: i)
   }
 
-  public static func += <S: Sequence>(lhs: inout NonEmpty, rhs: S) where Element == S.Element {
+  public static func += <S: Sequence>(lhs: inout Self, rhs: S) where Element == S.Element {
     lhs.append(contentsOf: rhs)
   }
   
-  public static func + (lhs: NonEmpty, rhs: NonEmpty) -> NonEmpty {
+  public static func + (lhs: Self, rhs: Self) -> Self {
     var lhs = lhs
     lhs += rhs
     return lhs
   }
 
-  public static func + <S: Sequence>(lhs: NonEmpty, rhs: S) -> NonEmpty where Element == S.Element {
+  public static func + <S: Sequence>(lhs: Self, rhs: S) -> Self where Element == S.Element {
     var lhs = lhs
     lhs += rhs
     return lhs
   }
 
-  public static func + <S: Sequence>(lhs: S, rhs: NonEmpty) -> NonEmpty where Element == S.Element {
+  public static func + <S: Sequence>(lhs: S, rhs: Self) -> Self where Element == S.Element {
     var rhs = rhs
     rhs.insert(contentsOf: ContiguousArray(lhs), at: rhs.startIndex)
     return rhs
