@@ -20,6 +20,8 @@ final class NonEmptyTests: XCTestCase {
     XCTAssertEqual(2, xs.max(by: >) + 1)
     XCTAssertEqual(NonEmptyArray(3, 2, 1), xs.sorted(by: >))
     XCTAssertEqual([1, 2, 3], Array(xs))
+
+    XCTAssertEqual(NonEmptyArray(1, 2, 3, 1, 2, 3), xs + xs)
   }
 
   func testBidirectionalCollection() {
