@@ -31,7 +31,7 @@ extension NonEmpty where Collection: RangeReplaceableCollection {
   public static func += <S: Sequence>(lhs: inout Self, rhs: S) where Element == S.Element {
     lhs.append(contentsOf: rhs)
   }
-  
+
   public static func + (lhs: Self, rhs: Self) -> Self {
     var lhs = lhs
     lhs += rhs
