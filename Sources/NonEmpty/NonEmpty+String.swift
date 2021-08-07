@@ -102,7 +102,7 @@ where
       encodedAs targetEncoding: Encoding.Type,
       _ body: (UnsafePointer<Encoding.CodeUnit>) throws -> Result
     ) rethrows -> Result where Encoding: _UnicodeEncoding {
-      try self.withCString(encodedAs: targetEncoding, body)
+      try self.rawValue.withCString(encodedAs: targetEncoding, body)
     }
 
     public func lowercased() -> NonEmptyString {

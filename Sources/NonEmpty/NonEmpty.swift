@@ -2,8 +2,6 @@
 public struct NonEmpty<Collection: Swift.Collection>: Swift.Collection {
   public typealias Element = Collection.Element
   public typealias Index = Collection.Index
-  public typealias Iterator = Collection.Iterator
-  public typealias SubSequence = Collection.SubSequence
 
   public internal(set) var rawValue: Collection
 
@@ -16,17 +14,11 @@ public struct NonEmpty<Collection: Swift.Collection>: Swift.Collection {
     self.rawValue[keyPath: keyPath]
   }
 
-  public func makeIterator() -> Iterator {
-    self.rawValue.makeIterator()
-  }
-
   public var startIndex: Index { self.rawValue.startIndex }
 
   public var endIndex: Index { self.rawValue.endIndex }
 
   public subscript(position: Index) -> Element { self.rawValue[position] }
-
-  public subscript(bounds: Range<Index>) -> SubSequence { self.rawValue[bounds] }
 
   public func index(after i: Index) -> Index {
     self.rawValue.index(after: i)
@@ -136,8 +128,7 @@ extension NonEmpty: BidirectionalCollection where Collection: BidirectionalColle
 
 extension NonEmpty: MutableCollection where Collection: MutableCollection {
   public subscript(position: Index) -> Element {
-    get { self.rawValue[position] }
-    set { self.rawValue[position] = newValue }
+    _read { yield self.rawValue[position] }
     _modify { yield &self.rawValue[position] }
   }
 }
