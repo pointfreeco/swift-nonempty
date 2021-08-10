@@ -1,10 +1,10 @@
 import XCTest
 
+@testable import NonEmpty
+
 #if canImport(SwiftUI)
   import SwiftUI
 #endif
-
-@testable import NonEmpty
 
 final class NonEmptyTests: XCTestCase {
   func testCollection() {
