@@ -1,5 +1,9 @@
 import XCTest
 
+#if canImport(SwiftUI)
+  import SwiftUI
+#endif
+
 @testable import NonEmpty
 
 final class NonEmptyTests: XCTestCase {
@@ -203,6 +207,14 @@ final class NonEmptyTests: XCTestCase {
     xs[6] = 43
     XCTAssertEqual(43, xs[6])
   }
+
+  #if canImport(SwiftUI)
+    func testMove() {
+      var xs: NonEmptyArray<String> = .init("A", "B", "C")
+      xs.move(fromOffsets: [1], toOffset: 3)
+      XCTAssertEqual(.init("A", "C", "B"), xs)
+    }
+  #endif
 }
 
 struct TrivialHashable: Equatable, Comparable, Hashable {
