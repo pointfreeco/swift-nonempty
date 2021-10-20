@@ -15,7 +15,6 @@ jobs:
     strategy:
       matrix:
         xcode:
-          - '11.3'
           - '11.7'
           - '12.4'
           - '12.5.1'
