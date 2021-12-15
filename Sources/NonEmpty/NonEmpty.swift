@@ -10,8 +10,9 @@ public struct NonEmpty<Collection: Swift.Collection>: Swift.Collection {
     self.rawValue = rawValue
   }
 
-  public subscript<Subject>(dynamicMember keyPath: KeyPath<Collection, Subject>) -> Subject {
-    self.rawValue[keyPath: keyPath]
+  public subscript<Subject>(dynamicMember keyPath: WritableKeyPath<Collection, Subject>) -> Subject {
+    _read { yield self.rawValue[keyPath: keyPath] }
+    _modify { yield &self.rawValue[keyPath: keyPath] }
   }
 
   public var startIndex: Index { self.rawValue.startIndex }
