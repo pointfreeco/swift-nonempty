@@ -3,24 +3,28 @@ public struct NonEmpty<Collection: Swift.Collection>: Swift.Collection {
   public typealias Element = Collection.Element
   public typealias Index = Collection.Index
 
-  public internal(set) var head: Collection.Element
+  public var head: Collection.Element { self[self.startIndex] }
   public internal(set) var tail: Slice<Collection>
 
-//  public init(head: Collection.Element, tail: Collection) {
-//    self.head = head
-//    self.tail = Slice(base: tail, bounds: tail.startIndex..<tail.endIndex)
-//  }
-
-  public init(from rawValue: Collection) throws {
-    guard let head = rawValue.first else {
+  public init(from rawValue: Slice<Collection>) throws {
+    guard !rawValue.isEmpty else {
       throw Self.Error.emptyCollection
     }
-    self.head = head
-    self.tail = Slice(base: rawValue, bounds: (rawValue.index(after: rawValue.startIndex))..<rawValue.endIndex)
+    let bounds = (rawValue.index(after: rawValue.startIndex))..<rawValue.endIndex
+    self.tail = Slice(base: rawValue.base, bounds: bounds)
+  }
+
+  public init(from rawValue: Collection) throws {
+    try self.init(from: Slice(base: rawValue, bounds: rawValue.startIndex..<rawValue.endIndex))
   }
 
   public init?(rawValue: Collection) {
     try? self.init(from: rawValue)
+  }
+
+  public init<C: Swift.Collection>(_ nonEmpty: NonEmpty<C>) throws where Collection == NonEmpty<C> {
+    let tail = try NonEmpty<C>(from: nonEmpty.tail)
+    self.tail = Slice(base: nonEmpty, bounds: tail.startIndex..<tail.endIndex)
   }
 
   public subscript<Subject>(dynamicMember keyPath: KeyPath<Collection, Subject>) -> Subject {
@@ -127,7 +131,6 @@ extension NonEmpty: RawRepresentable {
   public internal(set) var rawValue: Collection {
     get { self.tail.base }
     set {
-      self.head = newValue.first!
       self.tail = Slice(base: newValue, bounds: (newValue.index(after: newValue.startIndex))..<newValue.endIndex)
     }
   }

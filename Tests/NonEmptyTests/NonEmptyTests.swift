@@ -215,6 +215,41 @@ final class NonEmptyTests: XCTestCase {
       XCTAssertEqual(.init("A", "C", "B"), xs)
     }
   #endif
+
+  func testNestedNonEmpty() throws {
+    let digits = Array(1...10)
+    try XCTAssertEqual(AtLeast1(digits).first,   1)
+    try XCTAssertEqual(AtLeast2(digits).second,  2)
+    try XCTAssertEqual(AtLeast3(digits).third,   3)
+    try XCTAssertEqual(AtLeast4(digits).fourth,  4)
+    try XCTAssertEqual(AtLeast5(digits).fifth,   5)
+    try XCTAssertEqual(AtLeast6(digits).sixth,   6)
+    try XCTAssertEqual(AtLeast7(digits).seventh, 7)
+    try XCTAssertEqual(AtLeast8(digits).eighth,  8)
+    try XCTAssertEqual(AtLeast9(digits).ninth,   9)
+    try XCTAssertEqual(AtLeast10(digits).tenth, 10)
+
+    let atLeast10 = try AtLeast10(digits)
+    XCTAssertEqual(atLeast10.first,   1)
+    XCTAssertEqual(atLeast10.second,  2)
+    XCTAssertEqual(atLeast10.third,   3)
+    XCTAssertEqual(atLeast10.fourth,  4)
+    XCTAssertEqual(atLeast10.fifth,   5)
+    XCTAssertEqual(atLeast10.sixth,   6)
+    XCTAssertEqual(atLeast10.seventh, 7)
+    XCTAssertEqual(atLeast10.eighth,  8)
+    XCTAssertEqual(atLeast10.ninth,   9)
+    XCTAssertEqual(atLeast10.tenth,  10)
+
+    let exactly21 = try AtLeast10(AtLeast10([0] + digits + digits.map { $0 + 10 }))
+    XCTAssertEqual(exactly21.count, 21)
+    XCTAssertEqual(exactly21[12], 12)
+
+    let atLeast42 = try AtLeast10(AtLeast10(AtLeast10(AtLeast10(AtLeast2(Array(1...100))))))
+    XCTAssertEqual(atLeast42.count, 100)
+    XCTAssertEqual(atLeast42.drop10.drop10.count, 80)
+    XCTAssertEqual(atLeast42.drop10.drop10.drop10.drop10.second, 42)
+  }
 }
 
 struct TrivialHashable: Equatable, Comparable, Hashable {
