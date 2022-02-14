@@ -5,9 +5,15 @@ public struct NonEmpty<Collection: Swift.Collection>: Swift.Collection {
 
   public internal(set) var rawValue: Collection
 
-  public init?(rawValue: Collection) {
-    guard !rawValue.isEmpty else { return nil }
+  public init(from rawValue: Collection) throws {
+    guard !rawValue.isEmpty else {
+      throw Self.Error.emptyCollection
+    }
     self.rawValue = rawValue
+  }
+
+  public init?(rawValue: Collection) {
+    try? self.init(from: rawValue)
   }
 
   public subscript<Subject>(dynamicMember keyPath: KeyPath<Collection, Subject>) -> Subject {
