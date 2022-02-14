@@ -15,21 +15,21 @@ extension NonEmpty where Collection: RangeReplaceableCollection {
   }
 
   public mutating func append(_ newElement: Element) {
-    self.rawValue.append(newElement)
+    self.tail.append(newElement)
   }
 
   public mutating func append<S: Sequence>(contentsOf newElements: S) where Element == S.Element {
-    self.rawValue.append(contentsOf: newElements)
+    self.tail.append(contentsOf: newElements)
   }
 
   public mutating func insert(_ newElement: Element, at i: Index) {
-    self.rawValue.insert(newElement, at: i)
+    self.tail.insert(newElement, at: i)
   }
 
   public mutating func insert<S>(
     contentsOf newElements: S, at i: Index
   ) where S: Swift.Collection, Element == S.Element {
-    self.rawValue.insert(contentsOf: newElements, at: i)
+    self.tail.insert(contentsOf: newElements, at: i)
   }
 
   public static func += <S: Sequence>(lhs: inout Self, rhs: S) where Element == S.Element {

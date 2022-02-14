@@ -3,13 +3,13 @@ public struct NonEmpty<Collection: Swift.Collection>: Swift.Collection {
   public typealias Element = Collection.Element
   public typealias Index = Collection.Index
 
-  public internal(set) var rawValue: Collection
+  public internal(set) var tail: Slice<Collection>
 
   public init(from rawValue: Collection) throws {
     guard !rawValue.isEmpty else {
       throw Self.Error.emptyCollection
     }
-    self.rawValue = rawValue
+    self.tail = Slice(base: rawValue, bounds: rawValue.startIndex..<rawValue.endIndex)
   }
 
   public init?(rawValue: Collection) {
@@ -17,82 +17,90 @@ public struct NonEmpty<Collection: Swift.Collection>: Swift.Collection {
   }
 
   public subscript<Subject>(dynamicMember keyPath: KeyPath<Collection, Subject>) -> Subject {
-    self.rawValue[keyPath: keyPath]
+    self.tail.base[keyPath: keyPath]
   }
 
-  public var startIndex: Index { self.rawValue.startIndex }
+  public var startIndex: Index { self.tail.startIndex }
 
-  public var endIndex: Index { self.rawValue.endIndex }
+  public var endIndex: Index { self.tail.endIndex }
 
-  public subscript(position: Index) -> Element { self.rawValue[position] }
+  public subscript(position: Index) -> Element { self.tail[position] }
 
   public func index(after i: Index) -> Index {
-    self.rawValue.index(after: i)
+    self.tail.index(after: i)
   }
 
-  public var first: Element { self.rawValue.first! }
+  public var first: Element { self.tail.first! }
 
   public func max(by areInIncreasingOrder: (Element, Element) throws -> Bool) rethrows -> Element {
-    try self.rawValue.max(by: areInIncreasingOrder)!
+    try self.tail.max(by: areInIncreasingOrder)!
   }
 
   public func min(by areInIncreasingOrder: (Element, Element) throws -> Bool) rethrows -> Element {
-    try self.rawValue.min(by: areInIncreasingOrder)!
+    try self.tail.min(by: areInIncreasingOrder)!
   }
 
   public func sorted(
     by areInIncreasingOrder: (Element, Element) throws -> Bool
   ) rethrows -> NonEmpty<[Element]> {
-    NonEmpty<[Element]>(rawValue: try self.rawValue.sorted(by: areInIncreasingOrder))!
+    NonEmpty<[Element]>(rawValue: try self.tail.sorted(by: areInIncreasingOrder))!
   }
 
   public func randomElement<T>(using generator: inout T) -> Element where T: RandomNumberGenerator {
-    self.rawValue.randomElement(using: &generator)!
+    self.tail.randomElement(using: &generator)!
   }
 
   public func randomElement() -> Element {
-    self.rawValue.randomElement()!
+    self.tail.randomElement()!
   }
 
   public func shuffled<T>(using generator: inout T) -> NonEmpty<[Element]>
   where T: RandomNumberGenerator {
-    NonEmpty<[Element]>(rawValue: self.rawValue.shuffled(using: &generator))!
+    NonEmpty<[Element]>(rawValue: self.tail.shuffled(using: &generator))!
   }
 
   public func shuffled() -> NonEmpty<[Element]> {
-    NonEmpty<[Element]>(rawValue: self.rawValue.shuffled())!
+    NonEmpty<[Element]>(rawValue: self.tail.shuffled())!
   }
 
   public func map<T>(_ transform: (Element) throws -> T) rethrows -> NonEmpty<[T]> {
-    NonEmpty<[T]>(rawValue: try self.rawValue.map(transform))!
+    NonEmpty<[T]>(rawValue: try self.tail.map(transform))!
   }
 
   public func flatMap<SegmentOfResult>(
     _ transform: (Element) throws -> NonEmpty<SegmentOfResult>
   ) rethrows -> NonEmpty<[SegmentOfResult.Element]> where SegmentOfResult: Sequence {
-    NonEmpty<[SegmentOfResult.Element]>(rawValue: try self.rawValue.flatMap(transform))!
+    NonEmpty<[SegmentOfResult.Element]>(rawValue: try self.tail.flatMap(transform))!
   }
 }
 
 extension NonEmpty: CustomStringConvertible {
   public var description: String {
-    return String(describing: self.rawValue)
+    return String(describing: self.tail)
   }
 }
 
-extension NonEmpty: Equatable where Collection: Equatable {}
+extension NonEmpty: Equatable where Collection: Equatable {
+  public static func == (lhs: NonEmpty<Collection>, rhs: NonEmpty<Collection>) -> Bool {
+    lhs.tail.base == rhs.tail.base
+  }
+}
 
-extension NonEmpty: Hashable where Collection: Hashable {}
+extension NonEmpty: Hashable where Collection: Hashable {
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(self.tail.base)
+  }
+}
 
 extension NonEmpty: Comparable where Collection: Comparable {
   public static func < (lhs: Self, rhs: Self) -> Bool {
-    lhs.rawValue < rhs.rawValue
+    lhs.tail.base < rhs.tail.base
   }
 }
 
 extension NonEmpty: Encodable where Collection: Encodable {
   public func encode(to encoder: Encoder) throws {
-    try self.rawValue.encode(to: encoder)
+    try self.tail.base.encode(to: encoder)
   }
 }
 
@@ -108,34 +116,39 @@ extension NonEmpty: Decodable where Collection: Decodable {
   }
 }
 
-extension NonEmpty: RawRepresentable {}
+extension NonEmpty: RawRepresentable {
+  public internal(set) var rawValue: Collection {
+    get { tail.base }
+    set { tail = Slice(base: newValue, bounds: newValue.startIndex..<newValue.endIndex) }
+  }
+}
 
 extension NonEmpty where Collection.Element: Comparable {
   public func max() -> Element {
-    self.rawValue.max()!
+    self.tail.max()!
   }
 
   public func min() -> Element {
-    self.rawValue.min()!
+    self.tail.min()!
   }
 
   public func sorted() -> NonEmpty<[Element]> {
-    return NonEmpty<[Element]>(rawValue: self.rawValue.sorted())!
+    return NonEmpty<[Element]>(rawValue: self.tail.sorted())!
   }
 }
 
 extension NonEmpty: BidirectionalCollection where Collection: BidirectionalCollection {
   public func index(before i: Index) -> Index {
-    self.rawValue.index(before: i)
+    self.tail.index(before: i)
   }
 
-  public var last: Element { self.rawValue.last! }
+  public var last: Element { self.tail.last! }
 }
 
 extension NonEmpty: MutableCollection where Collection: MutableCollection {
   public subscript(position: Index) -> Element {
-    _read { yield self.rawValue[position] }
-    _modify { yield &self.rawValue[position] }
+    _read { yield self.tail[position] }
+    _modify { yield &self.tail[position] }
   }
 }
 
@@ -143,7 +156,7 @@ extension NonEmpty: RandomAccessCollection where Collection: RandomAccessCollect
 
 extension NonEmpty where Collection: MutableCollection & RandomAccessCollection {
   public mutating func shuffle<T: RandomNumberGenerator>(using generator: inout T) {
-    self.rawValue.shuffle(using: &generator)
+    self.tail.shuffle(using: &generator)
   }
 }
 
