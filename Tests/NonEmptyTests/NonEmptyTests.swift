@@ -198,7 +198,7 @@ final class NonEmptyTests: XCTestCase {
       data, try JSONDecoder().decode(NonEmpty<Data>.self, from: JSONEncoder().encode(data)))
     XCTAssertEqual(
       data, try JSONDecoder().decode(NonEmpty<Data>.self, from: Data(#""SGVsbG8=""#.utf8)))
-    XCTAssertThrowsError(try JSONDecoder().decode(NonEmpty<Data>.self, from: Data(#""""#.utf8)))
+    XCTAssertThrowsError(try JSONDecoder().decode(NonEmpty<Data>.self, from: Data("\"\"".utf8)))
   }
 
   func testNonEmptySetWithTrivialValue() {
