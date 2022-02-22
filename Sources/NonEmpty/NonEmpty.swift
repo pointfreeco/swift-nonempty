@@ -86,13 +86,24 @@ extension NonEmpty: Comparable where Collection: Comparable {
 
 extension NonEmpty: Encodable where Collection: Encodable {
   public func encode(to encoder: Encoder) throws {
-    try self.rawValue.encode(to: encoder)
+    do {
+      var container = encoder.singleValueContainer()
+      try container.encode(self.rawValue)
+    } catch {
+      try self.rawValue.encode(to: encoder)
+    }
   }
 }
 
 extension NonEmpty: Decodable where Collection: Decodable {
   public init(from decoder: Decoder) throws {
-    let collection = try Collection(from: decoder)
+    let collection: Collection
+    do {
+      collection = try decoder.singleValueContainer().decode(Collection.self)
+    } catch {
+      collection = try Collection(from: decoder)
+    }
+
     guard !collection.isEmpty else {
       throw DecodingError.dataCorrupted(
         .init(codingPath: decoder.codingPath, debugDescription: "Non-empty collection expected")
