@@ -6,12 +6,15 @@ public struct NonEmpty<Collection: Swift.Collection>: Swift.Collection {
   public var head: Collection.Element { self[self.startIndex] }
   public internal(set) var tail: Slice<Collection>
 
+  public let minimumCount: Int
+
   public init(from rawValue: Slice<Collection>) throws {
     guard !rawValue.isEmpty else {
       throw Self.Error.emptyCollection
     }
     let bounds = (rawValue.index(after: rawValue.startIndex))..<rawValue.endIndex
     self.tail = Slice(base: rawValue.base, bounds: bounds)
+    self.minimumCount = 1
   }
 
   public init(from rawValue: Collection) throws {
@@ -23,6 +26,10 @@ public struct NonEmpty<Collection: Swift.Collection>: Swift.Collection {
   }
 
   public init<C: Swift.Collection>(_ nonEmpty: NonEmpty<C>) throws where Collection == NonEmpty<C> {
+    self.minimumCount = nonEmpty.minimumCount + 1
+    guard !nonEmpty.tail.dropFirst(nonEmpty.minimumCount).isEmpty else {
+      throw Self.Error.tooFewElements(expected: self.minimumCount)
+    }
     let tail = try NonEmpty<C>(from: nonEmpty.tail)
     self.tail = Slice(base: nonEmpty, bounds: tail.startIndex..<tail.endIndex)
   }

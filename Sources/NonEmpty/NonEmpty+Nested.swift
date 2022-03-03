@@ -69,6 +69,37 @@ public func AtLeast10<C: Swift.Collection>(_ c: C) throws -> _AtLeast10<C> {
   try NonEmpty(AtLeast9(c))
 }
 
+public func AtLeast1<C: Swift.Collection>(_ nonEmpty: NonEmpty<C>) throws -> _AtLeast1<NonEmpty<C>> {
+  try NonEmpty(nonEmpty)
+}
+public func AtLeast2<C: Swift.Collection>(_ nonEmpty: NonEmpty<C>) throws -> _AtLeast2<NonEmpty<C>> {
+  try NonEmpty(AtLeast1(nonEmpty))
+}
+public func AtLeast3<C: Swift.Collection>(_ nonEmpty: NonEmpty<C>) throws -> _AtLeast3<NonEmpty<C>> {
+  try NonEmpty(AtLeast2(nonEmpty))
+}
+public func AtLeast4<C: Swift.Collection>(_ nonEmpty: NonEmpty<C>) throws -> _AtLeast4<NonEmpty<C>> {
+  try NonEmpty(AtLeast3(nonEmpty))
+}
+public func AtLeast5<C: Swift.Collection>(_ nonEmpty: NonEmpty<C>) throws -> _AtLeast5<NonEmpty<C>> {
+  try NonEmpty(AtLeast4(nonEmpty))
+}
+public func AtLeast6<C: Swift.Collection>(_ nonEmpty: NonEmpty<C>) throws -> _AtLeast6<NonEmpty<C>> {
+  try NonEmpty(AtLeast5(nonEmpty))
+}
+public func AtLeast7<C: Swift.Collection>(_ nonEmpty: NonEmpty<C>) throws -> _AtLeast7<NonEmpty<C>> {
+  try NonEmpty(AtLeast6(nonEmpty))
+}
+public func AtLeast8<C: Swift.Collection>(_ nonEmpty: NonEmpty<C>) throws -> _AtLeast8<NonEmpty<C>> {
+  try NonEmpty(AtLeast7(nonEmpty))
+}
+public func AtLeast9<C: Swift.Collection>(_ nonEmpty: NonEmpty<C>) throws -> _AtLeast9<NonEmpty<C>> {
+  try NonEmpty(AtLeast8(nonEmpty))
+}
+public func AtLeast10<C: Swift.Collection>(_ nonEmpty: NonEmpty<C>) throws -> _AtLeast10<NonEmpty<C>> {
+  try NonEmpty(AtLeast9(nonEmpty))
+}
+
 fileprivate typealias _AtLeast11<C: Swift.Collection> = NonEmpty<_AtLeast10<C>>
 extension _AtLeast11 {
   public var drop10: NonEmpty<Collection.SubSequence> {

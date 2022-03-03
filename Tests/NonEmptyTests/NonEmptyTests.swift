@@ -240,8 +240,17 @@ final class NonEmptyTests: XCTestCase {
     XCTAssertEqual(atLeast10.eighth,  8)
     XCTAssertEqual(atLeast10.ninth,   9)
     XCTAssertEqual(atLeast10.tenth,  10)
+    
+    let nonEmpty = try NonEmpty(from: digits)
+    XCTAssertEqual(nonEmpty.minimumCount, 1)
+    
+    let atLeast2 = try AtLeast2(digits)
+    XCTAssertEqual(atLeast2.minimumCount, 2)
+    
+    let atLeast4 = try AtLeast2(AtLeast2(digits))
+    XCTAssertEqual(atLeast4.minimumCount, 4)
 
-    let exactly21 = try AtLeast10(AtLeast10([0] + digits + digits.map { $0 + 10 }))
+    let exactly21 = try AtLeast10(AtLeast10(Array(0...20)))
     XCTAssertEqual(exactly21.count, 21)
     XCTAssertEqual(exactly21[12], 12)
 
@@ -249,6 +258,20 @@ final class NonEmptyTests: XCTestCase {
     XCTAssertEqual(atLeast42.count, 100)
     XCTAssertEqual(atLeast42.drop10.drop10.count, 80)
     XCTAssertEqual(atLeast42.drop10.drop10.drop10.drop10.second, 42)
+
+    XCTAssertThrowsError(try NonEmpty(NonEmpty(from: digits.prefix(1))))
+    XCTAssertThrowsError(try AtLeast2(digits.prefix(1)))
+    XCTAssertThrowsError(try AtLeast3(digits.prefix(2)))
+    XCTAssertThrowsError(try AtLeast4(digits.prefix(3)))
+    XCTAssertThrowsError(try AtLeast5(digits.prefix(4)))
+    XCTAssertThrowsError(try AtLeast6(digits.prefix(5)))
+    XCTAssertThrowsError(try AtLeast7(digits.prefix(6)))
+    XCTAssertThrowsError(try AtLeast8(digits.prefix(7)))
+    XCTAssertThrowsError(try AtLeast9(digits.prefix(8)))
+    XCTAssertThrowsError(try AtLeast10(digits.prefix(9)))
+    XCTAssertThrowsError(try AtLeast10(AtLeast10(Array(1...19))), (try! AtLeast10(AtLeast10(Array(1...19)))).minimumCount.description)
+
+    XCTAssertNoThrow(try AtLeast10(AtLeast10(Array(1...20))))
   }
 }
 
