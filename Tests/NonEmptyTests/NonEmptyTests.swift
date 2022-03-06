@@ -217,6 +217,7 @@ final class NonEmptyTests: XCTestCase {
   #endif
 
   func testNestedNonEmpty() throws {
+    // Test type safe accessors
     let digits = Array(1...10)
     try XCTAssertEqual(atLeast1(digits).first,   1)
     try XCTAssertEqual(atLeast2(digits).second,  2)
@@ -229,6 +230,7 @@ final class NonEmptyTests: XCTestCase {
     try XCTAssertEqual(atLeast9(digits).ninth,   9)
     try XCTAssertEqual(atLeast10(digits).tenth, 10)
 
+    // Test type safe accessors on more nested types
     let atLeast10Digits = try atLeast10(digits)
     XCTAssertEqual(atLeast10Digits.first,   1)
     XCTAssertEqual(atLeast10Digits.second,  2)
@@ -240,25 +242,18 @@ final class NonEmptyTests: XCTestCase {
     XCTAssertEqual(atLeast10Digits.eighth,  8)
     XCTAssertEqual(atLeast10Digits.ninth,   9)
     XCTAssertEqual(atLeast10Digits.tenth,  10)
-    
-    let nonEmpty = try NonEmpty(from: digits)
-    XCTAssertEqual(nonEmpty.minimumCount, 1)
 
-    let atLeast2Digits = try atLeast2(digits)
-    XCTAssertEqual(atLeast2Digits.minimumCount, 2)
-    
-    let atLeast4Digits = try atLeast2(atLeast2(digits))
-    XCTAssertEqual(atLeast4Digits.minimumCount, 4)
+    // Test `minimumCount`
+    try XCTAssertEqual(    NonEmpty(from: digits).minimumCount, 1)
+    try XCTAssertEqual(         atLeast2(digits) .minimumCount, 2)
+    try XCTAssertEqual(atLeast2(atLeast2(digits)).minimumCount, 4)
 
-    let exactly21Digits = try atLeast10(atLeast10(Array(0...20)))
-    XCTAssertEqual(exactly21Digits.count, 21)
-    XCTAssertEqual(exactly21Digits[12], 12)
+    // Test count and access by index
+    let exactly21Numbers = try atLeast10(atLeast10(Array(0...20)))
+    XCTAssertEqual(exactly21Numbers.count, 21)
+    XCTAssertEqual(exactly21Numbers[12], 12)
 
-    let atLeast42Digits = try atLeast10(atLeast10(atLeast10(atLeast10(atLeast2(Array(1...100))))))
-    XCTAssertEqual(atLeast42Digits.count, 100)
-    XCTAssertEqual(atLeast42Digits.drop10.drop10.count, 80)
-    XCTAssertEqual(atLeast42Digits.drop10.drop10.drop10.drop10.second, 42)
-
+    // Test initializers correctly throw
     XCTAssertThrowsError(try NonEmpty(NonEmpty(from: digits.prefix(1))))
     XCTAssertThrowsError(try atLeast2(digits.prefix(1)))
     XCTAssertThrowsError(try atLeast3(digits.prefix(2)))
@@ -271,7 +266,20 @@ final class NonEmptyTests: XCTestCase {
     XCTAssertThrowsError(try atLeast10(digits.prefix(9)))
     XCTAssertThrowsError(try atLeast10(atLeast10(Array(1...19))), (try! atLeast10(atLeast10(Array(1...19)))).minimumCount.description)
 
+    // Test initializers correctly **not** throw
     XCTAssertNoThrow(try atLeast10(atLeast10(Array(1...20))))
+
+    // Test some code does not compile
+    // Note: I couldn't find a way to assert this, so one way to check it is to uncomment the code
+//    _ = try atLeast1(digits).second
+//    _ = try atLeast2(digits).third
+//    _ = try atLeast3(digits).fourth
+//    _ = try atLeast4(digits).fifth
+//    _ = try atLeast5(digits).sixth
+//    _ = try atLeast6(digits).seventh
+//    _ = try atLeast7(digits).eighth
+//    _ = try atLeast8(digits).ninth
+//    _ = try atLeast9(digits).tenth
   }
 }
 
