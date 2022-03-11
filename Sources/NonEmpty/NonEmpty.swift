@@ -1,95 +1,38 @@
 @dynamicMemberLookup
-public struct NonEmpty<Collection: Swift.Collection>: Swift.Collection {
+public struct NonEmpty<Collection: Swift.Collection>: Swift.Collection, NonEmptyProtocol {
   public typealias Element = Collection.Element
   public typealias Index = Collection.Index
 
-  public var head: Collection.Element { self[self.startIndex] }
   public internal(set) var tail: Slice<Collection>
 
-  public let minimumCount: Int
+  public let minimumCount: Int = 1
 
-  public init(from rawValue: Slice<Collection>) throws {
-    guard !rawValue.isEmpty else {
-      throw Self.Error.emptyCollection
+  public var wrappedValue: Collection {
+    get { rawValue }
+    set { rawValue = newValue }
+  }
+
+  public init(fromSlice slice: Slice<Collection>) throws {
+    guard !slice.isEmpty else {
+      throw NonEmptyError.emptyCollection
     }
-    let bounds = (rawValue.index(after: rawValue.startIndex))..<rawValue.endIndex
-    self.tail = Slice(base: rawValue.base, bounds: bounds)
-    self.minimumCount = 1
+    let bounds = (slice.index(after: slice.startIndex))..<slice.endIndex
+    self.tail = Slice(base: slice.base, bounds: bounds)
   }
 
   public init(from rawValue: Collection) throws {
-    try self.init(from: Slice(base: rawValue, bounds: rawValue.startIndex..<rawValue.endIndex))
+    try self.init(fromSlice: Slice(base: rawValue, bounds: rawValue.startIndex..<rawValue.endIndex))
   }
 
   public init?(rawValue: Collection) {
     try? self.init(from: rawValue)
   }
 
-  public init<C: Swift.Collection>(_ nonEmpty: NonEmpty<C>) throws where Collection == NonEmpty<C> {
-    self.minimumCount = nonEmpty.minimumCount + 1
-    guard !nonEmpty.tail.dropFirst(nonEmpty.minimumCount).isEmpty else {
-      throw Self.Error.tooFewElements(expected: self.minimumCount)
-    }
-    let tail = try NonEmpty<C>(from: nonEmpty.tail)
-    self.tail = Slice(base: nonEmpty, bounds: tail.startIndex..<tail.endIndex)
-  }
-
   public subscript<Subject>(dynamicMember keyPath: KeyPath<Collection, Subject>) -> Subject {
     self.rawValue[keyPath: keyPath]
   }
 
-  public var startIndex: Index { self.rawValue.startIndex }
-
-  public var endIndex: Index { self.rawValue.endIndex }
-
   public subscript(position: Index) -> Element { self.rawValue[position] }
-
-  public func index(after i: Index) -> Index {
-    self.rawValue.index(after: i)
-  }
-
-  public var first: Element { self.head }
-
-  public func max(by areInIncreasingOrder: (Element, Element) throws -> Bool) rethrows -> Element {
-    try self.rawValue.max(by: areInIncreasingOrder)!
-  }
-
-  public func min(by areInIncreasingOrder: (Element, Element) throws -> Bool) rethrows -> Element {
-    try self.rawValue.min(by: areInIncreasingOrder)!
-  }
-
-  public func sorted(
-    by areInIncreasingOrder: (Element, Element) throws -> Bool
-  ) rethrows -> NonEmpty<[Element]> {
-    NonEmpty<[Element]>(rawValue: try self.rawValue.sorted(by: areInIncreasingOrder))!
-  }
-
-  public func randomElement<T>(using generator: inout T) -> Element where T: RandomNumberGenerator {
-    self.rawValue.randomElement(using: &generator)!
-  }
-
-  public func randomElement() -> Element {
-    self.rawValue.randomElement()!
-  }
-
-  public func shuffled<T>(using generator: inout T) -> NonEmpty<[Element]>
-  where T: RandomNumberGenerator {
-    NonEmpty<[Element]>(rawValue: self.rawValue.shuffled(using: &generator))!
-  }
-
-  public func shuffled() -> NonEmpty<[Element]> {
-    NonEmpty<[Element]>(rawValue: self.rawValue.shuffled())!
-  }
-
-  public func map<T>(_ transform: (Element) throws -> T) rethrows -> NonEmpty<[T]> {
-    NonEmpty<[T]>(rawValue: try self.rawValue.map(transform))!
-  }
-
-  public func flatMap<SegmentOfResult>(
-    _ transform: (Element) throws -> NonEmpty<SegmentOfResult>
-  ) rethrows -> NonEmpty<[SegmentOfResult.Element]> where SegmentOfResult: Sequence {
-    NonEmpty<[SegmentOfResult.Element]>(rawValue: try self.rawValue.flatMap(transform))!
-  }
 }
 
 extension NonEmpty: CustomStringConvertible {
@@ -140,20 +83,6 @@ extension NonEmpty: RawRepresentable {
     set {
       self.tail = Slice(base: newValue, bounds: (newValue.index(after: newValue.startIndex))..<newValue.endIndex)
     }
-  }
-}
-
-extension NonEmpty where Collection.Element: Comparable {
-  public func max() -> Element {
-    self.rawValue.max()!
-  }
-
-  public func min() -> Element {
-    self.rawValue.min()!
-  }
-
-  public func sorted() -> NonEmpty<[Element]> {
-    return NonEmpty<[Element]>(rawValue: self.rawValue.sorted())!
   }
 }
 

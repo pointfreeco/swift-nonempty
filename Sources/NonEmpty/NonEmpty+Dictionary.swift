@@ -18,6 +18,7 @@ public protocol _DictionaryProtocol: Collection where Element == (key: Key, valu
 extension Dictionary: _DictionaryProtocol {}
 
 extension NonEmpty where Collection: _DictionaryProtocol {
+  @_disfavoredOverload
   public init(_ head: Element, _ tail: Collection) {
     guard !tail.keys.contains(head.key) else { fatalError("Dictionary contains duplicate key") }
     var tail = tail

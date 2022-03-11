@@ -1,9 +1,13 @@
 // NB: `NonEmpty` does not conditionally conform to `RangeReplaceableCollection` because it contains destructive methods.
-extension NonEmpty where Collection: RangeReplaceableCollection {
-  public init(_ head: Element, _ tail: Element...) {
+extension NonEmptyProtocol where Collection: RangeReplaceableCollection {
+  public init(_ head: Element, tail: Collection) {
     var tail = tail
     tail.insert(head, at: tail.startIndex)
-    self.init(rawValue: Collection(tail))!
+    try! self.init(from: tail)
+  }
+
+  public init(_ head: Element, _ tail: Element...) {
+    self.init(head, tail: Collection(tail))
   }
 
   public init<S>(from elements: S) throws where S: Sequence, Collection.Element == S.Element {
@@ -11,25 +15,25 @@ extension NonEmpty where Collection: RangeReplaceableCollection {
   }
 
   public init?<S>(_ elements: S) where S: Sequence, Collection.Element == S.Element {
-    self.init(rawValue: Collection(elements))
+    try? self.init(from: Collection(elements))
   }
 
   public mutating func append(_ newElement: Element) {
-    self.rawValue.append(newElement)
+    self.wrappedValue.append(newElement)
   }
 
   public mutating func append<S: Sequence>(contentsOf newElements: S) where Element == S.Element {
-    self.rawValue.append(contentsOf: newElements)
+    self.wrappedValue.append(contentsOf: newElements)
   }
 
   public mutating func insert(_ newElement: Element, at i: Index) {
-    self.rawValue.insert(newElement, at: i)
+    self.wrappedValue.insert(newElement, at: i)
   }
 
   public mutating func insert<S>(
     contentsOf newElements: S, at i: Index
   ) where S: Swift.Collection, Element == S.Element {
-    self.rawValue.insert(contentsOf: newElements, at: i)
+    self.wrappedValue.insert(contentsOf: newElements, at: i)
   }
 
   public static func += <S: Sequence>(lhs: inout Self, rhs: S) where Element == S.Element {
