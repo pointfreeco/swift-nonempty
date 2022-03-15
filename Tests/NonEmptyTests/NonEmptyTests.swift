@@ -129,6 +129,8 @@ final class NonEmptyTests: XCTestCase {
     let ys: NonEmpty<[Int]> = [1, 2, 3]
 
     XCTAssertEqual(xs, ys)
+    XCTAssertEqual(xs, [1, 2, 3])
+    XCTAssertNotEqual(xs, [2, 1, 3])
   }
 
   func testExpressibleByDictionaryLiteral() {
@@ -136,6 +138,8 @@ final class NonEmptyTests: XCTestCase {
     let ys: NonEmpty<[String: String]> = ["a": "test", "b": "demo"]
 
     XCTAssertEqual(xs, ys)
+    XCTAssertEqual(xs, ["b": "demo", "a": "test"])
+    XCTAssertEqual(xs.rawValue, ["b": "demo", "a": "test"])
   }
 
   func testDictionary() {
