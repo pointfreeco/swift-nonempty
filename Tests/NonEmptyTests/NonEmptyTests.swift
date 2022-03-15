@@ -124,6 +124,20 @@ final class NonEmptyTests: XCTestCase {
     XCTAssertFalse(NonEmptySet(1, 2, 3).isDisjoint(with: [3, 4, 5]))
   }
 
+  func testExpressibleByArrayLiteral() {
+    let xs = NonEmpty<[Int]>(1, 2, 3)
+    let ys: NonEmpty<[Int]> = [1, 2, 3]
+
+    XCTAssertEqual(xs, ys)
+  }
+
+  func testExpressibleByDictionaryLiteral() {
+    let xs = NonEmpty<[String: String]>(("a", "test"), ["b": "demo"])
+    let ys: NonEmpty<[String: String]> = ["a": "test", "b": "demo"]
+
+    XCTAssertEqual(xs, ys)
+  }
+
   func testDictionary() {
     let nonEmptyDict1 = NonEmpty(("1", "Blob"), ["1": "Blobbo"], uniquingKeysWith: { $1 })
     XCTAssertEqual(1, nonEmptyDict1.count)
