@@ -1,6 +1,6 @@
 extension NonEmpty: ExpressibleByArrayLiteral where Collection: ExpressibleByArrayLiteral {
   public init(arrayLiteral elements: Element...) {
-    assert(!elements.isEmpty, "Cannot initialize a NonEmpty array from an empty literal!")
+    precondition(!elements.isEmpty, "Can't construct \(Self.self) from empty array literal")
     let f = unsafeBitCast(
       Collection.init(arrayLiteral:),
       to: (([Element]) -> Collection).self
