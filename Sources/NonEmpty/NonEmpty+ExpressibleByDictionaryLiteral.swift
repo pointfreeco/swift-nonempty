@@ -1,4 +1,5 @@
-extension NonEmpty: ExpressibleByDictionaryLiteral where Collection: ExpressibleByDictionaryLiteral {
+extension NonEmpty: ExpressibleByDictionaryLiteral
+where Collection: ExpressibleByDictionaryLiteral {
   public init(dictionaryLiteral elements: (Collection.Key, Collection.Value)...) {
     precondition(!elements.isEmpty, "Can't construct \(Self.self) from empty dictionary literal")
     let f = unsafeBitCast(
