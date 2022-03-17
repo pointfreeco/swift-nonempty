@@ -65,8 +65,6 @@ extension NonEmpty: Swift.Collection {
     self.rawValue.index(after: i)
   }
 
-  public var first: Element { self.rawValue.first! }
-
   public func max(by areInIncreasingOrder: (Element, Element) throws -> Bool) rethrows -> Element {
     try self.rawValue.max(by: areInIncreasingOrder)!
   }

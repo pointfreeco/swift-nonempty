@@ -19,4 +19,5 @@ where RawValue: Swift.Collection,
 
 extension NonEmptyProtocol {
   public var head: Element { self[self.startIndex] }
+  public var first: Element { head }
 }
