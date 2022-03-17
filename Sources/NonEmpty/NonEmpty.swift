@@ -155,7 +155,8 @@ extension NonEmpty where Collection.Element: Comparable {
   }
 }
 
-extension NonEmpty: BidirectionalCollection where Collection: BidirectionalCollection {
+extension NonEmpty: BidirectionalCollection where RawValue: BidirectionalCollection {}
+extension NonEmptyProtocol where RawValue: BidirectionalCollection {
   public func index(before i: Index) -> Index {
     self.rawValue.index(before: i)
   }
