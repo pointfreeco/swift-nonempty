@@ -229,21 +229,21 @@ final class NonEmptyTests: XCTestCase {
     try XCTAssertEqual(AtLeast6(digits).sixth,   6)
     try XCTAssertEqual(AtLeast7(digits).seventh, 7)
     try XCTAssertEqual(AtLeast8(digits).eighth,  8)
-    try XCTAssertEqual(AtLeast9(digits).ninth,   9)
-    try XCTAssertEqual(AtLeast10(digits).tenth, 10)
+//    try XCTAssertEqual(AtLeast9(digits).ninth,   9)
+//    try XCTAssertEqual(AtLeast10(digits).tenth, 10)
 
     // Test type safe accessors on more nested types
-    let atLeast10Digits = try AtLeast10(digits)
-    XCTAssertEqual(atLeast10Digits.first,   1)
-    XCTAssertEqual(atLeast10Digits.second,  2)
-    XCTAssertEqual(atLeast10Digits.third,   3)
-    XCTAssertEqual(atLeast10Digits.fourth,  4)
-    XCTAssertEqual(atLeast10Digits.fifth,   5)
-    XCTAssertEqual(atLeast10Digits.sixth,   6)
-    XCTAssertEqual(atLeast10Digits.seventh, 7)
-    XCTAssertEqual(atLeast10Digits.eighth,  8)
-    XCTAssertEqual(atLeast10Digits.ninth,   9)
-    XCTAssertEqual(atLeast10Digits.tenth,  10)
+    let atLeast8Digits = try AtLeast8(digits)
+    XCTAssertEqual(atLeast8Digits.first,   1)
+    XCTAssertEqual(atLeast8Digits.second,  2)
+    XCTAssertEqual(atLeast8Digits.third,   3)
+    XCTAssertEqual(atLeast8Digits.fourth,  4)
+    XCTAssertEqual(atLeast8Digits.fifth,   5)
+    XCTAssertEqual(atLeast8Digits.sixth,   6)
+    XCTAssertEqual(atLeast8Digits.seventh, 7)
+    XCTAssertEqual(atLeast8Digits.eighth,  8)
+//    XCTAssertEqual(atLeast10Digits.ninth,   9)
+//    XCTAssertEqual(atLeast10Digits.tenth,  10)
 
     // Test `minimumCount`
     XCTAssertEqual(         NonEmpty<[Int]> .minimumCount, 1)
@@ -251,7 +251,7 @@ final class NonEmptyTests: XCTestCase {
     XCTAssertEqual(AtLeast2<AtLeast2<[Int]>>.minimumCount, 4)
 
     // Test count and access by index
-    let exactly21Numbers = try AtLeast10(AtLeast10(Array(0...20)))
+    let exactly21Numbers = try AtLeast8(AtLeast8(Array(0...20)))
     XCTAssertEqual(exactly21Numbers.count, 21)
     XCTAssertEqual(exactly21Numbers[12], 12)
 
@@ -263,14 +263,14 @@ final class NonEmptyTests: XCTestCase {
     XCTAssertThrowsError(try AtLeast6(digits.prefix(5)))
     XCTAssertThrowsError(try AtLeast7(digits.prefix(6)))
     XCTAssertThrowsError(try AtLeast8(digits.prefix(7)))
-    XCTAssertThrowsError(try AtLeast9(digits.prefix(8)))
-    XCTAssertThrowsError(try AtLeast10(digits.prefix(9)))
-    XCTAssertThrowsError(try AtLeast10(AtLeast10(Array(1...19))))
+//    XCTAssertThrowsError(try AtLeast9(digits.prefix(8)))
+//    XCTAssertThrowsError(try AtLeast10(digits.prefix(9)))
+//    XCTAssertThrowsError(try AtLeast10(AtLeast10(Array(1...19))))
     XCTAssertThrowsError(try NonEmpty(NonEmpty([1])))
-    XCTAssertThrowsError(try AtLeast2(AtLeast2([1, 2])))
+    XCTAssertThrowsError(try AtLeast2(AtLeast2([1, 2, 3])))
 
     // Test initializers correctly **not** throw
-    XCTAssertNoThrow(try AtLeast10(AtLeast10(Array(1...20))))
+    XCTAssertNoThrow(try AtLeast8(AtLeast8(Array(1...16))))
 
     // Test nested `NonEmpty` can be initialized in a safe way
     XCTAssertEqual(NonEmpty        (1, tail: [2, 3]).first, 1)
@@ -300,12 +300,12 @@ final class NonEmptyTests: XCTestCase {
     XCTAssertEqual(AtLeast8        (1, 2, 3, 4, 5, 6, 7, 8, tail: [9, 10]).eighth, 8)
     XCTAssertEqual(AtLeast8<[Int]> (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)        .eighth, 8)
     XCTAssertEqual(AtLeast8<[Int]> (1, 2, 3, 4, 5, 6, 7, 8)               .eighth, 8)
-    XCTAssertEqual(AtLeast9        (1, 2, 3, 4, 5, 6, 7, 8, 9, tail: [10, 11]).ninth, 9)
-    XCTAssertEqual(AtLeast9<[Int]> (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11)        .ninth, 9)
-    XCTAssertEqual(AtLeast9<[Int]> (1, 2, 3, 4, 5, 6, 7, 8, 9)                .ninth, 9)
-    XCTAssertEqual(AtLeast10       (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, tail: [11, 12]).tenth, 10)
-    XCTAssertEqual(AtLeast10<[Int]>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)        .tenth, 10)
-    XCTAssertEqual(AtLeast10<[Int]>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)                .tenth, 10)
+//    XCTAssertEqual(AtLeast9        (1, 2, 3, 4, 5, 6, 7, 8, 9, tail: [10, 11]).ninth, 9)
+//    XCTAssertEqual(AtLeast9<[Int]> (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11)        .ninth, 9)
+//    XCTAssertEqual(AtLeast9<[Int]> (1, 2, 3, 4, 5, 6, 7, 8, 9)                .ninth, 9)
+//    XCTAssertEqual(AtLeast10       (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, tail: [11, 12]).tenth, 10)
+//    XCTAssertEqual(AtLeast10<[Int]>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)        .tenth, 10)
+//    XCTAssertEqual(AtLeast10<[Int]>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)                .tenth, 10)
 
     // Test some code does not compile
     // Note: I couldn't find a way to assert this, so one way to check it is to uncomment the code
