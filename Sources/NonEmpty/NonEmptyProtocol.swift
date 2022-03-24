@@ -5,19 +5,14 @@ public protocol WithMinimumCount {
 }
 
 public protocol NonEmptyProtocol: Swift.Collection, RawRepresentable, WithMinimumCount
-where RawValue: Swift.Collection,
-      Element == RawValue.Element,
+where Element == RawValue.Element,
       Index == RawValue.Index,
-      Collection.Element == Element,
-      Collection.Index == Index
+      Collection == RawValue
 {
   associatedtype Collection: Swift.Collection
-  var tail: Slice<Collection> { get }
-  var wrappedValue: Collection { get set }
-  init(from wrappedValue: Collection) throws
+  init(from rawValue: Collection) throws
 }
 
 extension NonEmptyProtocol {
-  public var head: Element { self[self.startIndex] }
-  public var first: Element { head }
+  public var first: Element { self[self.startIndex] }
 }

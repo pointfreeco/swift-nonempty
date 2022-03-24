@@ -15,25 +15,27 @@ extension NonEmptyProtocol where Collection: RangeReplaceableCollection {
   }
 
   public init?<S>(_ elements: S) where S: Sequence, Collection.Element == S.Element {
-    try? self.init(from: Collection(elements))
+    try? self.init(from: elements)
   }
+}
 
+extension NonEmpty where Collection: RangeReplaceableCollection {
   public mutating func append(_ newElement: Element) {
-    self.wrappedValue.append(newElement)
+    self.rawValue.append(newElement)
   }
 
   public mutating func append<S: Sequence>(contentsOf newElements: S) where Element == S.Element {
-    self.wrappedValue.append(contentsOf: newElements)
+    self.rawValue.append(contentsOf: newElements)
   }
 
   public mutating func insert(_ newElement: Element, at i: Index) {
-    self.wrappedValue.insert(newElement, at: i)
+    self.rawValue.insert(newElement, at: i)
   }
 
   public mutating func insert<S>(
     contentsOf newElements: S, at i: Index
   ) where S: Swift.Collection, Element == S.Element {
-    self.wrappedValue.insert(contentsOf: newElements, at: i)
+    self.rawValue.insert(contentsOf: newElements, at: i)
   }
 
   public static func += <S: Sequence>(lhs: inout Self, rhs: S) where Element == S.Element {

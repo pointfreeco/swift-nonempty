@@ -18,7 +18,6 @@ public protocol _DictionaryProtocol: Collection where Element == (key: Key, valu
 extension Dictionary: _DictionaryProtocol {}
 
 extension NonEmpty where Collection: _DictionaryProtocol {
-  @_disfavoredOverload
   public init(_ head: Element, _ tail: Collection) {
     guard !tail.keys.contains(head.key) else { fatalError("Dictionary contains duplicate key") }
     var tail = tail
@@ -88,13 +87,12 @@ extension NonEmpty where Collection: _DictionaryProtocol {
   }
 }
 
-// Commented to avoid "Ambiguous use of operator '=='", doesn't break the tests.
-//extension NonEmpty where Collection: _DictionaryProtocol, Collection.Value: Equatable {
-//  public static func == (lhs: NonEmpty, rhs: NonEmpty) -> Bool {
-//    return Dictionary(uniqueKeysWithValues: Array(lhs))
-//      == Dictionary(uniqueKeysWithValues: Array(rhs))
-//  }
-//}
+extension NonEmpty where Collection: _DictionaryProtocol, Collection.Value: Equatable {
+  public static func == (lhs: NonEmpty, rhs: NonEmpty) -> Bool {
+    return Dictionary(uniqueKeysWithValues: Array(lhs))
+      == Dictionary(uniqueKeysWithValues: Array(rhs))
+  }
+}
 
 extension NonEmpty where Collection: _DictionaryProtocol & ExpressibleByDictionaryLiteral {
   public init(_ head: Element) {

@@ -1,6 +1,9 @@
 @dynamicMemberLookup
-public struct NonEmpty<Collection: Swift.Collection> {
-  public internal(set) var tail: Slice<Collection>
+public struct NonEmpty<Collection: Swift.Collection>: Swift.Collection, NonEmptyProtocol {
+  public typealias Element = Collection.Element
+  public typealias Index = Collection.Index
+
+  public internal(set) var rawValue: Collection
 
   public static var minimumCount: Int {
     if let T = Collection.self as? WithMinimumCount.Type {
@@ -10,50 +13,24 @@ public struct NonEmpty<Collection: Swift.Collection> {
     }
   }
 
-  public init(fromSlice slice: Slice<Collection>) throws {
-    guard !slice.dropFirst(Self.minimumCount - 1).isEmpty else {
+  public init(from rawValue: Collection) throws {
+    guard !rawValue.dropFirst(Self.minimumCount - 1).isEmpty else {
       if Self.minimumCount == 1 {
         throw NonEmptyError.emptyCollection
       } else {
         throw NonEmptyError.tooFewElements(expected: Self.minimumCount)
       }
     }
-    let bounds = (slice.index(after: slice.startIndex))..<slice.endIndex
-    self.tail = Slice(base: slice.base, bounds: bounds)
+    self.rawValue = rawValue
   }
 
-  public init(from wrappedValue: Collection) throws {
-    let slice = Slice(base: wrappedValue, bounds: wrappedValue.startIndex..<wrappedValue.endIndex)
-    try self.init(fromSlice: slice)
+  public init?(rawValue: Collection) {
+    try? self.init(from: rawValue)
   }
 
   public subscript<Subject>(dynamicMember keyPath: KeyPath<Collection, Subject>) -> Subject {
     self.rawValue[keyPath: keyPath]
   }
-}
-
-extension NonEmpty: NonEmptyProtocol {
-  public var wrappedValue: Collection {
-    get { self.rawValue }
-    set { self.rawValue = newValue }
-  }
-}
-
-extension NonEmpty: RawRepresentable {
-  public internal(set) var rawValue: Collection {
-    get { tail.base }
-    set {
-      self = try! Self.init(from: newValue)
-    }
-  }
-  public init?(rawValue: Collection) {
-    try? self.init(from: rawValue)
-  }
-}
-
-extension NonEmpty: Swift.Collection {
-  public typealias Element = RawValue.Element
-  public typealias Index = RawValue.Index
 
   public var startIndex: Index { self.rawValue.startIndex }
 
@@ -109,7 +86,7 @@ extension NonEmpty: Swift.Collection {
 
 extension NonEmpty: CustomStringConvertible {
   public var description: String {
-    String(describing: self.rawValue)
+    return String(describing: self.rawValue)
   }
 }
 
@@ -141,6 +118,8 @@ extension NonEmpty: Decodable where Collection: Decodable {
   }
 }
 
+extension NonEmpty: RawRepresentable {}
+
 extension NonEmpty where Collection.Element: Comparable {
   public func max() -> Element {
     self.rawValue.max()!
@@ -155,10 +134,10 @@ extension NonEmpty where Collection.Element: Comparable {
   }
 }
 
-extension NonEmpty: BidirectionalCollection where RawValue: BidirectionalCollection {
+extension NonEmpty: BidirectionalCollection where Collection: BidirectionalCollection {
   public var last: Element { self.rawValue.last! }
 }
-extension NonEmptyProtocol where RawValue: BidirectionalCollection {
+extension NonEmptyProtocol where Collection: BidirectionalCollection {
   public func index(before i: Index) -> Index {
     self.rawValue.index(before: i)
   }
