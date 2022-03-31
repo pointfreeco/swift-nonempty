@@ -6,8 +6,8 @@ public typealias AtLeast5 <C: Swift.Collection> = NonEmpty<AtLeast4<C>>
 public typealias AtLeast6 <C: Swift.Collection> = NonEmpty<AtLeast5<C>>
 public typealias AtLeast7 <C: Swift.Collection> = NonEmpty<AtLeast6<C>>
 public typealias AtLeast8 <C: Swift.Collection> = NonEmpty<AtLeast7<C>>
-//public typealias AtLeast9 <C: Swift.Collection> = NonEmpty<AtLeast8<C>>
-//public typealias AtLeast10<C: Swift.Collection> = NonEmpty<AtLeast9<C>>
+public typealias AtLeast9 <C: Swift.Collection> = NonEmpty<AtLeast8<C>>
+public typealias AtLeast10<C: Swift.Collection> = NonEmpty<AtLeast9<C>>
 
 extension NonEmptyProtocol {
   @_disfavoredOverload
@@ -246,96 +246,96 @@ where Collection: NonEmptyProtocol,
     self.init(e1, e2, e3, e4, e5, e6, e7, e8, tail: .init(tail))
   }
 }
-//extension NonEmptyProtocol
-//where Collection: NonEmptyProtocol,
-//      Collection.Collection: NonEmptyProtocol,
-//      Collection.Collection.Collection: NonEmptyProtocol,
-//      Collection.Collection.Collection.Collection: NonEmptyProtocol,
-//      Collection.Collection.Collection.Collection.Collection: NonEmptyProtocol,
-//      Collection.Collection.Collection.Collection.Collection.Collection: NonEmptyProtocol,
-//      Collection.Collection.Collection.Collection.Collection.Collection.Collection: NonEmptyProtocol,
-//      Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection: NonEmptyProtocol
-//{
-//  public var ninth: Element { self[self.index(self.startIndex, offsetBy: 8)] }
-//  public init(_ c: Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection) throws {
-//    try self.init(.init(.init(.init(.init(.init(.init(.init(.init(c)))))))))
-//  }
-//  public init(
-//    _ e1: Element,
-//    _ e2: Element,
-//    _ e3: Element,
-//    _ e4: Element,
-//    _ e5: Element,
-//    _ e6: Element,
-//    _ e7: Element,
-//    _ e8: Element,
-//    _ e9: Element,
-//    tail: Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection
-//  ) where Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection: RangeReplaceableCollection {
-//    var rawValue = tail
-//    rawValue.insert(contentsOf: [e1, e2, e3, e4, e5, e6, e7, e8, e9], at: rawValue.startIndex)
-//    try! self.init(rawValue)
-//  }
-//  public init(
-//    _ e1: Element,
-//    _ e2: Element,
-//    _ e3: Element,
-//    _ e4: Element,
-//    _ e5: Element,
-//    _ e6: Element,
-//    _ e7: Element,
-//    _ e8: Element,
-//    _ e9: Element,
-//    _ tail: Element...
-//  ) where Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection: RangeReplaceableCollection {
-//    self.init(e1, e2, e3, e4, e5, e6, e7, e8, e9, tail: .init(tail))
-//  }
-//}
-//extension NonEmptyProtocol
-//where Collection: NonEmptyProtocol,
-//      Collection.Collection: NonEmptyProtocol,
-//      Collection.Collection.Collection: NonEmptyProtocol,
-//      Collection.Collection.Collection.Collection: NonEmptyProtocol,
-//      Collection.Collection.Collection.Collection.Collection: NonEmptyProtocol,
-//      Collection.Collection.Collection.Collection.Collection.Collection: NonEmptyProtocol,
-//      Collection.Collection.Collection.Collection.Collection.Collection.Collection: NonEmptyProtocol,
-//      Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection: NonEmptyProtocol,
-//      Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection: NonEmptyProtocol
-//{
-//  public var tenth: Element { self[self.index(self.startIndex, offsetBy: 9)] }
-//  public init(_ c: Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection) throws {
-//    try self.init(.init(.init(.init(.init(.init(.init(.init(.init(.init(c))))))))))
-//  }
-//  public init(
-//    _ e1: Element,
-//    _ e2: Element,
-//    _ e3: Element,
-//    _ e4: Element,
-//    _ e5: Element,
-//    _ e6: Element,
-//    _ e7: Element,
-//    _ e8: Element,
-//    _ e9: Element,
-//    _ e10: Element,
-//    tail: Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection
-//  ) where Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection: RangeReplaceableCollection {
-//    var rawValue = tail
-//    rawValue.insert(contentsOf: [e1, e2, e3, e4, e5, e6, e7, e8, e9, e10], at: rawValue.startIndex)
-//    try! self.init(rawValue)
-//  }
-//  public init(
-//    _ e1: Element,
-//    _ e2: Element,
-//    _ e3: Element,
-//    _ e4: Element,
-//    _ e5: Element,
-//    _ e6: Element,
-//    _ e7: Element,
-//    _ e8: Element,
-//    _ e9: Element,
-//    _ e10: Element,
-//    _ tail: Element...
-//  ) where Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection: RangeReplaceableCollection {
-//    self.init(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, tail: .init(tail))
-//  }
-//}
+extension NonEmptyProtocol
+where Collection: NonEmptyProtocol,
+      Collection.Collection: NonEmptyProtocol,
+      Collection.Collection.Collection: NonEmptyProtocol,
+      Collection.Collection.Collection.Collection: NonEmptyProtocol,
+      Collection.Collection.Collection.Collection.Collection: NonEmptyProtocol,
+      Collection.Collection.Collection.Collection.Collection.Collection: NonEmptyProtocol,
+      Collection.Collection.Collection.Collection.Collection.Collection.Collection: NonEmptyProtocol,
+      Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection: NonEmptyProtocol
+{
+  public var ninth: Element { self[self.index(self.startIndex, offsetBy: 8)] }
+  public init(_ c: Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection) throws {
+    try self.init(.init(.init(.init(.init(.init(.init(.init(.init(c)))))))))
+  }
+  public init(
+    _ e1: Element,
+    _ e2: Element,
+    _ e3: Element,
+    _ e4: Element,
+    _ e5: Element,
+    _ e6: Element,
+    _ e7: Element,
+    _ e8: Element,
+    _ e9: Element,
+    tail: Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection
+  ) where Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection: RangeReplaceableCollection {
+    var rawValue = tail
+    rawValue.insert(contentsOf: [e1, e2, e3, e4, e5, e6, e7, e8, e9], at: rawValue.startIndex)
+    try! self.init(rawValue)
+  }
+  public init(
+    _ e1: Element,
+    _ e2: Element,
+    _ e3: Element,
+    _ e4: Element,
+    _ e5: Element,
+    _ e6: Element,
+    _ e7: Element,
+    _ e8: Element,
+    _ e9: Element,
+    _ tail: Element...
+  ) where Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection: RangeReplaceableCollection {
+    self.init(e1, e2, e3, e4, e5, e6, e7, e8, e9, tail: .init(tail))
+  }
+}
+extension NonEmptyProtocol
+where Collection: NonEmptyProtocol,
+      Collection.Collection: NonEmptyProtocol,
+      Collection.Collection.Collection: NonEmptyProtocol,
+      Collection.Collection.Collection.Collection: NonEmptyProtocol,
+      Collection.Collection.Collection.Collection.Collection: NonEmptyProtocol,
+      Collection.Collection.Collection.Collection.Collection.Collection: NonEmptyProtocol,
+      Collection.Collection.Collection.Collection.Collection.Collection.Collection: NonEmptyProtocol,
+      Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection: NonEmptyProtocol,
+      Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection: NonEmptyProtocol
+{
+  public var tenth: Element { self[self.index(self.startIndex, offsetBy: 9)] }
+  public init(_ c: Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection) throws {
+    try self.init(.init(.init(.init(.init(.init(.init(.init(.init(.init(c))))))))))
+  }
+  public init(
+    _ e1: Element,
+    _ e2: Element,
+    _ e3: Element,
+    _ e4: Element,
+    _ e5: Element,
+    _ e6: Element,
+    _ e7: Element,
+    _ e8: Element,
+    _ e9: Element,
+    _ e10: Element,
+    tail: Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection
+  ) where Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection: RangeReplaceableCollection {
+    var rawValue = tail
+    rawValue.insert(contentsOf: [e1, e2, e3, e4, e5, e6, e7, e8, e9, e10], at: rawValue.startIndex)
+    try! self.init(rawValue)
+  }
+  public init(
+    _ e1: Element,
+    _ e2: Element,
+    _ e3: Element,
+    _ e4: Element,
+    _ e5: Element,
+    _ e6: Element,
+    _ e7: Element,
+    _ e8: Element,
+    _ e9: Element,
+    _ e10: Element,
+    _ tail: Element...
+  ) where Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection.Collection: RangeReplaceableCollection {
+    self.init(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, tail: .init(tail))
+  }
+}
