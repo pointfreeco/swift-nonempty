@@ -240,6 +240,44 @@ final class NonEmptyTests: XCTestCase {
       XCTAssertEqual(.init("A", "C", "B"), xs)
     }
   #endif
+  
+  func testEnumerated() {
+    let actual = NonEmptyArray("1", "2", "3").enumerated()
+    let expected = [(offset: 0, element: "1", (offset: 1, element: "2"), (offset: 2, element: "3"))]
+    
+    XCTAssertTrue(
+      zip(actual, expected).allSatisfy {
+        $0.offset == $1.offset && $0.element == $1.element
+      }
+    )
+  }
+
+  func testEnumeratedMap() {
+    let xs = NonEmptyArray(1, 2, 3).enumerated()
+    
+    let nonEmptyArray: NonEmpty<[String]> = xs.map { String($0.element) }
+    let array: [String] = xs.map { String($0.element) }
+    
+    XCTAssertEqual(nonEmptyArray, NonEmpty("1", "2", "3"))
+    XCTAssertEqual(array, ["1", "2", "3"])
+  }
+  
+  func testEnumeratedFlatMap() {
+    let xs = NonEmptyArray(NonEmptyArray("1"), NonEmptyArray("2"), NonEmptyArray("3")).enumerated()
+    
+    let nonEmptyArray: NonEmpty<[String]> = xs.flatMap { $0.element }
+    let array: [String] = xs.flatMap { $0.element }
+    
+    XCTAssertEqual(nonEmptyArray, NonEmpty("1", "2", "3"))
+    XCTAssertEqual(array, ["1", "2", "3"])
+  }
+  
+  func testEnumeratedFirst() {
+    let xs = NonEmptyArray("Blob").enumerated()
+    
+    XCTAssertEqual(xs.first.offset, 0)
+    XCTAssertEqual(xs.first.element, "Blob")
+  }
 }
 
 struct TrivialHashable: Equatable, Comparable, Hashable {
