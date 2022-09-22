@@ -16,3 +16,7 @@ where Element == RawValue.Element,
 extension NonEmptyProtocol {
   public var first: Element { self[self.startIndex] }
 }
+
+internal protocol _NonEmptyProtocol: NonEmptyProtocol {
+  var rawValue: RawValue { get set }
+}

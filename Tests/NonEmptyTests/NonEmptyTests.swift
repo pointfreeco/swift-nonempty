@@ -307,6 +307,16 @@ final class NonEmptyTests: XCTestCase {
     XCTAssertEqual(AtLeast10<[Int]>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)        .tenth, 10)
     XCTAssertEqual(AtLeast10<[Int]>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)                .tenth, 10)
 
+    // Test that appending to a nested `NonEmpty` works as expected
+    var mutableDigits = AtLeast2<[Int]>(1, 2)
+    XCTAssertEqual(Array(mutableDigits), [1, 2])
+    XCTAssertEqual(mutableDigits.first, 1)
+    XCTAssertEqual(mutableDigits.last, 2)
+    mutableDigits.append(3)
+    XCTAssertEqual(Array(mutableDigits), [1, 2, 3])
+    XCTAssertEqual(mutableDigits.first, 1)
+    XCTAssertEqual(mutableDigits.last, 3)
+
     // Test some code does not compile
     // Note: I couldn't find a way to assert this, so one way to check it is to uncomment the code
 //    _ = try AtLeast1(digits).second
