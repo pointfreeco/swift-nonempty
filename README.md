@@ -154,7 +154,7 @@ These concepts (and more) are explored thoroughly in [Point-Free](https://www.po
 NonEmpty was first explored in [Episode #20](https://www.pointfree.co/episodes/ep20-nonempty):
 
 <a href="https://www.pointfree.co/episodes/ep20-nonempty">
-  <img alt="video poster image" src="https://d1hf1soyumxcgv.cloudfront.net/0020-nonempty/poster.jpg" width="480">
+  <img alt="video poster image" src="https://d3rccdn33rt8ze.cloudfront.net/episodes/0020.jpeg" width="480">
 </a>
 
 ## License
