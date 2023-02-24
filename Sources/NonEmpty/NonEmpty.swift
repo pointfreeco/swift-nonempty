@@ -78,6 +78,8 @@ extension NonEmpty: Equatable where Collection: Equatable {}
 
 extension NonEmpty: Hashable where Collection: Hashable {}
 
+extension NonEmpty: Sendable where Collection: Sendable {}
+
 extension NonEmpty: Comparable where Collection: Comparable {
   public static func < (lhs: Self, rhs: Self) -> Bool {
     lhs.rawValue < rhs.rawValue
