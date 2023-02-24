@@ -85,7 +85,7 @@ extension NonEmpty: Comparable where Collection: Comparable {
 }
 
 #if canImport(_Concurrency) && compiler(>=5.5)
-extension NonEmpty: Sendable where Collection: Sendable {}
+  extension NonEmpty: Sendable where Collection: Sendable {}
 #endif
 
 extension NonEmpty: Encodable where Collection: Encodable {
