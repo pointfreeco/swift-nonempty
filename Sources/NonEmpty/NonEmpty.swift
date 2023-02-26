@@ -1,13 +1,31 @@
 @dynamicMemberLookup
-public struct NonEmpty<Collection: Swift.Collection>: Swift.Collection {
+public struct NonEmpty<Collection: Swift.Collection>: Swift.Collection, NonEmptyProtocol {
   public typealias Element = Collection.Element
   public typealias Index = Collection.Index
 
   public internal(set) var rawValue: Collection
 
-  public init?(rawValue: Collection) {
-    guard !rawValue.isEmpty else { return nil }
+  public static var minimumCount: Int {
+    if let T = Collection.self as? WithMinimumCount.Type {
+      return T.minimumCount + 1
+    } else {
+      return 1
+    }
+  }
+
+  public init(from rawValue: Collection) throws {
+    guard !rawValue.dropFirst(Self.minimumCount - 1).isEmpty else {
+      if Self.minimumCount == 1 {
+        throw NonEmptyError.emptyCollection
+      } else {
+        throw NonEmptyError.tooFewElements(expected: Self.minimumCount)
+      }
+    }
     self.rawValue = rawValue
+  }
+
+  public init?(rawValue: Collection) {
+    try? self.init(from: rawValue)
   }
 
   public subscript<Subject>(dynamicMember keyPath: KeyPath<Collection, Subject>) -> Subject {
@@ -23,8 +41,6 @@ public struct NonEmpty<Collection: Swift.Collection>: Swift.Collection {
   public func index(after i: Index) -> Index {
     self.rawValue.index(after: i)
   }
-
-  public var first: Element { self.rawValue.first! }
 
   public func max(by areInIncreasingOrder: (Element, Element) throws -> Bool) rethrows -> Element {
     try self.rawValue.max(by: areInIncreasingOrder)!
@@ -134,6 +150,9 @@ extension NonEmpty where Collection.Element: Comparable {
 }
 
 extension NonEmpty: BidirectionalCollection where Collection: BidirectionalCollection {
+  public var last: Element { self.rawValue.last! }
+}
+extension NonEmptyProtocol where Collection: BidirectionalCollection {
   public func index(before i: Index) -> Index {
     self.rawValue.index(before: i)
   }
