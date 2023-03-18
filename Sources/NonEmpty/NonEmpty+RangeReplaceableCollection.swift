@@ -52,6 +52,7 @@ extension NonEmpty where Collection: RangeReplaceableCollection {
 }
 
 extension NonEmpty {
+  @inlinable
   public func joined<S: Sequence, C: RangeReplaceableCollection>(
     separator: S
   )
@@ -60,6 +61,7 @@ extension NonEmpty {
     NonEmpty<C>(rawValue: C(self.rawValue.joined(separator: separator)))!
   }
 
+  @inlinable
   public func joined<C: RangeReplaceableCollection>() -> NonEmpty<C>
   where Element == NonEmpty<C> {
     return joined(separator: C())

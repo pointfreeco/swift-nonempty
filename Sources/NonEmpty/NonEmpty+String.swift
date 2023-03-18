@@ -85,12 +85,14 @@ extension NonEmpty where Collection: StringProtocol {
     self.init(rawValue: Collection(decodingCString: nullTerminatedCodeUnits, as: sourceEncoding))!
   }
 
+  @inlinable
   public func withCString<Result>(_ body: (UnsafePointer<CChar>) throws -> Result) rethrows
     -> Result
   {
     try self.rawValue.withCString(body)
   }
 
+  @inlinable
   public func withCString<Result, Encoding>(
     encodedAs targetEncoding: Encoding.Type,
     _ body: (UnsafePointer<Encoding.CodeUnit>) throws -> Result
@@ -98,10 +100,12 @@ extension NonEmpty where Collection: StringProtocol {
     try self.rawValue.withCString(encodedAs: targetEncoding, body)
   }
 
+  @inlinable
   public func lowercased() -> NonEmptyString {
     NonEmptyString(self.rawValue.lowercased())!
   }
 
+  @inlinable
   public func uppercased() -> NonEmptyString {
     NonEmptyString(self.rawValue.uppercased())!
   }
