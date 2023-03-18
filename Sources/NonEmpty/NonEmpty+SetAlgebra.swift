@@ -12,17 +12,20 @@ extension NonEmpty where Collection: SetAlgebra, Collection.Element: Hashable {
     self.init(rawValue: Collection(elements))
   }
 
+  @inlinable
   public func contains(_ member: Collection.Element) -> Bool {
     self.rawValue.contains(member)
   }
 
   @_disfavoredOverload
+  @inlinable
   public func union(_ other: NonEmpty) -> NonEmpty {
     var copy = self
     copy.formUnion(other)
     return copy
   }
 
+  @inlinable
   public func union(_ other: Collection) -> NonEmpty {
     var copy = self
     copy.formUnion(other)
@@ -30,19 +33,23 @@ extension NonEmpty where Collection: SetAlgebra, Collection.Element: Hashable {
   }
 
   @_disfavoredOverload
+  @inlinable
   public func intersection(_ other: NonEmpty) -> Collection {
     self.rawValue.intersection(other.rawValue)
   }
 
+  @inlinable
   public func intersection(_ other: Collection) -> Collection {
     self.rawValue.intersection(other)
   }
 
   @_disfavoredOverload
+  @inlinable
   public func symmetricDifference(_ other: NonEmpty) -> Collection {
     self.rawValue.symmetricDifference(other.rawValue)
   }
 
+  @inlinable
   public func symmetricDifference(_ other: Collection) -> Collection {
     self.rawValue.symmetricDifference(other)
   }
@@ -69,99 +76,121 @@ extension NonEmpty where Collection: SetAlgebra, Collection.Element: Hashable {
   }
 
   @_disfavoredOverload
+  @inlinable
   public func subtracting(_ other: NonEmpty) -> Collection {
     self.rawValue.subtracting(other.rawValue)
   }
 
+  @inlinable
   public func subtracting(_ other: Collection) -> Collection {
     self.rawValue.subtracting(other)
   }
 
   @_disfavoredOverload
+  @inlinable
   public func isDisjoint(with other: NonEmpty) -> Bool {
     self.rawValue.isDisjoint(with: other.rawValue)
   }
 
+  @inlinable
   public func isDisjoint(with other: Collection) -> Bool {
     self.rawValue.isDisjoint(with: other)
   }
 
   @_disfavoredOverload
+  @inlinable
   public func isSubset(of other: NonEmpty) -> Bool {
     self.rawValue.isSubset(of: other.rawValue)
   }
 
+  @inlinable
   public func isSubset(of other: Collection) -> Bool {
     self.rawValue.isSubset(of: other)
   }
 
   @_disfavoredOverload
+  @inlinable
   public func isSuperset(of other: NonEmpty) -> Bool {
     self.rawValue.isSuperset(of: other.rawValue)
   }
 
+  @inlinable
   public func isSuperset(of other: Collection) -> Bool {
     self.rawValue.isSuperset(of: other)
   }
 
   @_disfavoredOverload
+  @inlinable
   public func isStrictSubset(of other: NonEmpty) -> Bool {
     self.rawValue.isStrictSubset(of: other.rawValue)
   }
 
+  @inlinable
   public func isStrictSubset(of other: Collection) -> Bool {
     self.rawValue.isStrictSubset(of: other)
   }
 
   @_disfavoredOverload
+  @inlinable
   public func isStrictSuperset(of other: NonEmpty) -> Bool {
     self.rawValue.isStrictSuperset(of: other.rawValue)
   }
 
+  @inlinable
   public func isStrictSuperset(of other: Collection) -> Bool {
     self.rawValue.isStrictSuperset(of: other)
   }
 }
 
 extension SetAlgebra where Self: Collection, Element: Hashable {
+  @inlinable
   public func union(_ other: NonEmpty<Self>) -> NonEmpty<Self> {
     var copy = other
     copy.formUnion(self)
     return copy
   }
 
+  @inlinable
   public func intersection(_ other: NonEmpty<Self>) -> Self {
     self.intersection(other.rawValue)
   }
 
+  @inlinable
   public func symmetricDifference(_ other: NonEmpty<Self>) -> Self {
     self.symmetricDifference(other.rawValue)
   }
 
+  @inlinable
   public mutating func formUnion(_ other: NonEmpty<Self>) {
     self.formUnion(other.rawValue)
   }
 
+  @inlinable
   public func subtracting(_ other: NonEmpty<Self>) -> Self {
     self.subtracting(other.rawValue)
   }
 
+  @inlinable
   public func isDisjoint(with other: NonEmpty<Self>) -> Bool {
     self.isDisjoint(with: other.rawValue)
   }
 
+  @inlinable
   public func isSubset(of other: NonEmpty<Self>) -> Bool {
     self.isSubset(of: other.rawValue)
   }
 
+  @inlinable
   public func isSuperset(of other: NonEmpty<Self>) -> Bool {
     self.isSuperset(of: other.rawValue)
   }
 
+  @inlinable
   public func isStrictSubset(of other: NonEmpty<Self>) -> Bool {
     self.isStrictSubset(of: other.rawValue)
   }
 
+  @inlinable
   public func isStrictSuperset(of other: NonEmpty<Self>) -> Bool {
     self.isStrictSuperset(of: other.rawValue)
   }
