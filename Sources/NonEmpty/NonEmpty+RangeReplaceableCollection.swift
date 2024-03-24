@@ -3,7 +3,7 @@ extension NonEmpty where Collection: RangeReplaceableCollection {
   public init(_ head: Element, _ tail: Element...) {
     var tail = tail
     tail.insert(head, at: tail.startIndex)
-    self.init(rawValue: Collection(tail))!
+    self = .init(rawValue: Collection(tail)).unsafelyUnwrapped
   }
 
   public init?<S>(_ elements: S) where S: Sequence, Collection.Element == S.Element {
@@ -57,7 +57,7 @@ extension NonEmpty {
   )
     -> NonEmpty<C>
   where Element == NonEmpty<C>, S.Element == C.Element {
-    NonEmpty<C>(rawValue: C(self.rawValue.joined(separator: separator)))!
+    NonEmpty<C>(rawValue: C(self.rawValue.joined(separator: separator))).unsafelyUnwrapped
   }
 
   public func joined<C: RangeReplaceableCollection>() -> NonEmpty<C>
