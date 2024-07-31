@@ -5,6 +5,6 @@ extension NonEmpty: ExpressibleByArrayLiteral where Collection: ExpressibleByArr
       Collection.init(arrayLiteral:),
       to: (([Element]) -> Collection).self
     )
-    self.init(rawValue: f(elements))!
+    self = .init(rawValue: f(elements)).unsafelyUnwrapped
   }
 }

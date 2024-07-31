@@ -24,47 +24,47 @@ public struct NonEmpty<Collection: Swift.Collection>: Swift.Collection {
     self.rawValue.index(after: i)
   }
 
-  public var first: Element { self.rawValue.first! }
+  public var first: Element { self.rawValue.first.unsafelyUnwrapped }
 
   public func max(by areInIncreasingOrder: (Element, Element) throws -> Bool) rethrows -> Element {
-    try self.rawValue.max(by: areInIncreasingOrder)!
+    try self.rawValue.max(by: areInIncreasingOrder).unsafelyUnwrapped
   }
 
   public func min(by areInIncreasingOrder: (Element, Element) throws -> Bool) rethrows -> Element {
-    try self.rawValue.min(by: areInIncreasingOrder)!
+    try self.rawValue.min(by: areInIncreasingOrder).unsafelyUnwrapped
   }
 
   public func sorted(
     by areInIncreasingOrder: (Element, Element) throws -> Bool
   ) rethrows -> NonEmpty<[Element]> {
-    NonEmpty<[Element]>(rawValue: try self.rawValue.sorted(by: areInIncreasingOrder))!
+    NonEmpty<[Element]>(rawValue: try self.rawValue.sorted(by: areInIncreasingOrder)).unsafelyUnwrapped
   }
 
   public func randomElement<T>(using generator: inout T) -> Element where T: RandomNumberGenerator {
-    self.rawValue.randomElement(using: &generator)!
+    self.rawValue.randomElement(using: &generator).unsafelyUnwrapped
   }
 
   public func randomElement() -> Element {
-    self.rawValue.randomElement()!
+    self.rawValue.randomElement().unsafelyUnwrapped
   }
 
   public func shuffled<T>(using generator: inout T) -> NonEmpty<[Element]>
   where T: RandomNumberGenerator {
-    NonEmpty<[Element]>(rawValue: self.rawValue.shuffled(using: &generator))!
+    NonEmpty<[Element]>(rawValue: self.rawValue.shuffled(using: &generator)).unsafelyUnwrapped
   }
 
   public func shuffled() -> NonEmpty<[Element]> {
-    NonEmpty<[Element]>(rawValue: self.rawValue.shuffled())!
+    NonEmpty<[Element]>(rawValue: self.rawValue.shuffled()).unsafelyUnwrapped
   }
 
   public func map<T>(_ transform: (Element) throws -> T) rethrows -> NonEmpty<[T]> {
-    NonEmpty<[T]>(rawValue: try self.rawValue.map(transform))!
+    NonEmpty<[T]>(rawValue: try self.rawValue.map(transform)).unsafelyUnwrapped
   }
 
   public func flatMap<SegmentOfResult>(
     _ transform: (Element) throws -> NonEmpty<SegmentOfResult>
   ) rethrows -> NonEmpty<[SegmentOfResult.Element]> where SegmentOfResult: Sequence {
-    NonEmpty<[SegmentOfResult.Element]>(rawValue: try self.rawValue.flatMap(transform))!
+    NonEmpty<[SegmentOfResult.Element]>(rawValue: try self.rawValue.flatMap(transform)).unsafelyUnwrapped
   }
 }
 
@@ -113,7 +113,7 @@ extension NonEmpty: Decodable where Collection: Decodable {
         .init(codingPath: decoder.codingPath, debugDescription: "Non-empty collection expected")
       )
     }
-    self.init(rawValue: collection)!
+    self = .init(rawValue: collection).unsafelyUnwrapped
   }
 }
 
@@ -121,15 +121,15 @@ extension NonEmpty: RawRepresentable {}
 
 extension NonEmpty where Collection.Element: Comparable {
   public func max() -> Element {
-    self.rawValue.max()!
+    self.rawValue.max().unsafelyUnwrapped
   }
 
   public func min() -> Element {
-    self.rawValue.min()!
+    self.rawValue.min().unsafelyUnwrapped
   }
 
   public func sorted() -> NonEmpty<[Element]> {
-    return NonEmpty<[Element]>(rawValue: self.rawValue.sorted())!
+    return NonEmpty<[Element]>(rawValue: self.rawValue.sorted()).unsafelyUnwrapped
   }
 }
 
@@ -138,7 +138,7 @@ extension NonEmpty: BidirectionalCollection where Collection: BidirectionalColle
     self.rawValue.index(before: i)
   }
 
-  public var last: Element { self.rawValue.last! }
+  public var last: Element { self.rawValue.last.unsafelyUnwrapped }
 }
 
 extension NonEmpty: MutableCollection where Collection: MutableCollection {

@@ -5,7 +5,7 @@ extension NonEmpty where Collection: SetAlgebra, Collection.Element: Hashable {
   public init(_ head: Collection.Element, _ tail: Collection.Element...) {
     var tail = Collection(tail)
     tail.insert(head)
-    self.init(rawValue: tail)!
+    self = .init(rawValue: tail).unsafelyUnwrapped
   }
 
   public init?<S>(_ elements: S) where S: Sequence, Collection.Element == S.Element {

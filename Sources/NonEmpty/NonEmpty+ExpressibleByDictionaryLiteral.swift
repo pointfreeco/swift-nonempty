@@ -6,6 +6,6 @@ where Collection: ExpressibleByDictionaryLiteral {
       Collection.init(dictionaryLiteral:),
       to: (([(Collection.Key, Collection.Value)]) -> Collection).self
     )
-    self.init(rawValue: f(elements))!
+    self = .init(rawValue: f(elements)).unsafelyUnwrapped
   }
 }
