@@ -12,7 +12,7 @@ public protocol _DictionaryProtocol: Collection where Element == (key: Key, valu
     _ other: [Key: Value], uniquingKeysWith combine: (Value, Value) throws -> Value
   ) rethrows
   @discardableResult mutating func removeValue(forKey key: Key) -> Value?
-  mutating func updateValue(_ value: Value, forKey key: Key) -> Value?
+  @discardableResult mutating func updateValue(_ value: Value, forKey key: Key) -> Value?
 }
 
 extension Dictionary: _DictionaryProtocol {}
@@ -80,6 +80,7 @@ extension NonEmpty where Collection: _DictionaryProtocol {
     return copy
   }
 
+  @discardableResult
   public mutating func updateValue(_ value: Collection.Value, forKey key: Collection.Key)
     -> Collection.Value?
   {
