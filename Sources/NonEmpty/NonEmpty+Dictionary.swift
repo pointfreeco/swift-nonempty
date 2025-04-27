@@ -22,7 +22,7 @@ extension NonEmpty where Collection: _DictionaryProtocol {
     guard !tail.keys.contains(head.key) else { fatalError("Dictionary contains duplicate key") }
     var tail = tail
     tail[head.key] = head.value
-    self.init(rawValue: tail)!
+    self = .init(rawValue: tail).unsafelyUnwrapped
   }
 
   public init(
@@ -37,7 +37,7 @@ extension NonEmpty where Collection: _DictionaryProtocol {
     } else {
       tail[head.key] = head.value
     }
-    self.init(rawValue: tail)!
+    self = .init(rawValue: tail).unsafelyUnwrapped
   }
 
   public subscript(key: Collection.Key) -> Collection.Value? {
@@ -97,6 +97,6 @@ extension NonEmpty where Collection: _DictionaryProtocol, Collection.Value: Equa
 
 extension NonEmpty where Collection: _DictionaryProtocol & ExpressibleByDictionaryLiteral {
   public init(_ head: Element) {
-    self.init(rawValue: [head.key: head.value])!
+    self = .init(rawValue: [head.key: head.value]).unsafelyUnwrapped
   }
 }

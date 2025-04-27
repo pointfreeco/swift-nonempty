@@ -12,7 +12,7 @@ where Collection: ExpressibleByUnicodeScalarLiteral {
   public typealias UnicodeScalarLiteralType = Collection.UnicodeScalarLiteralType
 
   public init(unicodeScalarLiteral value: Collection.UnicodeScalarLiteralType) {
-    self.init(rawValue: Collection(unicodeScalarLiteral: value))!
+    self = .init(rawValue: Collection(unicodeScalarLiteral: value)).unsafelyUnwrapped
   }
 }
 
@@ -22,7 +22,7 @@ where Collection: ExpressibleByExtendedGraphemeClusterLiteral {
     .ExtendedGraphemeClusterLiteralType
 
   public init(extendedGraphemeClusterLiteral value: Collection.ExtendedGraphemeClusterLiteralType) {
-    self.init(rawValue: Collection(extendedGraphemeClusterLiteral: value))!
+    self = .init(rawValue: Collection(extendedGraphemeClusterLiteral: value)).unsafelyUnwrapped
   }
 }
 
@@ -30,7 +30,7 @@ extension NonEmpty: ExpressibleByStringLiteral where Collection: ExpressibleBySt
   public typealias StringLiteralType = Collection.StringLiteralType
 
   public init(stringLiteral value: Collection.StringLiteralType) {
-    self.init(rawValue: Collection(stringLiteral: value))!
+    self = .init(rawValue: Collection(stringLiteral: value)).unsafelyUnwrapped
   }
 }
 
@@ -71,18 +71,18 @@ extension NonEmpty where Collection: StringProtocol {
   public init<C, Encoding>(
     decoding codeUnits: C, as sourceEncoding: Encoding.Type
   ) where C: Swift.Collection, Encoding: _UnicodeEncoding, C.Element == Encoding.CodeUnit {
-    self.init(rawValue: Collection(decoding: codeUnits, as: sourceEncoding))!
+    self = .init(rawValue: Collection(decoding: codeUnits, as: sourceEncoding)).unsafelyUnwrapped
   }
 
   public init(cString nullTerminatedUTF8: UnsafePointer<CChar>) {
-    self.init(rawValue: Collection(cString: nullTerminatedUTF8))!
+    self = .init(rawValue: Collection(cString: nullTerminatedUTF8)).unsafelyUnwrapped
   }
 
   public init<Encoding>(
     decodingCString nullTerminatedCodeUnits: UnsafePointer<Encoding.CodeUnit>,
     as sourceEncoding: Encoding.Type
   ) where Encoding: _UnicodeEncoding {
-    self.init(rawValue: Collection(decodingCString: nullTerminatedCodeUnits, as: sourceEncoding))!
+    self = .init(rawValue: Collection(decodingCString: nullTerminatedCodeUnits, as: sourceEncoding)).unsafelyUnwrapped
   }
 
   public func withCString<Result>(_ body: (UnsafePointer<CChar>) throws -> Result) rethrows
@@ -99,10 +99,10 @@ extension NonEmpty where Collection: StringProtocol {
   }
 
   public func lowercased() -> NonEmptyString {
-    NonEmptyString(self.rawValue.lowercased())!
+    NonEmptyString(self.rawValue.lowercased()).unsafelyUnwrapped
   }
 
   public func uppercased() -> NonEmptyString {
-    NonEmptyString(self.rawValue.uppercased())!
+    NonEmptyString(self.rawValue.uppercased()).unsafelyUnwrapped
   }
 }
