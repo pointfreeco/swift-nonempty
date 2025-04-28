@@ -52,6 +52,7 @@ extension NonEmpty where Collection: _DictionaryProtocol {
     try self.rawValue.merge(other, uniquingKeysWith: combine)
   }
 
+  @inlinable
   public func merging<S: Sequence>(
     _ other: S,
     uniquingKeysWith combine: (Collection.Value, Collection.Value) throws -> Collection.Value
@@ -70,6 +71,7 @@ extension NonEmpty where Collection: _DictionaryProtocol {
     try self.rawValue.merge(other, uniquingKeysWith: combine)
   }
 
+  @inlinable
   public func merging(
     _ other: [Collection.Key: Collection.Value],
     uniquingKeysWith combine: (Collection.Value, Collection.Value) throws -> Collection.Value

@@ -20,47 +20,57 @@ public struct NonEmpty<Collection: Swift.Collection>: Swift.Collection {
 
   public subscript(position: Index) -> Element { self.rawValue[position] }
 
+  @inlinable
   public func index(after i: Index) -> Index {
     self.rawValue.index(after: i)
   }
 
   public var first: Element { self.rawValue.first! }
 
+  @inlinable
   public func max(by areInIncreasingOrder: (Element, Element) throws -> Bool) rethrows -> Element {
     try self.rawValue.max(by: areInIncreasingOrder)!
   }
 
+  @inlinable
   public func min(by areInIncreasingOrder: (Element, Element) throws -> Bool) rethrows -> Element {
     try self.rawValue.min(by: areInIncreasingOrder)!
   }
 
+  @inlinable
   public func sorted(
     by areInIncreasingOrder: (Element, Element) throws -> Bool
   ) rethrows -> NonEmpty<[Element]> {
     NonEmpty<[Element]>(rawValue: try self.rawValue.sorted(by: areInIncreasingOrder))!
   }
 
+  @inlinable
   public func randomElement<T>(using generator: inout T) -> Element where T: RandomNumberGenerator {
     self.rawValue.randomElement(using: &generator)!
   }
 
+  @inlinable
   public func randomElement() -> Element {
     self.rawValue.randomElement()!
   }
 
+  @inlinable
   public func shuffled<T>(using generator: inout T) -> NonEmpty<[Element]>
   where T: RandomNumberGenerator {
     NonEmpty<[Element]>(rawValue: self.rawValue.shuffled(using: &generator))!
   }
 
+  @inlinable
   public func shuffled() -> NonEmpty<[Element]> {
     NonEmpty<[Element]>(rawValue: self.rawValue.shuffled())!
   }
 
+  @inlinable
   public func map<T>(_ transform: (Element) throws -> T) rethrows -> NonEmpty<[T]> {
     NonEmpty<[T]>(rawValue: try self.rawValue.map(transform))!
   }
 
+  @inlinable
   public func flatMap<SegmentOfResult>(
     _ transform: (Element) throws -> NonEmpty<SegmentOfResult>
   ) rethrows -> NonEmpty<[SegmentOfResult.Element]> where SegmentOfResult: Sequence {
@@ -89,6 +99,7 @@ extension NonEmpty: Comparable where Collection: Comparable {
 #endif
 
 extension NonEmpty: Encodable where Collection: Encodable {
+  @inlinable
   public func encode(to encoder: Encoder) throws {
     do {
       var container = encoder.singleValueContainer()
@@ -120,20 +131,24 @@ extension NonEmpty: Decodable where Collection: Decodable {
 extension NonEmpty: RawRepresentable {}
 
 extension NonEmpty where Collection.Element: Comparable {
+  @inlinable
   public func max() -> Element {
     self.rawValue.max()!
   }
 
+  @inlinable
   public func min() -> Element {
     self.rawValue.min()!
   }
 
+  @inlinable
   public func sorted() -> NonEmpty<[Element]> {
     return NonEmpty<[Element]>(rawValue: self.rawValue.sorted())!
   }
 }
 
 extension NonEmpty: BidirectionalCollection where Collection: BidirectionalCollection {
+  @inlinable
   public func index(before i: Index) -> Index {
     self.rawValue.index(before: i)
   }
